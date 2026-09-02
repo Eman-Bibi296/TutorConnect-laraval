@@ -1,13 +1,11 @@
-
-
-<?php $__env->startSection('title', 'Student Dashboard'); ?>
+<?php $__env->startSection('title', 'Student Dashboard - TutorConnect'); ?>
 
 <?php $__env->startSection('content'); ?>
 <style>
     .dashboard-container {
-        background: #f0f4f8;
-        min-height: 100vh;
-        padding: 30px 5%;
+        padding: 35px 5%;
+        min-height: calc(100vh - 180px);
+        background: #F8FAFC;
     }
     .dashboard-wrapper {
         display: flex;
@@ -15,296 +13,326 @@
         max-width: 1400px;
         margin: 0 auto;
     }
-    .sidebar {
-        width: 280px;
-        background: white;
-        border-radius: 25px;
-        padding: 25px;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        height: fit-content;
-        position: sticky;
-        top: 30px;
+    .main-content {
+        flex: 1;
+        min-width: 0;
     }
-    .sidebar-logo {
-        text-align: center;
-        margin-bottom: 30px;
-        padding-bottom: 20px;
-        border-bottom: 2px solid #f0f4f8;
-    }
-    .sidebar-logo h2 {
-        margin: 0;
-        font-size: 1.5rem;
-        color: #1a1a2e;
-    }
-    .sidebar-logo span { color: #4a6cf7; }
-    .sidebar-logo p {
-        font-size: 0.7rem;
-        color: #999;
-        margin: 5px 0 0;
-    }
-    .sidebar-menu {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
-    .sidebar-menu li { margin-bottom: 8px; }
-    .sidebar-menu a {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        padding: 12px 15px;
-        color: #555;
-        text-decoration: none;
-        border-radius: 12px;
-        transition: all 0.3s;
-        font-weight: 500;
-    }
-    .sidebar-menu a:hover {
-        background: #f0f4f8;
-        color: #4a6cf7;
-    }
-    .sidebar-menu a.active {
-        background: linear-gradient(135deg, #4a6cf7, #6c5ce7);
-        color: white;
-    }
-    .logout-link {
-        margin-top: 30px;
-        padding-top: 20px;
-        border-top: 1px solid #eee;
-    }
-    .main-content { flex: 1; }
-    .welcome-card {
-        background: linear-gradient(135deg, #4a6cf7, #6c5ce7);
+    
+    .welcome-banner {
+        background: linear-gradient(135deg, #111827 0%, #1e293b 100%);
         border-radius: 20px;
-        padding: 25px;
+        padding: 28px 30px;
         color: white;
-        margin-bottom: 30px;
+        margin-bottom: 25px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.08);
     }
-    .welcome-card h1 {
+    .welcome-banner h2 {
+        font-size: 1.6rem;
+        font-weight: 800;
         margin: 0;
-        font-size: 1.5rem;
     }
-    .welcome-card p {
-        margin: 10px 0 0;
-        opacity: 0.9;
+    .welcome-banner p {
+        color: #94A3B8;
+        margin: 6px 0 0;
+        font-size: 0.95rem;
     }
-    .search-section {
+
+    .search-card {
         background: white;
         border-radius: 20px;
         padding: 25px;
-        margin-bottom: 30px;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        margin-bottom: 25px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+        border: 1px solid #E2E8F0;
     }
     .search-row {
         display: flex;
         gap: 15px;
         flex-wrap: wrap;
     }
-    .search-input-group {
+    .search-input {
         flex: 1;
         min-width: 200px;
-    }
-    .search-input {
-        width: 100%;
-        padding: 12px 15px;
-        border: 2px solid #e0e0e0;
+        padding: 12px 16px;
+        border: 1.5px solid #CBD5E1;
         border-radius: 12px;
-        font-size: 1rem;
+        font-size: 0.95rem;
+        transition: all 0.2s;
     }
     .search-input:focus {
-        border-color: #4a6cf7;
+        border-color: #059669;
         outline: none;
+        box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.12);
     }
     .search-btn {
-        background: linear-gradient(135deg, #4a6cf7, #6c5ce7);
+        background: #059669;
+        color: white;
         border: none;
         border-radius: 12px;
-        padding: 12px 25px;
-        color: white;
-        font-weight: 600;
+        padding: 12px 28px;
+        font-weight: 700;
         cursor: pointer;
+        transition: all 0.2s;
     }
+    .search-btn:hover {
+        background: #047857;
+    }
+
     .tutors-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-        gap: 25px;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 20px;
     }
     .tutor-card {
         background: white;
         border-radius: 20px;
-        padding: 20px;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        transition: transform 0.3s;
+        padding: 22px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+        border: 1px solid #E2E8F0;
+        transition: all 0.3s ease;
         display: flex;
-        gap: 20px;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    .tutor-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 25px rgba(5, 150, 105, 0.12);
+        border-color: #10B981;
+    }
+    
+    .tutor-header {
+        display: flex;
+        gap: 15px;
         align-items: center;
-    }
-    .tutor-card:hover { transform: translateY(-5px); }
-    .tutor-avatar {
-        width: 140px;
-        height: 140px;
-        border-radius: 20px;
-        background: linear-gradient(135deg, #4a6cf7, #6c5ce7);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden;
-        flex-shrink: 0;
-    }
-    .tutor-avatar img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        border-radius: 20px;
-    }
-    .tutor-info { flex: 1; }
-    .tutor-name {
-        font-size: 1.3rem;
-        font-weight: 700;
-        margin: 0 0 5px;
-    }
-    .tutor-qualification {
-        font-size: 0.85rem;
-        color: #4a6cf7;
-        margin-bottom: 5px;
-    }
-    .tutor-experience {
-        font-size: 0.8rem;
-        color: #666;
-        margin-bottom: 10px;
-    }
-    .tutor-subjects {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
         margin-bottom: 15px;
     }
-    .subject-tag {
-        background: #e8f0fe;
-        color: #4a6cf7;
-        padding: 4px 12px;
-        border-radius: 20px;
-        font-size: 0.7rem;
+    .tutor-img {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2.5px solid #10B981;
+        background: #ECFDF5;
+        flex-shrink: 0;
     }
-    .tutor-price {
-        font-size: 1.2rem;
-        font-weight: 800;
-        color: #4a6cf7;
-        margin-top: 10px;
+    .tutor-info h4 {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #111827;
+        margin: 0;
     }
-    .btn-view {
-        background: linear-gradient(135deg, #4a6cf7, #6c5ce7);
-        border-radius: 10px;
-        padding: 8px 20px;
-        color: white;
-        text-decoration: none;
+    .tutor-badge {
+        background: #ECFDF5;
+        color: #059669;
+        font-size: 0.75rem;
+        font-weight: 700;
+        padding: 3px 8px;
+        border-radius: 12px;
         display: inline-block;
-        margin-top: 10px;
-        font-size: 0.8rem;
+        margin-top: 3px;
     }
-    @media (max-width: 768px) {
-        .dashboard-wrapper { flex-direction: column; }
-        .sidebar { width: 100%; position: static; }
-        .tutors-grid { grid-template-columns: 1fr; }
-        .tutor-card { flex-direction: column; text-align: center; }
-        .tutor-avatar { width: 120px; height: 120px; margin: 0 auto; }
+    
+    .tutor-stats {
+        display: flex;
+        justify-content: space-between;
+        background: #F8FAFC;
+        padding: 10px 14px;
+        border-radius: 12px;
+        margin-bottom: 15px;
+        font-size: 0.85rem;
+    }
+    .tutor-actions {
+        display: flex;
+        gap: 10px;
+    }
+    .btn-book {
+        flex: 1;
+        background: #059669;
+        color: white;
+        text-align: center;
+        padding: 9px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 0.9rem;
+        transition: all 0.2s;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .btn-book:hover {
+        background: #047857;
+        color: white;
+    }
+    .btn-chat {
+        background: #F1F5F9;
+        color: #1E293B;
+        padding: 9px 15px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.9rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+    }
+    .btn-chat:hover {
+        background: #E2E8F0;
+        color: #1E293B;
+    }
+
+    .empty-state {
+        grid-column: 1 / -1;
+        text-align: center;
+        padding: 45px 20px;
+        background: white;
+        border-radius: 20px;
+        border: 1px dashed #CBD5E1;
+    }
+    .empty-state i {
+        font-size: 2.5rem;
+        color: #94A3B8;
+        margin-bottom: 12px;
+    }
+    .empty-state h4 {
+        color: #334155;
+        font-weight: 700;
+        margin-bottom: 6px;
+    }
+    .empty-state p {
+        color: #64748B;
+        font-size: 0.9rem;
+        margin: 0;
+    }
+
+    @media (max-width: 900px) {
+        .dashboard-wrapper {
+            flex-direction: column;
+        }
     }
 </style>
 
 <div class="dashboard-container">
     <div class="dashboard-wrapper">
-        
+        <!-- Student Sidebar -->
         <?php echo $__env->make('student.partials.sidebar', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
-        
+
+        <!-- Main Content -->
         <div class="main-content">
-            <div class="welcome-card">
-                <h1>Welcome back, <?php echo e($student->name); ?>! 😊</h1>
-                <p>Find your perfect tutor and start learning today.</p>
+            <!-- Welcome Banner -->
+            <div class="welcome-banner">
+                <h2>Hello, <span><?php echo e(explode(' ', $student->name ?? 'Student')[0]); ?></span>! 👋</h2>
+                <p>Find and book verified tutors for computer science, mathematics, engineering, and science.</p>
             </div>
-            
-            <div class="search-section">
+
+            <!-- Search Card -->
+            <div class="search-card">
                 <div class="search-row">
-                    <div class="search-input-group">
-                        <input type="text" id="searchSubject" class="search-input" placeholder="Search by subject...">
-                    </div>
-                    <div class="search-input-group">
-                        <input type="text" id="searchLocation" class="search-input" placeholder="Search by location...">
-                    </div>
-                    <div>
-                        <button class="search-btn" onclick="searchTutors()">🔍 Search</button>
-                    </div>
+                    <select id="dashSubjectFilter" class="search-input" onchange="filterDashTutors()">
+                        <option value="all">All Subjects</option>
+                        <option value="Computer Science">Computer Science</option>
+                        <option value="Mathematics">Mathematics & Calculus</option>
+                        <option value="Physics">Physics & Electronics</option>
+                        <option value="Chemistry">Chemistry</option>
+                        <option value="English">English</option>
+                    </select>
+                    <input type="text" id="dashKeywordInput" class="search-input" placeholder="Search by tutor name, keyword or city..." oninput="filterDashTutors()">
+                    <button type="button" class="search-btn" onclick="filterDashTutors()"><i class="fas fa-search me-1"></i> Search</button>
                 </div>
             </div>
-            
-            <div id="tutorsList" class="tutors-grid">
-                <?php $__currentLoopData = $tutors; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $tutor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                <div class="tutor-card">
-                    <div class="tutor-avatar">
-                        <!-- ⭐ DATABASE SE PICTURE SHOW KARO -->
-                        <?php if($tutor->profile_picture): ?>
-                            <img src="<?php echo e(asset($tutor->profile_picture)); ?>" 
-                                 alt="<?php echo e($tutor->name); ?>" 
-                                 style="width:100%; height:100%; object-fit:cover; border-radius:20px;">
-                        <?php else: ?>
-                            <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; font-size:3rem; background:linear-gradient(135deg, #4a6cf7, #6c5ce7); color:white;">
-                                👨‍🏫
+
+            <!-- Live Dynamic Tutors Grid -->
+            <div class="tutors-grid" id="dashTutorsGrid">
+                <?php $__empty_1 = true; $__currentLoopData = $tutors; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $t): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                    <?php
+                        $tutorAvatar = 'images/burhan.png';
+                        if (!empty($t->profile_picture) && file_exists(public_path($t->profile_picture))) {
+                            $tutorAvatar = $t->profile_picture;
+                        } else {
+                            $firstName = strtolower(explode(' ', str_replace(['Dr.', 'Prof.', 'Mr.', 'Ms.'], '', $t->name))[0] ?? 'burhan');
+                            if (file_exists(public_path('images/' . $firstName . '.jpg'))) {
+                                $tutorAvatar = 'images/' . $firstName . '.jpg';
+                            } elseif (file_exists(public_path('images/' . $firstName . '.png'))) {
+                                $tutorAvatar = 'images/' . $firstName . '.png';
+                            }
+                        }
+                        $avg = $t->avgRating();
+                        $revCount = $t->feedback ? $t->feedback->count() : 0;
+                    ?>
+                    <div class="tutor-card" data-name="<?php echo e(strtolower($t->name)); ?>" data-subject="<?php echo e(strtolower($t->subject)); ?>" data-location="<?php echo e(strtolower($t->location ?? '')); ?>" data-bio="<?php echo e(strtolower($t->bio ?? '')); ?>">
+                        <div>
+                            <div class="tutor-header">
+                                <img src="<?php echo e(asset($tutorAvatar)); ?>" alt="<?php echo e($t->name); ?>" class="tutor-img" onerror="this.src='https://ui-avatars.com/api/?name=<?php echo e(urlencode($t->name)); ?>&background=ECFDF5&color=059669'">
+                                <div class="tutor-info">
+                                    <h4><?php echo e($t->name); ?></h4>
+                                    <span class="tutor-badge">✓ Verified Expert</span>
+                                </div>
                             </div>
-                        <?php endif; ?>
-                    </div>
-                    <div class="tutor-info">
-                        <h3 class="tutor-name"><?php echo e($tutor->name); ?></h3>
-                        <div class="tutor-qualification"><?php echo e($tutor->qualification); ?></div>
-                        <div class="tutor-experience">⭐ <?php echo e($tutor->experience); ?>+ Years Experience</div>
-                        <div class="tutor-subjects">
-                            <span class="subject-tag"><?php echo e($tutor->subject); ?></span>
-                            
+                            <p class="text-muted small mb-2"><strong>Subject:</strong> <?php echo e($t->subject); ?></p>
+                            <p class="text-muted small mb-3"><?php echo e(Str::limit($t->bio ?? 'Experienced instructor ready to help you succeed in your studies.', 85)); ?></p>
+                            <div class="tutor-stats">
+                                <span>⭐ <?php echo e(number_format($avg, 1)); ?> (<?php echo e($revCount); ?> reviews)</span>
+                                <span style="color:#059669; font-weight:800;">Rs <?php echo e(number_format($t->hourly_rate ?? 1500)); ?>/hr</span>
+                            </div>
                         </div>
-                        <div class="tutor-price">Rs <?php echo e($tutor->hourly_rate ?? $tutor->experience * 100 + 1000); ?>/hour</div>
-                        <a href="/student/tutor/<?php echo e($tutor->id); ?>" class="btn-view">View Profile →</a>
+                        <div class="tutor-actions">
+                            <a href="<?php echo e(url('/student/tutor/' . $t->id)); ?>" class="btn-book">
+                                <i class="fas fa-calendar-plus me-1"></i> View & Book
+                            </a>
+                            <a href="<?php echo e(url('/student/chat-only/' . $t->id)); ?>" class="btn-chat" title="Chat with <?php echo e($t->name); ?>">
+                                <i class="fas fa-comment"></i>
+                            </a>
+                        </div>
                     </div>
-                </div>
-                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+                    <div class="empty-state">
+                        <i class="fas fa-user-graduate"></i>
+                        <h4>No instructors found matching your criteria</h4>
+                        <p>Try clearing filters or search for another subject.</p>
+                    </div>
+                <?php endif; ?>
+            </div>
+            
+            <div id="noResultsNotice" class="empty-state mt-3" style="display:none;">
+                <i class="fas fa-search"></i>
+                <h4>No instructors found matching your criteria</h4>
+                <p>Try clearing filters or search for another subject.</p>
             </div>
         </div>
     </div>
 </div>
 
 <script>
-function searchTutors() {
-    let subject = document.getElementById('searchSubject').value;
-    let location = document.getElementById('searchLocation').value;
-    
-    fetch(`/student/search?subject=${subject}&location=${location}`)
-        .then(response => response.json())
-        .then(data => {
-            let tutorsList = document.getElementById('tutorsList');
-            if(data.length === 0) {
-                tutorsList.innerHTML = '<div style="text-align:center;padding:50px;color:#888;">No tutors found</div>';
-                return;
+    function filterDashTutors() {
+        const subject = document.getElementById('dashSubjectFilter').value.toLowerCase().trim();
+        const keyword = (document.getElementById('dashKeywordInput').value || '').toLowerCase().trim();
+        const cards = document.querySelectorAll('#dashTutorsGrid .tutor-card');
+        const noResults = document.getElementById('noResultsNotice');
+        
+        let visibleCount = 0;
+        cards.forEach(card => {
+            const cName = card.getAttribute('data-name') || '';
+            const cSubject = card.getAttribute('data-subject') || '';
+            const cLoc = card.getAttribute('data-location') || '';
+            const cBio = card.getAttribute('data-bio') || '';
+            
+            const matchSubject = (subject === 'all') || cSubject.includes(subject);
+            const matchKeyword = !keyword || cName.includes(keyword) || cSubject.includes(keyword) || cLoc.includes(keyword) || cBio.includes(keyword);
+            
+            if (matchSubject && matchKeyword) {
+                card.style.display = 'flex';
+                visibleCount++;
+            } else {
+                card.style.display = 'none';
             }
-            tutorsList.innerHTML = data.map(tutor => `
-                <div class="tutor-card">
-                    <div class="tutor-avatar">
-                        ${tutor.profile_picture ? 
-                            `<img src="/${tutor.profile_picture}" alt="${tutor.name}" style="width:100%; height:100%; object-fit:cover; border-radius:20px;">` :
-                            `<div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; font-size:3rem; background:linear-gradient(135deg, #4a6cf7, #6c5ce7); color:white;">👨‍🏫</div>`
-                        }
-                    </div>
-                    <div class="tutor-info">
-                        <h3 class="tutor-name">${tutor.name}</h3>
-                        <div class="tutor-qualification">${tutor.qualification || 'N/A'}</div>
-                        <div class="tutor-experience">⭐ ${tutor.experience || 0}+ Years Experience</div>
-                        <div class="tutor-subjects">
-                            <span class="subject-tag">${tutor.subject || 'General'}</span>
-                            <span class="subject-tag">${tutor.subject || 'General'} Tutoring</span>
-                        </div>
-                        <div class="tutor-price">Rs ${tutor.hourly_rate || (tutor.experience || 0) * 100 + 1000}/hour</div>
-                        <a href="/student/tutor/${tutor.id}" class="btn-view">View Profile →</a>
-                    </div>
-                </div>
-            `).join('');
         });
-}
+
+        if (noResults) {
+            noResults.style.display = (visibleCount === 0 && cards.length > 0) ? 'block' : 'none';
+        }
+    }
 </script>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\TutorConnect\resources\views/student/dashboard.blade.php ENDPATH**/ ?>

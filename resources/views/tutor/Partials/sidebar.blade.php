@@ -1,59 +1,66 @@
 <!-- ============================================================ -->
-<!-- TUTOR SIDEBAR - WITH NOTIFICATIONS                           -->
+<!-- TUTOR SIDEBAR - 1:1 VISUAL & DYNAMIC PARITY                   -->
 <!-- ============================================================ -->
 
 <style>
+    :root {
+        --primary: #059669;
+        --primary-hover: #047857;
+        --primary-light: #ECFDF5;
+        --accent: #10B981;
+        --bg-light: #F8FAFC;
+        --bg-card: #FFFFFF;
+        --text-main: #111827;
+        --text-muted: #64748B;
+        --border-color: #E2E8F0;
+    }
+
     .sidebar {
         width: 280px;
-        background: #1a1a2e;
-        min-height: 100vh;
-        padding: 30px 20px;
-        color: white;
+        background: white;
+        border-radius: 20px;
+        padding: 25px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+        border: 1px solid #E2E8F0;
+        height: fit-content;
         position: sticky;
-        top: 0;
-        border-radius: 0 30px 30px 0;
-        box-shadow: 4px 0 20px rgba(0,0,0,0.1);
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        top: 90px;
+        font-family: 'Poppins', sans-serif;
     }
     
-    .profile-section {
+    .tutor-profile-badge {
         text-align: center;
-        margin-bottom: 35px;
-        padding-bottom: 25px;
-        border-bottom: 1px solid rgba(255,255,255,0.08);
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+        border-bottom: 1px solid #F1F5F9;
     }
     
-    .profile-icon {
-        width: 80px;
-        height: 80px;
+    .tutor-avatar {
+        width: 70px;
+        height: 70px;
         border-radius: 50%;
-        border: 3px solid #4a6cf7;
-        padding: 5px;
-        margin-bottom: 12px;
-        transition: all 0.3s ease;
         object-fit: cover;
-        background: rgba(255,255,255,0.05);
+        border: 3px solid #10B981;
+        margin: 0 auto 12px;
+        display: block;
+        box-shadow: 0 4px 10px rgba(16, 185, 129, 0.25);
+        background: #ECFDF5;
     }
-    
-    .profile-icon:hover {
-        transform: scale(1.05);
-        border-color: #6c5ce7;
-        box-shadow: 0 0 25px rgba(74, 108, 247, 0.3);
-    }
-    
-    .profile-name {
-        margin: 0;
+
+    .tutor-profile-badge h4 {
         font-size: 1.1rem;
-        font-weight: 600;
-        color: white;
+        font-weight: 700;
+        color: #111827;
+        margin: 0;
     }
     
-    .profile-email {
-        margin: 5px 0 0;
+    .tutor-profile-badge p {
         font-size: 0.8rem;
-        color: rgba(255,255,255,0.4);
+        color: #64748B;
+        margin: 3px 0 0;
+        word-break: break-all;
     }
-    
+
     .sidebar-menu {
         list-style: none;
         padding: 0;
@@ -61,213 +68,207 @@
     }
     
     .sidebar-menu li {
-        margin-bottom: 5px;
+        margin-bottom: 6px;
     }
     
     .sidebar-menu a {
         display: flex;
         align-items: center;
-        gap: 14px;
-        padding: 12px 18px;
-        color: rgba(255,255,255,0.7);
+        gap: 12px;
+        padding: 11px 16px;
+        color: #475569;
         text-decoration: none;
         border-radius: 12px;
-        transition: all 0.3s ease;
-        font-weight: 500;
-        font-size: 0.95rem;
+        font-weight: 600;
+        font-size: 0.92rem;
+        transition: all 0.2s ease;
         position: relative;
     }
     
     .sidebar-menu a:hover {
-        background: rgba(255,255,255,0.08);
-        color: #ffffff;
-        transform: translateX(5px);
+        background: #F1F5F9;
+        color: #059669;
+        transform: translateX(4px);
     }
     
     .sidebar-menu a.active {
-        background: linear-gradient(135deg, #4a6cf7, #6c5ce7);
-        color: white;
-        box-shadow: 0 4px 15px rgba(74, 108, 247, 0.3);
+        background: linear-gradient(135deg, #059669 0%, #10B981 100%);
+        color: #ffffff;
+        box-shadow: 0 4px 14px rgba(5, 150, 105, 0.25);
     }
 
-    /* ===== ICON STYLES - WHITE ICONS ===== */
-.sidebar-menu a .icon {
-    width: 28px;    /* ⭐ SIZE YAHAN SET HAI */
-    height: 28px;   /* ⭐ SIZE YAHAN SET HAI */
-    object-fit: contain;
-    flex-shrink: 0;
-    filter: none;
-    opacity: 0.7;
-    transition: opacity 0.3s ease;
-}
+    .sidebar-menu a.active:hover {
+        transform: translateX(4px);
+        color: #ffffff;
+    }
 
-.sidebar-menu a:hover .icon {
-    opacity: 1;
-}
+    .sidebar-menu a i {
+        width: 20px;
+        text-align: center;
+        font-size: 1rem;
+    }
 
-.sidebar-menu a.active .icon {
-    opacity: 1;
-}
-    
-    .badge {
-        display: inline-block;
-        padding: 2px 9px;
-        border-radius: 50%;
-        font-size: 0.65rem;
+    .badge-count {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2px 8px;
+        border-radius: 20px;
+        font-size: 0.72rem;
         font-weight: 700;
         margin-left: auto;
         color: white;
-        min-width: 22px;
-        text-align: center;
-        animation: pulse-badge 2s infinite;
+        min-width: 20px;
+        height: 20px;
     }
     
-    @keyframes pulse-badge {
-        0% { transform: scale(1); }
-        50% { transform: scale(1.1); }
-        100% { transform: scale(1); }
+    .badge-msg { background: #059669; }
+    .badge-req { background: #F59E0B; color: #111827; }
+    .badge-bk { background: #10B981; }
+    .badge-rev { background: #EC4899; }
+
+    .sidebar-menu a.active .badge-count {
+        background: #ffffff;
+        color: #059669;
     }
     
-    .badge-message { background: #4a6cf7; }
-    .badge-request { background: #ffc107; color: #333; }
-    .badge-booking { background: #28a745; }
-    .badge-review { background: #ff69b4; }
-    
-    .logout-link {
-        margin-top: 40px;
-        padding-top: 20px;
-        border-top: 1px solid rgba(255,255,255,0.08);
+    .logout-item {
+        margin-top: 18px;
+        padding-top: 14px;
+        border-top: 1px solid #F1F5F9;
     }
     
-    .logout-link a {
-        color: rgba(255,255,255,0.4) !important;
+    .logout-item a {
+        color: #64748B;
     }
     
-    .logout-link a:hover {
-        color: #ff6b6b !important;
-        background: rgba(255,107,107,0.1) !important;
-        transform: translateX(5px);
+    .logout-item a:hover {
+        color: #EF4444;
+        background: #FEF2F2;
     }
-    
-    @media (max-width: 768px) {
+
+    @media (max-width: 900px) {
         .sidebar {
             width: 100%;
-            border-radius: 0;
-            min-height: auto;
-            padding: 20px;
-            position: relative;
-        }
-        .sidebar-menu a {
-            padding: 10px 15px;
-            font-size: 0.9rem;
-        }
-        .profile-icon {
-            width: 60px;
-            height: 60px;
+            position: static;
+            top: auto;
+            margin-bottom: 24px;
         }
     }
 </style>
 
+@php
+    use App\Models\Tutor;
+    use App\Models\RequestModel;
+    use App\Models\Message;
+    use App\Models\Booking;
+    use App\Models\Feedback;
+    use Illuminate\Support\Facades\Session;
+
+    $tutorId = Session::get('tutor_id');
+    $tutorUser = $tutorId ? Tutor::find($tutorId) : null;
+
+    $tutorAvatar = 'images/burhan.png';
+    if ($tutorUser) {
+        if (!empty($tutorUser->profile_picture) && file_exists(public_path($tutorUser->profile_picture))) {
+            $tutorAvatar = $tutorUser->profile_picture;
+        } else {
+            $firstName = strtolower(explode(' ', str_replace(['Dr.', 'Prof.', 'Mr.', 'Ms.'], '', $tutorUser->name))[0] ?? 'burhan');
+            if (file_exists(public_path('images/' . $firstName . '.jpg'))) {
+                $tutorAvatar = 'images/' . $firstName . '.jpg';
+            } elseif (file_exists(public_path('images/' . $firstName . '.png'))) {
+                $tutorAvatar = 'images/' . $firstName . '.png';
+            }
+        }
+    }
+
+    $unreadTutorMsgs = $tutorId ? Message::where('receiver_id', $tutorId)
+        ->where('receiver_type', 'tutor')
+        ->where('is_read', 0)
+        ->count() : 0;
+
+    $newTutorReqs = $tutorId ? RequestModel::where('tutor_id', $tutorId)
+        ->where('status', 'pending')
+        ->where('is_viewed', 0)
+        ->count() : 0;
+
+    $newTutorBookings = $tutorId ? Booking::where('tutor_id', $tutorId)
+        ->where('status', 'confirmed')
+        ->where('is_viewed', 0)
+        ->count() : 0;
+
+    $unreadTutorReviews = $tutorId ? Feedback::where('tutor_id', $tutorId)
+        ->where('is_read', 0)
+        ->count() : 0;
+@endphp
+
 <div class="sidebar">
-    
-    <!-- ===== PROFILE SECTION ===== -->
-    @php
-        use App\Models\Tutor;
-        $tutorId = Session::get('tutor_id');
-        $tutor = Tutor::find($tutorId);
-    @endphp
-    
-    <div class="profile-section">
-        <a href="/tutor/dashboard">
-            <img src="{{ asset('images/icon.png') }}" alt="Profile" class="profile-icon">
-        </a>
-        <h3 class="profile-name">{{ $tutor->name ?? 'Tutor' }}</h3>
-        <p class="profile-email">{{ $tutor->email ?? 'tutor@email.com' }}</p>
+    <div class="tutor-profile-badge">
+        <img src="{{ asset($tutorAvatar) }}" alt="Tutor Avatar" class="tutor-avatar" onerror="this.src='https://ui-avatars.com/api/?name={{ urlencode($tutorUser->name ?? 'Tutor') }}&background=ECFDF5&color=059669'">
+        <h4>{{ $tutorUser->name ?? 'Tutor' }}</h4>
+        <p>{{ $tutorUser->email ?? 'tutor@tutorconnect.com' }}</p>
     </div>
-    
-    <!-- ===== MENU ===== -->
+
     <ul class="sidebar-menu">
-        
-        <!-- Dashboard -->
         <li>
             <a href="/tutor/dashboard" class="{{ request()->is('tutor/dashboard') ? 'active' : '' }}">
-                <img src="{{ asset('images/computer.png') }}" alt="Dashboard" class="icon">
-                Dashboard 
+                <i class="fas fa-th-large"></i>
+                <span>Dashboard</span>
             </a>
         </li>
-        
-        <!-- Edit Profile -->
         <li>
             <a href="/tutor/profile/edit" class="{{ request()->is('tutor/profile/edit*') ? 'active' : '' }}">
-                <img src="{{ asset('images/Editprofile.png') }}" alt="Edit Profile" class="icon">
-                Edit Profile
+                <i class="fas fa-user-edit"></i>
+                <span>Edit Profile</span>
             </a>
         </li>
-        
-        <!-- Student Requests -->
         <li>
             <a href="/tutor/requests" class="{{ request()->is('tutor/requests*') ? 'active' : '' }}">
-                 <img src="{{ asset('images/Myrequest.png') }}" alt="Student Requests" class="icon">
-                Student Requests
-                @if(isset($newRequests) && $newRequests > 0)
-                    <span class="badge badge-request">{{ $newRequests }}</span>
+                <i class="fas fa-paper-plane"></i>
+                <span>Student Requests</span>
+                @if($newTutorReqs > 0)
+                    <span class="badge-count badge-req">{{ $newTutorReqs }}</span>
                 @endif
             </a>
         </li>
-        
-        <!-- Messages -->
         <li>
             <a href="/tutor/messages" class="{{ request()->is('tutor/messages*') ? 'active' : '' }}">
-                 <img src="{{ asset('images/messages.png') }}" alt="Messages" class="icon">
-                Messages
-                @if(isset($unreadMessages) && $unreadMessages > 0)
-                    <span class="badge badge-message">{{ $unreadMessages }}</span>
+                <i class="fas fa-comments"></i>
+                <span>Messages</span>
+                @if($unreadTutorMsgs > 0)
+                    <span class="badge-count badge-msg">{{ $unreadTutorMsgs }}</span>
                 @endif
             </a>
         </li>
-        
-        <!-- Booking Requests -->
         <li>
             <a href="/tutor/bookings" class="{{ request()->is('tutor/bookings*') ? 'active' : '' }}">
-                    <img src="{{ asset('images/bookingicon.png') }}" alt="Booking Requests" class="icon">
-                Booking Requests
-                @if(isset($newBookings) && $newBookings > 0)
-                    <span class="badge badge-booking">{{ $newBookings }}</span>
+                <i class="fas fa-calendar-check"></i>
+                <span>Booking Requests</span>
+                @if($newTutorBookings > 0)
+                    <span class="badge-count badge-bk">{{ $newTutorBookings }}</span>
                 @endif
             </a>
         </li>
-        
-        <!-- Study Materials -->
         <li>
             <a href="/tutor/study-materials" class="{{ request()->is('tutor/study-materials*') ? 'active' : '' }}">
-                       <img src="{{ asset('images/studymaterial.png') }}" alt="Study Materials" class="icon">
-                Study Materials
+                <i class="fas fa-book-open"></i>
+                <span>Study Materials</span>
             </a>
         </li>
-        
-        <!-- ⭐ REVIEWS & RATINGS - USING $unreadReviews -->
         <li>
             <a href="/tutor/reviews" class="{{ request()->is('tutor/reviews*') ? 'active' : '' }}">
-                  <img src="{{ asset('images/reviewsicon.png') }}" alt="Reviews" class="icon">
-                Reviews & Ratings
-                @if(isset($unreadReviews) && $unreadReviews > 0)
-                    <span class="badge badge-review">{{ $unreadReviews }}</span>
+                <i class="fas fa-star"></i>
+                <span>Reviews & Ratings</span>
+                @if($unreadTutorReviews > 0)
+                    <span class="badge-count badge-rev">{{ $unreadTutorReviews }}</span>
                 @endif
             </a>
         </li>
-        
+        <li class="logout-item">
+            <a href="/logout">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </a>
+        </li>
     </ul>
-    
-    <!-- ===== LOGOUT ===== -->
-    <div class="logout-link">
-        <ul class="sidebar-menu">
-            <li>
-                <a href="/logout">
-                    <img src="{{ asset('images/logout.png') }}" alt="Logout" class="icon">
-                    Logout
-                </a>
-            </li>
-        </ul>
-    </div>
-    
 </div>

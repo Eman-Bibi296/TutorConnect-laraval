@@ -59,6 +59,8 @@ Route::post('/student/mark-messages-read', [StudentController::class, 'markMessa
 Route::post('/student/mark-requests-viewed', [StudentController::class, 'markRequestsViewed']);
 Route::post('/student/mark-bookings-viewed', [StudentController::class, 'markBookingsViewed']);
 
+Route::post('/student/submit-booking', [StudentController::class, 'submitBooking']);
+
 // ==================== TUTOR ROUTES ====================
 Route::get('/tutor/dashboard', [TutorController::class, 'dashboard']);
 Route::get('/tutor/profile/complete', [TutorController::class, 'showCompleteProfile']);
@@ -67,6 +69,9 @@ Route::post('/tutor/update-status', [TutorController::class, 'updateStatus']);
 Route::get('/tutor/profile/edit', [TutorController::class, 'editProfile']);
 Route::post('/tutor/profile/update', [TutorController::class, 'updateProfile']);
 Route::post('/tutor/update-booking-status', [TutorController::class, 'updateBookingStatus']);
+
+
+Route::post('/tutor/confirm-payment', [TutorController::class, 'confirmPayment']);
 Route::post('/tutor/complete-session', [TutorController::class, 'completeSession']);
 Route::post('/tutor/reply-message', [TutorController::class, 'replyMessage']);
 Route::get('/tutor/messages', [TutorController::class, 'messages']);
@@ -74,7 +79,9 @@ Route::post('/tutor/mark-messages-read', [TutorController::class, 'markMessagesR
 Route::get('/tutor/reviews', [TutorController::class, 'reviews']);
 Route::get('/tutor/study-materials', [TutorController::class, 'studyMaterials']);
 Route::post('/tutor/upload-material', [TutorController::class, 'uploadMaterial']);
+Route::post('/tutor/material/upload', [TutorController::class, 'uploadMaterial']);
 Route::get('/tutor/material/delete/{id}', [TutorController::class, 'deleteMaterial']);
+Route::delete('/tutor/material/delete/{id}', [TutorController::class, 'deleteMaterial']);
 Route::get('/tutor/get-student-messages/{id}', [TutorController::class, 'getStudentMessages']);
 Route::post('/tutor/reply-message-ajax', [TutorController::class, 'replyMessageAjax']);
 Route::delete('/student/review/delete/{id}', [StudentController::class, 'deleteReview']);
@@ -109,3 +116,10 @@ Route::delete('/admin/review/delete/{id}', [AdminController::class, 'reviewDelet
 
 Route::get('/admin/messages', [AdminController::class, 'messages'])->name('admin.messages');
 Route::delete('/admin/message/delete/{id}', [AdminController::class, 'messageDelete']);
+use App\Http\Controllers\PaymentController;
+
+// ⭐ PAYMENT ROUTES
+Route::get('/payment/{bookingId}', [PaymentController::class, 'showPaymentPage']);
+Route::post('/create-payment-intent', [PaymentController::class, 'createPaymentIntent']);
+Route::post('/book-and-pay', [PaymentController::class, 'bookAndPay']);
+Route::get('/booking/success/{bookingId}', [PaymentController::class, 'bookingSuccess']);

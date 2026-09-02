@@ -1,40 +1,59 @@
 @extends('layouts.app')
 
-@section('title', 'Chat with Tutor')
+@section('title', 'Chat with Tutor - TutorConnect')
 
 @section('content')
 <style>
+    :root {
+        --primary: #059669;
+        --primary-hover: #047857;
+        --primary-light: #ECFDF5;
+        --accent: #10B981;
+        --bg-dark: #111827;
+        --bg-dark-secondary: #1E293B;
+        --bg-light: #F8FAFC;
+        --bg-card: #FFFFFF;
+        --text-main: #111827;
+        --text-muted: #64748B;
+        --border-color: #E2E8F0;
+    }
+
     .chat-container {
-        background: #f0f4f8;
-        min-height: 100vh;
-        padding: 30px 5%;
+        background: var(--bg-light);
+        min-height: calc(100vh - 180px);
+        padding: 35px 5%;
+        font-family: 'Poppins', sans-serif;
     }
     .chat-card {
-        background: white;
-        border-radius: 25px;
+        background: var(--bg-card);
+        border-radius: 24px;
         overflow: hidden;
-        max-width: 800px;
+        max-width: 900px;
         margin: 0 auto;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+        border: 1px solid var(--border-color);
     }
     .chat-header {
-        background: linear-gradient(135deg, #4a6cf7, #6c5ce7);
-        padding: 20px;
+        background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-dark-secondary) 100%);
+        padding: 20px 24px;
         color: white;
         display: flex;
         align-items: center;
-        gap: 15px;
+        gap: 16px;
     }
     .chat-header-avatar {
-        width: 50px;
-        height: 50px;
+        width: 52px;
+        height: 52px;
         border-radius: 50%;
-        background: rgba(255,255,255,0.2);
+        background: var(--primary-light);
+        color: var(--primary);
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.8rem;
+        font-size: 1.4rem;
+        font-weight: 700;
         overflow: hidden;
+        border: 2px solid var(--accent);
     }
     .chat-header-avatar img {
         width: 100%;
@@ -43,32 +62,46 @@
     }
     .chat-header-info h2 {
         margin: 0;
-        font-size: 1.3rem;
+        font-size: 1.2rem;
+        font-weight: 700;
     }
     .chat-header-info p {
-        margin: 5px 0 0;
-        font-size: 0.8rem;
-        opacity: 0.8;
+        margin: 4px 0 0;
+        font-size: 0.82rem;
+        color: #94A3B8;
     }
     .back-btn {
-        background: rgba(255,255,255,0.2);
-        border: none;
+        background: rgba(255,255,255,0.1);
+        border: 1px solid rgba(255,255,255,0.15);
         color: white;
-        padding: 8px 15px;
+        padding: 8px 18px;
         border-radius: 20px;
         cursor: pointer;
         margin-left: auto;
         text-decoration: none;
+        font-size: 0.85rem;
+        font-weight: 600;
+        transition: all 0.2s;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+    }
+    .back-btn:hover {
+        background: rgba(255,255,255,0.2);
+        color: white;
     }
     .chat-messages {
         height: 500px;
         overflow-y: auto;
-        padding: 20px;
-        background: #f8f9fc;
+        padding: 24px;
+        background: #F8FAFC;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
     }
     .message {
-        margin-bottom: 15px;
         display: flex;
+        margin-bottom: 0;
     }
     .message.sent {
         justify-content: flex-end;
@@ -77,123 +110,123 @@
         justify-content: flex-start;
     }
     .message-bubble {
-        max-width: 70%;
-        padding: 10px 15px;
+        max-width: 68%;
+        padding: 12px 18px;
         border-radius: 18px;
-        font-size: 0.9rem;
+        font-size: 0.92rem;
+        line-height: 1.5;
     }
     .message.sent .message-bubble {
-        background: linear-gradient(135deg, #4a6cf7, #6c5ce7);
+        background: linear-gradient(135deg, #059669 0%, #10B981 100%);
         color: white;
-        border-bottom-right-radius: 5px;
+        border-bottom-right-radius: 4px;
     }
     .message.received .message-bubble {
         background: white;
-        border: 1px solid #e0e0e0;
-        border-bottom-left-radius: 5px;
-        color: #333;
+        border: 1px solid var(--border-color);
+        border-bottom-left-radius: 4px;
+        color: var(--text-main);
     }
     .message-time {
         font-size: 0.7rem;
-        margin-top: 5px;
-        opacity: 0.7;
+        margin-top: 4px;
+        opacity: 0.8;
     }
     .chat-input {
-        padding: 15px;
-        background: white;
-        border-top: 1px solid #e0e0e0;
         display: flex;
-        gap: 10px;
+        padding: 18px 24px;
+        background: white;
+        border-top: 1px solid var(--border-color);
+        gap: 12px;
+        align-items: center;
     }
     .chat-input input {
         flex: 1;
-        padding: 12px;
-        border: 2px solid #e0e0e0;
+        padding: 12px 18px;
+        border: 1.5px solid #CBD5E1;
         border-radius: 25px;
+        font-size: 0.95rem;
         outline: none;
+        transition: all 0.2s;
+        font-family: inherit;
     }
     .chat-input input:focus {
-        border-color: #4a6cf7;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
     }
     .chat-input button {
-        background: linear-gradient(135deg, #4a6cf7, #6c5ce7);
+        background: linear-gradient(135deg, #059669 0%, #10B981 100%);
         color: white;
         border: none;
-        padding: 0 25px;
-        border-radius: 25px;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
         cursor: pointer;
+        font-size: 1.1rem;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 12px rgba(5, 150, 105, 0.25);
+    }
+    .chat-input button:hover {
+        transform: scale(1.05);
+    }
+    @media (max-width: 768px) {
+        .chat-card { border-radius: 16px; }
+        .chat-messages { height: 420px; padding: 16px; }
     }
 </style>
 
 <div class="chat-container">
     <div class="chat-card">
+        
         <div class="chat-header">
             <div class="chat-header-avatar">
                 @if($tutor->profile_picture)
-                    <img src="{{ $tutor->profile_picture }}">
+                    <img src="{{ asset($tutor->profile_picture) }}" alt="{{ $tutor->name }}">
                 @else
-                    👨‍🏫
+                    {{ substr($tutor->name, 0, 1) }}
                 @endif
             </div>
             <div class="chat-header-info">
                 <h2>{{ $tutor->name }}</h2>
-                <p>{{ $tutor->subject }} Tutor</p>
+                <p><i class="fa-solid fa-book"></i> {{ $tutor->subject }}</p>
             </div>
-            <a href="/student/dashboard" class="back-btn">← Back</a>
+            <a href="/student/messages" class="back-btn"><i class="fa-solid fa-arrow-left"></i> All Messages</a>
         </div>
         
         <div class="chat-messages" id="chatMessages">
-            @foreach($messages as $msg)
+            @forelse($messages as $msg)
                 <div class="message {{ $msg->sender_type == 'student' ? 'sent' : 'received' }}">
                     <div class="message-bubble">
-                        {{ $msg->message }}
-                        <div class="message-time">{{ \Carbon\Carbon::parse($msg->created_at)->format('h:i A') }}</div>
+                        <div>{{ $msg->message }}</div>
+                        <div class="message-time">{{ $msg->created_at->format('h:i A') }}</div>
                     </div>
                 </div>
-            @endforeach
+            @empty
+                <div style="text-align: center; color: #94A3B8; margin-top: 150px;">
+                    <i class="fa-solid fa-comments" style="font-size: 2.5rem; margin-bottom: 10px;"></i>
+                    <p>No messages yet. Send a greeting to start chatting!</p>
+                </div>
+            @endforelse
         </div>
         
-        <div class="chat-input">
-            <input type="text" id="messageInput" placeholder="Type your message...">
-            <button onclick="sendMessage()">Send →</button>
-        </div>
+        <form action="/student/send-message" method="POST" class="chat-input">
+            @csrf
+            <input type="hidden" name="receiver_id" value="{{ $tutor->id }}">
+            <input type="hidden" name="receiver_type" value="tutor">
+            <input type="text" name="message" placeholder="Type your message..." required autocomplete="off">
+            <button type="submit"><i class="fa-solid fa-paper-plane"></i></button>
+        </form>
+        
     </div>
 </div>
 
 <script>
     const chatMessages = document.getElementById('chatMessages');
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-    
-    function sendMessage() {
-        let input = document.getElementById('messageInput');
-        let message = input.value.trim();
-        if(message === '') return;
-        
-        fetch('/student/send-message-ajax', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-            },
-            body: JSON.stringify({
-                receiver_id: {{ $tutor->id }},
-                message: message,
-                receiver_type: 'tutor'
-            })
-        }).then(response => response.json()).then(data => {
-            if(data.success) {
-                let div = document.createElement('div');
-                div.className = 'message sent';
-                div.innerHTML = `<div class="message-bubble">${message}<div class="message-time">Just now</div></div>`;
-                chatMessages.appendChild(div);
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-                input.value = '';
-            }
-        });
+    if (chatMessages) {
+        chatMessages.scrollTop = chatMessages.scrollHeight;
     }
-    
-    document.getElementById('messageInput').addEventListener('keypress', function(e) {
-        if(e.key === 'Enter') sendMessage();
-    });
 </script>
 @endsection

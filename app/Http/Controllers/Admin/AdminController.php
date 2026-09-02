@@ -35,18 +35,19 @@ class AdminController extends Controller
         $recentStudents = Student::orderBy('created_at', 'desc')->take(5)->get();
         $recentTutors = Tutor::orderBy('created_at', 'desc')->take(5)->get();
         $recentBookings = Booking::with(['student', 'tutor'])->orderBy('created_at', 'desc')->take(5)->get();
+        $recentReviews = Feedback::with(['student', 'tutor'])->orderBy('created_at', 'desc')->take(5)->get();
         
         return view('admin.dashboard', compact(
             'totalStudents', 'totalTutors', 'totalRequests', 
             'totalBookings', 'pendingTutors', 'totalRevenue',
-            'recentStudents', 'recentTutors', 'recentBookings'
+            'recentStudents', 'recentTutors', 'recentBookings', 'recentReviews'
         ));
     }
 
     // ==================== STUDENTS MANAGEMENT ====================
     public function students()
     {
-        $students = Student::orderBy('created_at', 'desc')->get();
+        $students = Student::with(['requests', 'bookings'])->orderBy('created_at', 'desc')->get();
         return view('admin.students', compact('students'));
     }
 
@@ -111,8 +112,9 @@ class AdminController extends Controller
     // ==================== REVIEWS MANAGEMENT ====================
     public function reviews()
     {
-        $reviews = Feedback::with(['student', 'tutor'])->orderBy('created_at', 'desc')->get();
-        return view('admin.reviews', compact('reviews'));
+        $feedbacks = Feedback::with(['student', 'tutor'])->orderBy('created_at', 'desc')->get();
+        $reviews = $feedbacks;
+        return view('admin.reviews', compact('feedbacks', 'reviews'));
     }
 
     public function reviewDelete($id)

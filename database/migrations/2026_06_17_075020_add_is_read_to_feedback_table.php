@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('feedback', function (Blueprint $table) {
-             $table->boolean('is_read')->default(0);
+             $table->dropColumn('is_read');
         });
     }
 };

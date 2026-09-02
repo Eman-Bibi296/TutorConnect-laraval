@@ -1,72 +1,83 @@
 @extends('layouts.app')
 
-@section('title', 'Login')
+@section('title', 'Login - TutorConnect')
 
 @section('content')
 <style>
     .login-container {
-        min-height: 100vh;
+        min-height: calc(100vh - 220px);
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 50px;
-        background: #f0f4f8;
+        padding: 50px 20px;
+        background: #F8FAFC;
     }
     
     .login-card {
         background: white;
-        border-radius: 30px;
-        padding: 40px;
-        max-width: 500px;
+        border-radius: 24px;
+        padding: 40px 35px;
+        max-width: 480px;
         width: 100%;
-        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        box-shadow: 0 10px 35px rgba(0, 0, 0, 0.06);
+        border: 1px solid #E2E8F0;
     }
     
-    .login-card h2 {
+    .login-header {
         text-align: center;
-        margin-bottom: 10px;
-        color: #1a1a2e;
-        font-weight: 700;
+        margin-bottom: 25px;
+    }
+
+    .login-card h2 {
+        color: #111827;
+        font-weight: 800;
+        font-size: 1.8rem;
+        margin-bottom: 6px;
     }
     
     .login-card p {
-        text-align: center;
-        color: #666;
-        margin-bottom: 30px;
+        color: #64748B;
+        font-size: 0.95rem;
+        margin-bottom: 0;
     }
     
-    .user-type {
+    .user-type-toggle {
         display: flex;
-        gap: 20px;
-        margin-bottom: 30px;
-        justify-content: center;
+        gap: 12px;
+        margin-bottom: 25px;
+        background: #F1F5F9;
+        padding: 6px;
+        border-radius: 16px;
     }
     
     .user-option {
         flex: 1;
         text-align: center;
-        padding: 15px;
-        border: 2px solid #e0e0e0;
-        border-radius: 15px;
+        padding: 12px 10px;
+        border: 2px solid transparent;
+        border-radius: 12px;
         cursor: pointer;
-        transition: all 0.3s;
-        background: white;
+        transition: all 0.25s ease;
+        background: transparent;
+        color: #475569;
+        font-weight: 600;
+        font-size: 0.95rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        user-select: none;
     }
     
     .user-option:hover {
-        border-color: #8B5A2B;
-        background: #f8f9fc;
+        color: #1E293B;
     }
     
     .user-option.selected {
-        border-color: #8B5A2B;
-        background: #8B5A2B;
-        color: white;
-    }
-    
-    .user-label {
-        font-weight: 600;
-        font-size: 1rem;
+        background: white;
+        color: #059669;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+        border-color: rgba(5, 150, 105, 0.2);
     }
     
     .form-group {
@@ -77,107 +88,143 @@
         display: block;
         font-weight: 600;
         margin-bottom: 8px;
-        color: #333;
+        color: #1E293B;
+        font-size: 0.9rem;
     }
     
     .form-group input {
         width: 100%;
-        padding: 12px;
-        border: 2px solid #e0e0e0;
+        padding: 12px 16px;
+        border: 1.5px solid #CBD5E1;
         border-radius: 12px;
-        font-size: 1rem;
-    }
-    
-    .form-group input:focus {
-        border-color: #8B5A2B;
+        font-size: 0.98rem;
+        transition: all 0.2s ease;
+        background: #FFFFFF;
         outline: none;
     }
     
-    .btn-login {
-        width: 100%;
-        background: #8B5A2B;
-        color: white;
-        padding: 14px;
-        border: none;
-        border-radius: 12px;
-        font-size: 1.1rem;
-        font-weight: 600;
-        cursor: pointer;
-        margin-top: 10px;
+    .form-group input:focus {
+        border-color: #059669;
+        box-shadow: 0 0 0 4px rgba(5, 150, 105, 0.12);
     }
     
-    .btn-login:hover {
-        background: #6B4220;
+    .btn-login-submit {
+        width: 100%;
+        background: linear-gradient(135deg, #059669 0%, #10B981 100%);
+        color: white;
+        padding: 13px;
+        border: none;
+        border-radius: 12px;
+        font-size: 1.05rem;
+        font-weight: 700;
+        cursor: pointer;
+        margin-top: 10px;
+        transition: all 0.25s ease;
+        box-shadow: 0 4px 14px rgba(5, 150, 105, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+    
+    .btn-login-submit:hover {
         transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(5, 150, 105, 0.45);
+        color: white;
     }
     
     .register-link {
         text-align: center;
-        margin-top: 20px;
-        color: #666;
+        margin-top: 22px;
+        color: #64748B;
+        font-size: 0.92rem;
     }
     
     .register-link a {
-        color: #8B5A2B;
+        color: #059669;
         text-decoration: none;
-        font-weight: 600;
+        font-weight: 700;
     }
-    
-    .alert {
-        padding: 12px;
-        border-radius: 10px;
+
+    .register-link a:hover {
+        text-decoration: underline;
+    }
+
+    .auth-alert {
+        padding: 12px 16px;
+        border-radius: 12px;
         margin-bottom: 20px;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
     }
-    
-    .alert-danger {
-        background: #f8d7da;
-        color: #721c24;
+
+    .auth-alert-danger {
+        background: #FEF2F2;
+        color: #991B1B;
+        border: 1px solid #FECACA;
     }
-    
-    .alert-success {
-        background: #d4edda;
-        color: #155724;
+
+    .auth-alert-success {
+        background: #ECFDF5;
+        color: #065F46;
+        border: 1px solid #A7F3D0;
     }
 </style>
 
 <div class="login-container">
-    <div class="login-card">
-        <h2>Welcome Back</h2>
-        <p>Login to your account</p>
+    <div class="login-card animate-fade-in-up">
+        <div class="login-header">
+            <h2>Welcome Back</h2>
+            <p>Access your TutorConnect account</p>
+        </div>
         
         @if(session('error'))
-            <div class="alert alert-danger">{{ session('error') }}</div>
+            <div class="auth-alert auth-alert-danger">
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <div>{{ session('error') }}</div>
+            </div>
         @endif
         @if(session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
+            <div class="auth-alert auth-alert-success">
+                <i class="fa-solid fa-circle-check"></i>
+                <div>{{ session('success') }}</div>
+            </div>
         @endif
         
-        <div class="user-type">
-            <div class="user-option" id="studentOption" onclick="selectUserType('student')">
-                <span class="user-label">Student</span>
+        <div class="user-type-toggle">
+            <div class="user-option selected" id="studentOption" onclick="selectUserType('student')">
+                <i class="fas fa-user-graduate"></i>
+                <span>Student</span>
             </div>
             <div class="user-option" id="tutorOption" onclick="selectUserType('tutor')">
-                <span class="user-label">Tutor</span>
+                <i class="fas fa-chalkboard-user"></i>
+                <span>Tutor</span>
             </div>
         </div>
         
-        <form id="loginForm" action="" method="POST">
+        <form id="loginForm" action="/student/login" method="POST">
             @csrf
             
             <div class="form-group">
-                <label>Email</label>
-                <input type="email" name="email" placeholder="Enter your email" required>
+                <label><i class="fas fa-envelope me-1 text-muted"></i> Email Address</label>
+                <input type="email" id="loginEmail" name="email" placeholder="name@example.com" value="{{ old('email') }}" required>
             </div>
             
             <div class="form-group">
-                <label>Password</label>
+                <label><i class="fas fa-lock me-1 text-muted"></i> Password</label>
                 <input type="password" name="password" placeholder="Enter your password" required>
             </div>
             
-            <button type="submit" class="btn-login">Login</button>
+            <button type="submit" class="btn-login-submit">
+                <i class="fas fa-sign-in-alt"></i> Login to Dashboard
+            </button>
             
             <div class="register-link">
-                Don't have an account? <a href="#" id="registerLink">Register here</a>
+                Don't have an account? 
+                <a href="/student/register" id="primaryRegLink">Student Register</a> | 
+                <a href="/tutor/register" id="secondaryRegLink">Tutor Register</a>
             </div>
         </form>
     </div>
@@ -191,20 +238,17 @@
         
         const studentOption = document.getElementById('studentOption');
         const tutorOption = document.getElementById('tutorOption');
+        const form = document.getElementById('loginForm');
         
         if (type === 'student') {
             studentOption.classList.add('selected');
             tutorOption.classList.remove('selected');
-            document.getElementById('loginForm').action = '/student/login';
-            document.getElementById('registerLink').href = '/student/register';
+            form.action = '/student/login';
         } else {
             tutorOption.classList.add('selected');
             studentOption.classList.remove('selected');
-            document.getElementById('loginForm').action = '/tutor/login';
-            document.getElementById('registerLink').href = '/tutor/register';
+            form.action = '/tutor/login';
         }
     }
-    
-    selectUserType('student');
 </script>
 @endsection

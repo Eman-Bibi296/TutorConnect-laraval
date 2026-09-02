@@ -13,16 +13,27 @@ use Illuminate\Support\Facades\Session;
 
 class TutorController extends Controller
 {
+    public function __construct()
+    {
+        if (!Session::has('tutor_id')) {
+            redirect('/tutor/login')->send();
+        }
+    }
+
     public function dashboard()
     {
         $tutorId = Session::get('tutor_id');
         $tutor = Tutor::find($tutorId);
         
-            // ⭐ AGAR PROFILE COMPLETE NAHI HAI TOH COMPLETE PROFILE PAGE
-             // ⭐ SIRF BIO AUR HOURLY_RATE CHECK KARO
-    if (is_null($tutor->bio) || is_null($tutor->hourly_rate)) {
-        return redirect('/tutor/profile/complete')->with('info', 'Please complete your profile first.');
-    }
+        if (!$tutor) {
+            Session::forget(['tutor_id', 'tutor_name', 'user_type']);
+            return redirect('/tutor/login')->with('error', 'Session expired. Please login again.');
+        }
+        
+        // If bio or hourly_rate is null, prompt profile completion
+        if (is_null($tutor->bio) || is_null($tutor->hourly_rate)) {
+            return redirect('/tutor/profile/complete')->with('info', 'Please complete your profile first.');
+        }
 
 
         
@@ -184,16 +195,20 @@ class TutorController extends Controller
 
     public function replyMessage(Request $request)
     {
-        if (empty($request->reply) || $request->reply == '') {
+        $messageText = $request->reply ?? $request->message;
+        $receiverId = $request->student_id ?? $request->receiver_id;
+
+        if (empty($messageText) || empty($receiverId)) {
             return back()->with('error', 'Please write a reply before sending.');
         }
         
         Message::create([
             'sender_id' => Session::get('tutor_id'),
-            'receiver_id' => $request->student_id,
+            'receiver_id' => $receiverId,
             'sender_type' => 'tutor',
             'receiver_type' => 'student',
-            'message' => $request->reply
+            'message' => $messageText,
+            'is_read' => 0
         ]);
         
         return back()->with('success', 'Reply sent successfully!');
@@ -267,7 +282,7 @@ class TutorController extends Controller
     {
         $request->validate([
             'title' => 'required',
-            'material_type' => 'required',
+            
             'file' => 'required|mimes:pdf,doc,docx,ppt,pptx,txt|max:10240'
         ]);
 
@@ -281,7 +296,7 @@ class TutorController extends Controller
         StudyMaterial::create([
             'tutor_id' => $tutorId,
             'title' => $request->title,
-            'material_type' => $request->material_type,
+             'material_type' => $request->material_type ?? 'document',
             'description' => $request->description,
             'file_path' => $filePath,
             'file_name' => $fileName
@@ -323,12 +338,20 @@ class TutorController extends Controller
     public function replyMessageAjax(Request $request)
     {
         try {
+            $receiverId = $request->receiver_id ?? $request->student_id;
+            $messageText = $request->message ?? $request->reply;
+
+            if (empty($messageText) || empty($receiverId)) {
+                return response()->json(['success' => false, 'error' => 'Receiver and message content are required.']);
+            }
+
             $message = Message::create([
                 'sender_id' => Session::get('tutor_id'),
-                'receiver_id' => $request->student_id,
+                'receiver_id' => $receiverId,
                 'sender_type' => 'tutor',
                 'receiver_type' => 'student',
-                'message' => $request->message
+                'message' => $messageText,
+                'is_read' => 0
             ]);
             
             return response()->json(['success' => true, 'message' => $message]);
@@ -378,7 +401,7 @@ class TutorController extends Controller
         // ⭐ MARK AS VIEWED WHEN TUTOR OPENS BOOKINGS PAGE
         \DB::table('bookings')
             ->where('tutor_id', $tutorId)
-            ->where('status', 'pending')
+            ->where('status', 'confirmed')
             ->where('is_viewed', 0)
             ->update(['is_viewed' => 1]);
         
@@ -394,4 +417,15 @@ class TutorController extends Controller
         
         return view('tutor.bookings', compact('bookings', 'pendingBookings', 'confirmedBookings', 'completedBookings', 'cancelledBookings'));
     }
+    public function confirmPayment(Request $request)
+{
+    $booking = Booking::find($request->booking_id);
+    if ($booking) {
+        $booking->tutor_confirmed = 1;
+        $booking->student_viewed = 0;
+        $booking->save();
+        return back()->with('success', 'Payment confirmed! Student has been notified.');
+    }
+    return back()->with('error', 'Booking not found');
+}
 }

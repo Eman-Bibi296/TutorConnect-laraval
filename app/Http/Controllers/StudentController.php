@@ -25,7 +25,13 @@ class StudentController extends Controller
     {
         $studentId = Session::get('student_id');
         $student = Student::find($studentId);
-        $tutors = Tutor::where('is_verified', true)->get();
+        
+        if (!$student) {
+            Session::forget(['student_id', 'student_name', 'user_type']);
+            return redirect('/student/login')->with('error', 'Session expired. Please login again.');
+        }
+        
+        $tutors = Tutor::where('is_verified', true)->with('feedback')->get();
         $requests = RequestModel::where('student_id', $studentId)->with('tutor')->get();
         
         $messages = DB::table('messages')
@@ -49,7 +55,7 @@ class StudentController extends Controller
               // ⭐⭐⭐⭐⭐ YEH LINE ADD KARO ⭐⭐⭐⭐⭐
         $unreadBookings = Booking::where('student_id', $studentId)
         ->where('status', 'confirmed')
-        ->where('is_viewed', 0)
+        ->where('student_viewed', 0)
         ->count();
         
         return view('student.dashboard', compact(
@@ -78,8 +84,15 @@ class StudentController extends Controller
         $tutor = Tutor::findOrFail($id);
         $feedback = Feedback::where('tutor_id', $id)->with('student')->get();
         $avgRating = $tutor->avgRating();
+
+        // ⭐ NAYA CODE: Student ki is tutor ke sath request ka status check karo
+    $existingRequest = RequestModel::where('student_id', Session::get('student_id'))
+                        ->where('tutor_id', $id)
+                        ->orderBy('created_at', 'desc')
+                        ->first();
+    
         
-        return view('student.tutor-profile', compact('tutor', 'feedback', 'avgRating'));
+        return view('student.tutor-profile', compact('tutor', 'feedback', 'avgRating', 'existingRequest'));
     }
 
     public function sendRequest(Request $request)
@@ -104,12 +117,20 @@ class StudentController extends Controller
 
     public function sendMessage(Request $request)
     {
+        $receiverId = $request->receiver_id ?? $request->tutor_id;
+        $messageText = $request->message ?? $request->reply;
+
+        if (empty($messageText) || empty($receiverId)) {
+            return back()->with('error', 'Please write a message before sending.');
+        }
+
         Message::create([
             'sender_id' => Session::get('student_id'),
-            'receiver_id' => $request->receiver_id,
+            'receiver_id' => $receiverId,
             'sender_type' => 'student',
-            'receiver_type' => 'tutor',
-            'message' => $request->message
+            'receiver_type' => $request->receiver_type ?? 'tutor',
+            'message' => $messageText,
+            'is_read' => 0
         ]);
         
         return back()->with('success', 'Message sent!');
@@ -175,29 +196,42 @@ class StudentController extends Controller
     
     public function submitBooking(Request $request)
     {
+        $tutor = Tutor::findOrFail($request->tutor_id);
+        $hourlyRate = (float)($tutor->hourly_rate ?? 1500);
+
         $booking = Booking::create([
             'student_id' => Session::get('student_id'),
             'tutor_id' => $request->tutor_id,
-            'preferred_date' => $request->preferred_date,
-            'preferred_time' => $request->preferred_time,
-            'mode' => $request->mode,
-            'sessions_per_week' => $request->sessions_per_week,
-            'message' => $request->message,
+            'preferred_date' => $request->preferred_date ?? date('Y-m-d', strtotime('+1 day')),
+            'preferred_time' => $request->preferred_time ?? '04:00 PM - 05:00 PM',
+            'mode' => $request->mode ?? 'Online',
+            'sessions_per_week' => $request->sessions_per_week ?? '1',
+            'message' => $request->message ?? $request->topic ?? 'Course syllabus revision',
+            
+            'amount' => $hourlyRate,
             'status' => 'pending'
         ]);
         
-        return back()->with('success', 'Booking request sent successfully!');
+        return redirect('/payment/' . $booking->id);
     }
 
     public function sendMessageAjax(Request $request)
     {
         try {
+            $receiverId = $request->receiver_id ?? $request->tutor_id;
+            $messageText = $request->message ?? $request->reply;
+
+            if (empty($messageText) || empty($receiverId)) {
+                return response()->json(['success' => false, 'error' => 'Receiver and message content are required.']);
+            }
+
             $message = Message::create([
                 'sender_id' => Session::get('student_id'),
-                'receiver_id' => $request->receiver_id,
+                'receiver_id' => $receiverId,
                 'sender_type' => 'student',
-                'receiver_type' => $request->receiver_type,
-                'message' => $request->message
+                'receiver_type' => $request->receiver_type ?? 'tutor',
+                'message' => $messageText,
+                'is_read' => 0
             ]);
             
             return response()->json(['success' => true, 'message' => $message]);
@@ -285,8 +319,8 @@ class StudentController extends Controller
          DB::table('bookings')
         ->where('student_id', $studentId)
         ->where('status', 'confirmed')
-        ->where('is_viewed', 0)
-        ->update(['is_viewed' => 1]);
+        ->where('student_viewed', 0)
+        ->update(['student_viewed' => 1]);
         $bookings = Booking::where('student_id', $studentId)
                             ->with('tutor')
                             ->orderBy('created_at', 'desc')
@@ -463,7 +497,7 @@ class StudentController extends Controller
         DB::table('bookings')
             ->where('student_id', Session::get('student_id'))
             ->where('status', 'confirmed')
-            ->update(['is_viewed' => 1]);
+            ->update(['student_viewed' => 1]);
         
         return response()->json(['success' => true]);
     }

@@ -1,62 +1,66 @@
 <!-- ============================================================ -->
-<!-- STUDENT SIDEBAR - COMPLETE CODE                               -->
+<!-- STUDENT SIDEBAR - 1:1 VISUAL & DYNAMIC PARITY                 -->
 <!-- ============================================================ -->
 
 <style>
-    /* ===== SIDEBAR CONTAINER ===== */
+    :root {
+        --primary: #059669;
+        --primary-hover: #047857;
+        --primary-light: #ECFDF5;
+        --accent: #10B981;
+        --bg-light: #F8FAFC;
+        --bg-card: #FFFFFF;
+        --text-main: #111827;
+        --text-muted: #64748B;
+        --border-color: #E2E8F0;
+    }
+
     .sidebar {
         width: 280px;
-        background: #1a1a2e;
-        min-height: 100vh;
-        padding: 30px 20px;
-        color: white;
+        background: white;
+        border-radius: 20px;
+        padding: 25px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+        border: 1px solid #E2E8F0;
+        height: fit-content;
         position: sticky;
-        top: 0;
-        border-radius: 0 30px 30px 0;
-        box-shadow: 4px 0 20px rgba(0,0,0,0.1);
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        top: 90px;
+        font-family: 'Poppins', sans-serif;
     }
     
-    /* ===== PROFILE SECTION (TOP) ===== */
-    .profile-section {
+    .student-profile-badge {
         text-align: center;
-        margin-bottom: 35px;
-        padding-bottom: 25px;
-        border-bottom: 1px solid rgba(255,255,255,0.08);
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+        border-bottom: 1px solid #F1F5F9;
     }
     
-    .profile-icon {
-        width: 80px;
-        height: 80px;
+    .student-avatar {
+        width: 70px;
+        height: 70px;
         border-radius: 50%;
-        border: 3px solid #4a6cf7;
-        padding: 5px;
-        margin-bottom: 12px;
-        transition: all 0.3s ease;
         object-fit: cover;
-        background: rgba(255,255,255,0.05);
+        border: 3px solid #10B981;
+        margin: 0 auto 12px;
+        display: block;
+        box-shadow: 0 4px 10px rgba(16, 185, 129, 0.25);
+        background: #ECFDF5;
     }
-    
-    .profile-icon:hover {
-        transform: scale(1.05);
-        border-color: #6c5ce7;
-        box-shadow: 0 0 25px rgba(74, 108, 247, 0.3);
-    }
-    
-    .profile-name {
-        margin: 0;
+
+    .student-profile-badge h4 {
         font-size: 1.1rem;
-        font-weight: 600;
-        color: white;
+        font-weight: 700;
+        color: #111827;
+        margin: 0;
     }
     
-    .profile-email {
-        margin: 5px 0 0;
+    .student-profile-badge p {
         font-size: 0.8rem;
-        color: rgba(255,255,255,0.4);
+        color: #64748B;
+        margin: 3px 0 0;
+        word-break: break-all;
     }
-    
-    /* ===== MENU ITEMS ===== */
+
     .sidebar-menu {
         list-style: none;
         padding: 0;
@@ -64,275 +68,204 @@
     }
     
     .sidebar-menu li {
-        margin-bottom: 5px;
+        margin-bottom: 6px;
     }
     
     .sidebar-menu a {
         display: flex;
         align-items: center;
-        gap: 14px;
-        padding: 12px 18px;
-        color: rgba(255, 255, 255, 0.7);;
+        gap: 12px;
+        padding: 11px 16px;
+        color: #475569;
         text-decoration: none;
         border-radius: 12px;
-        transition: all 0.3s ease;
-        font-weight: 500;
-        font-size: 0.95rem;
+        font-weight: 600;
+        font-size: 0.92rem;
+        transition: all 0.2s ease;
         position: relative;
     }
     
     .sidebar-menu a:hover {
-        background: rgba(255,255,255,0.08);
-        color: #ffffff;  ;
-        transform: translateX(5px);
+        background: #F1F5F9;
+        color: #059669;
+        transform: translateX(4px);
     }
     
-    /* ===== ACTIVE LINK - BLUE GRADIENT ===== */
     .sidebar-menu a.active {
-        background: linear-gradient(135deg, #4a6cf7, #6c5ce7);
-        color: white;
-        box-shadow: 0 4px 15px rgba(74, 108, 247, 0.3);
+        background: linear-gradient(135deg, #059669 0%, #10B981 100%);
+        color: #ffffff;
+        box-shadow: 0 4px 14px rgba(5, 150, 105, 0.25);
     }
-    
-    .sidebar-menu a.active:hover {
-        transform: translateX(5px);
-    }
-     /* ===== ICON STYLES - CHOTA SIZE ===== */
-    .sidebar-menu a .icon {
-        width: 28px;
-        height: 28px;
-        object-fit: contain;
-        flex-shrink: 0;
-        filter: none;
 
-        transition: filter 0.3s ease;
+    .sidebar-menu a.active:hover {
+        transform: translateX(4px);
+        color: #ffffff;
     }
-    
-    .sidebar-menu a:hover .icon {
-        filter: invert(1);
+
+    .sidebar-menu a i {
+        width: 20px;
+        text-align: center;
+        font-size: 1rem;
     }
-    
-    .sidebar-menu a.active .icon {
-        filter: invert(1);
-    }
-    
-    /* ===== BADGES (NOTIFICATIONS) ===== */
-    .badge {
-        display: inline-block;
-        padding: 2px 9px;
-        border-radius: 50%;
-        font-size: 0.65rem;
+
+    .badge-count {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2px 8px;
+        border-radius: 20px;
+        font-size: 0.72rem;
         font-weight: 700;
         margin-left: auto;
         color: white;
-        min-width: 22px;
-        text-align: center;
-        animation: pulse-badge 2s infinite;
+        min-width: 20px;
+        height: 20px;
     }
     
-    @keyframes pulse-badge {
-        0% { transform: scale(1); }
-        50% { transform: scale(1.1); }
-        100% { transform: scale(1); }
-    }
-    
-    .badge-message {
-        background: #4a6cf7;
-    }
-    
-    .badge-request {
-        background: #ffc107;
-        color: #333;
-    }
-    
-    .badge-booking {
-        background: #28a745;
-    }
-    .badge-materials {
-    background: #28a745;  /* ⭐ YELLOW */
-    color: #333;
-}
+    .badge-msg { background: #059669; }
+    .badge-req { background: #F59E0B; color: #111827; }
+    .badge-bk { background: #10B981; }
+    .badge-mat { background: #0284C7; }
 
-    
-    /* ===== LOGOUT SECTION (BOTTOM) ===== */
-    .logout-link {
-        margin-top: 40px;
-        padding-top: 20px;
-        border-top: 1px solid rgba(255,255,255,0.08);
+    .sidebar-menu a.active .badge-count {
+        background: #ffffff;
+        color: #059669;
     }
     
-    .logout-link a {
-        color: rgba(255,255,255,0.4) !important;
+    .logout-item {
+        margin-top: 18px;
+        padding-top: 14px;
+        border-top: 1px solid #F1F5F9;
     }
     
-    .logout-link a:hover {
-        color: #ff6b6b !important;
-        background: rgba(255,107,107,0.1) !important;
-        transform: translateX(5px);
+    .logout-item a {
+        color: #64748B;
     }
     
-    /* ===== RESPONSIVE ===== */
-    @media (max-width: 768px) {
+    .logout-item a:hover {
+        color: #EF4444;
+        background: #FEF2F2;
+    }
+
+    @media (max-width: 900px) {
         .sidebar {
             width: 100%;
-            border-radius: 0;
-            min-height: auto;
-            padding: 20px;
-            position: relative;
-        }
-        
-        .sidebar-menu a {
-            padding: 10px 15px;
-            font-size: 0.9rem;
-        }
-        
-        .profile-icon {
-            width: 60px;
-            height: 60px;
+            position: static;
+            top: auto;
+            margin-bottom: 24px;
         }
     }
 </style>
 
-<!-- ============================================================ -->
-<!-- SIDEBAR HTML                                                  -->
-<!-- ============================================================ -->
+<?php
+    use App\Models\Student;
+    use App\Models\RequestModel;
+    use App\Models\Message;
+    use App\Models\Booking;
+    use App\Models\StudyMaterial;
+    use Illuminate\Support\Facades\DB;
+    use Illuminate\Support\Facades\Session;
 
-<div class="sidebar">
-    
-    <!-- ===== PROFILE SECTION ===== -->
-    <?php
-        use App\Models\Student;
-        $studentId = Session::get('student_id');
-        $student = Student::find($studentId);
-    ?>
-    
-    <div class="profile-section">
-        <a href="/student/dashboard">
-            <img src="<?php echo e(asset('images/icon.png')); ?>" alt="Profile" class="profile-icon">
-        </a>
-        <h3 class="profile-name"><?php echo e($student->name ?? 'Student'); ?></h3>
-        <p class="profile-email"><?php echo e($student->email ?? 'student@email.com'); ?></p>
-    </div>
-    
-    <!-- ===== NOTIFICATION COUNTS ===== -->
-    <?php
-        use Illuminate\Support\Facades\DB;
-        use App\Models\RequestModel;
-        use App\Models\Message;
-        use App\Models\Booking;
-        use App\Models\StudyMaterial;  
-        $studentId = Session::get('student_id');
-        
-        // New Messages
-        $newMessagesCount = DB::table('messages')
-            ->where('receiver_id', $studentId)
-            ->where('receiver_type', 'student')
-            ->where('is_read', 0)
-            ->count();
-        
-        // New Request Status Changes
-        $newRequestChanges = RequestModel::where('student_id', $studentId)
-            ->where('status', '!=', 'pending')
-            ->where('is_viewed', 0)
-            ->count();
-        
-        // New Bookings Confirmed
-        $newBookings = Booking::where('student_id', $studentId)
-            ->where('status', 'confirmed')
-            ->where('is_viewed', 0)
-            ->count();
+    $studentId = Session::get('student_id');
+    $studentUser = $studentId ? Student::find($studentId) : null;
 
-         // ⭐⭐⭐⭐⭐ YEH 5 LINES ADD KARO ⭐⭐⭐⭐⭐
-        
-    $acceptedTutorIds = RequestModel::where('student_id', $studentId)
+    $studentAvatar = null;
+    if ($studentUser) {
+        $firstName = strtolower(explode(' ', $studentUser->name)[0]);
+        if (file_exists(public_path('images/' . $firstName . '.jpg'))) {
+            $studentAvatar = 'images/' . $firstName . '.jpg';
+        } elseif (file_exists(public_path('images/' . $firstName . '.png'))) {
+            $studentAvatar = 'images/' . $firstName . '.png';
+        }
+    }
+
+    $unreadMsgCount = $studentId ? DB::table('messages')
+        ->where('receiver_id', $studentId)
+        ->where('receiver_type', 'student')
+        ->where('is_read', 0)
+        ->count() : 0;
+
+    $unreadReqCount = $studentId ? RequestModel::where('student_id', $studentId)
+        ->where('status', '!=', 'pending')
+        ->where('is_viewed', 0)
+        ->count() : 0;
+
+    $unreadBkCount = $studentId ? Booking::where('student_id', $studentId)
+        ->where('status', 'confirmed')
+        ->where('student_viewed', 0)
+        ->count() : 0;
+
+    $acceptedTutorIds = $studentId ? RequestModel::where('student_id', $studentId)
         ->where('status', 'accepted')
         ->pluck('tutor_id')
-        ->toArray();
-    
-    $newMaterials = StudyMaterial::whereIn('tutor_id', $acceptedTutorIds)
-        ->where('is_viewed', 0)
-        ->count();
+        ->toArray() : [];
 
-               $unreadRequestChanges = $newRequestChanges;
-               $unreadBookings = $newBookings;
-                  $unreadMaterials = $newMaterials;  // ⭐ YEH LINE IMPORTANT HAI!
-    ?>
-    
-    <!-- ===== MENU ===== -->
+    $unreadMatCount = (!empty($acceptedTutorIds)) ? StudyMaterial::whereIn('tutor_id', $acceptedTutorIds)
+        ->where('is_viewed', 0)
+        ->count() : 0;
+?>
+
+<div class="sidebar">
+    <div class="student-profile-badge">
+    <img src="<?php echo e($studentAvatar ? asset($studentAvatar) : 'https://ui-avatars.com/api/?name=' . urlencode($studentUser->name ?? 'Student') . '&background=ECFDF5&color=059669'); ?>" alt="Student Avatar" class="student-avatar">
+        <h4><?php echo e($studentUser->name ?? 'Student'); ?></h4>
+        <p><?php echo e($studentUser->email ?? 'student@tutorconnect.com'); ?></p>
+    </div>
+
     <ul class="sidebar-menu">
-        
-        <!-- Dashboard -->
         <li>
             <a href="/student/dashboard" class="<?php echo e(request()->is('student/dashboard') ? 'active' : ''); ?>">
-                <img src="<?php echo e(asset('images/computer.png')); ?>" alt="Dashboard" class="icon">
-                Dashboard
+                <i class="fas fa-th-large"></i>
+                <span>Find Tutors</span>
             </a>
         </li>
-        
-        <!-- My Requests -->
         <li>
             <a href="/student/my-requests" class="<?php echo e(request()->is('student/my-requests*') ? 'active' : ''); ?>">
-              <img src="<?php echo e(asset('images/Myrequest.png')); ?>" alt="My Requests" class="icon">
-                My Requests
-                <?php if(isset($unreadRequestChanges) && $unreadRequestChanges > 0): ?>
-                    <span class="badge badge-request"><?php echo e($newRequestChanges); ?></span>
+                <i class="fas fa-paper-plane"></i>
+                <span>My Requests</span>
+                <?php if($unreadReqCount > 0): ?>
+                    <span class="badge-count badge-req"><?php echo e($unreadReqCount); ?></span>
                 <?php endif; ?>
             </a>
         </li>
-        
-        <!-- Messages -->
         <li>
             <a href="/student/messages" class="<?php echo e(request()->is('student/messages*') ? 'active' : ''); ?>">
-                 <img src="<?php echo e(asset('images/messages.png')); ?>" alt="Messages" class="icon">
-                Messages
-                <?php if($newMessagesCount > 0): ?>
-                    <span class="badge badge-message"><?php echo e($newMessagesCount); ?></span>
+                <i class="fas fa-comments"></i>
+                <span>Messages</span>
+                <?php if($unreadMsgCount > 0): ?>
+                    <span class="badge-count badge-msg"><?php echo e($unreadMsgCount); ?></span>
                 <?php endif; ?>
             </a>
         </li>
-        
-        <!-- My Bookings -->
         <li>
             <a href="/student/my-bookings" class="<?php echo e(request()->is('student/my-bookings*') ? 'active' : ''); ?>">
-                 <img src="<?php echo e(asset('images/bookingicon.png')); ?>" alt="My Bookings" class="icon">
-                 My Booking
-                <?php if(isset($unreadBookings) && $unreadBookings > 0): ?>
-                    <span class="badge badge-booking"><?php echo e($newBookings); ?></span>
+                <i class="fas fa-calendar-alt"></i>
+                <span>My Bookings</span>
+                <?php if($unreadBkCount > 0): ?>
+                    <span class="badge-count badge-bk"><?php echo e($unreadBkCount); ?></span>
                 <?php endif; ?>
             </a>
         </li>
-        
-        <!-- Study Materials -->
         <li>
             <a href="/student/study-materials" class="<?php echo e(request()->is('student/study-materials*') ? 'active' : ''); ?>">
-               <img src="<?php echo e(asset('images/studymaterial.png')); ?>" alt="Study Materials" class="icon">
-                Study Materials
-                 <?php if(isset($unreadMaterials) && $unreadMaterials > 0): ?>
-                <span class="badge badge-materials"><?php echo e($unreadMaterials); ?></span>
-            <?php endif; ?>
+                <i class="fas fa-book-open"></i>
+                <span>Study Materials</span>
+                <?php if($unreadMatCount > 0): ?>
+                    <span class="badge-count badge-mat"><?php echo e($unreadMatCount); ?></span>
+                <?php endif; ?>
             </a>
         </li>
-        
-        <!-- Reviews -->
         <li>
             <a href="/student/reviews" class="<?php echo e(request()->is('student/reviews*') ? 'active' : ''); ?>">
-                 <img src="<?php echo e(asset('images/reviewsicon.png')); ?>" alt="Reviews" class="icon">
-                Reviews
+                <i class="fas fa-star"></i>
+                <span>Reviews</span>
             </a>
         </li>
-        
+        <li class="logout-item">
+            <a href="/logout">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </a>
+        </li>
     </ul>
-    
-    <!-- ===== LOGOUT ===== -->
-    <div class="logout-link">
-        <ul class="sidebar-menu">
-            <li>
-                <a href="/logout">
-                    <img src="<?php echo e(asset('images/logout.png')); ?>" alt="Logout" class="icon">
-                    Logout
-                </a>
-            </li>
-        </ul>
-    </div>
-    
 </div><?php /**PATH C:\xampp\htdocs\TutorConnect\resources\views/student/partials/sidebar.blade.php ENDPATH**/ ?>

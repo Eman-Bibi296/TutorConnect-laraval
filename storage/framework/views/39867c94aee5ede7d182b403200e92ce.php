@@ -1,547 +1,482 @@
-
-
-<?php $__env->startSection('title', 'Tutor Profile'); ?>
+<?php $__env->startSection('title', $tutor->name . ' - Tutor Profile - TutorConnect'); ?>
 
 <?php $__env->startSection('content'); ?>
 <style>
-    .profile-container {
-        background: #f0f4f8;
-        min-height: 100vh;
-        padding: 30px 5%;
+    :root {
+        --primary: #059669;
+        --primary-hover: #047857;
+        --primary-light: #ECFDF5;
+        --accent: #10B981;
+        --bg-dark: #111827;
+        --bg-dark-secondary: #1E293B;
+        --bg-light: #F8FAFC;
+        --bg-card: #FFFFFF;
+        --text-main: #111827;
+        --text-muted: #64748B;
+        --border-color: #E2E8F0;
     }
-    
+
+    .profile-container {
+        padding: 35px 5%;
+        min-height: calc(100vh - 180px);
+        background: var(--bg-light);
+        font-family: 'Poppins', sans-serif;
+    }
     .profile-wrapper {
         display: flex;
         gap: 30px;
         max-width: 1400px;
         margin: 0 auto;
     }
-    
-    /* Sidebar Styles - Same as Dashboard */
-    .sidebar {
-        width: 280px;
-        background: white;
-        border-radius: 25px;
-        padding: 25px;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        height: fit-content;
-        position: sticky;
-        top: 30px;
-    }
-    
-    .sidebar-logo {
-        text-align: center;
-        margin-bottom: 30px;
-        padding-bottom: 20px;
-        border-bottom: 2px solid #f0f4f8;
-    }
-    
-    .sidebar-logo h2 {
-        margin: 0;
-        font-size: 1.5rem;
-        color: #1a1a2e;
-    }
-    
-    .sidebar-logo span {
-        color: #4a6cf7;
-    }
-    
-    .sidebar-logo p {
-        font-size: 0.7rem;
-        color: #999;
-        margin: 5px 0 0;
-    }
-    
-    .sidebar-menu {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
-    
-    .sidebar-menu li {
-        margin-bottom: 8px;
-    }
-    
-    .sidebar-menu a {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        padding: 12px 15px;
-        color: #555;
-        text-decoration: none;
-        border-radius: 12px;
-        transition: all 0.3s;
-        font-weight: 500;
-    }
-    
-    .sidebar-menu a:hover {
-        background: #f0f4f8;
-        color: #4a6cf7;
-    }
-    
-    .sidebar-menu a.active {
-        background: linear-gradient(135deg, #4a6cf7, #6c5ce7);
-        color: white;
-    }
-    
-    .logout-link {
-        margin-top: 30px;
-        padding-top: 20px;
-        border-top: 1px solid #eee;
-    }
-    
-    /* Main Content */
     .main-content {
         flex: 1;
+        min-width: 0;
     }
     
     .profile-card {
-        background: white;
-        border-radius: 30px;
+        background: var(--bg-card);
+        border-radius: 24px;
         overflow: hidden;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+        border: 1px solid var(--border-color);
     }
     
     .profile-header {
-        background: linear-gradient(135deg, #4a6cf7, #6c5ce7);
-        padding: 40px;
+        background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-dark-secondary) 100%);
+        padding: 40px 30px;
         text-align: center;
         color: white;
     }
     
     .profile-avatar {
-        width: 120px;
-        height: 120px;
-        margin: 0 auto 20px;
+        width: 100px;
+        height: 100px;
+        margin: 0 auto 18px;
         border-radius: 50%;
         overflow: hidden;
-        border: 4px solid white;
-        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-        background: rgba(255,255,255,0.2);
+        border: 3.5px solid white;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+        background: #064E3B;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
-    
     .profile-avatar img {
         width: 100%;
         height: 100%;
         object-fit: cover;
     }
     
-    .profile-avatar .no-image {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 3rem;
-        background: rgba(255,255,255,0.2);
-        color: white;
-    }
-    
     .profile-name {
-        font-size: 2rem;
-        font-weight: 700;
-        margin-bottom: 10px;
+        font-size: 1.9rem;
+        font-weight: 800;
+        margin: 0 0 6px;
+        letter-spacing: -0.5px;
     }
-    
     .profile-email {
         font-size: 0.9rem;
-        opacity: 0.9;
-        margin-bottom: 10px;
+        color: #94A3B8;
+        margin-bottom: 12px;
     }
     
     .profile-subject {
-        background: rgba(255,255,255,0.2);
-        display: inline-block;
-        padding: 8px 20px;
+        background: rgba(16, 185, 129, 0.18);
+        border: 1px solid rgba(16, 185, 129, 0.35);
+        color: #34D399;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 18px;
         border-radius: 30px;
-        font-size: 1rem;
+        font-size: 0.9rem;
+        font-weight: 600;
     }
     
     .profile-body {
-        padding: 40px;
+        padding: 35px;
     }
-    
+    .row-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 30px;
+    }
     .info-section {
         margin-bottom: 30px;
     }
-    
     .info-title {
-        font-size: 1.3rem;
+        font-size: 1.25rem;
         font-weight: 700;
-        color: #1a1a2e;
-        margin-bottom: 15px;
-        border-left: 4px solid #4a6cf7;
-        padding-left: 15px;
+        color: var(--text-main);
+        margin-bottom: 16px;
+        border-left: 4px solid var(--primary);
+        padding-left: 12px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
     }
     
     .info-grid {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        gap: 15px;
-        margin-bottom: 20px;
+        gap: 16px;
+        margin-bottom: 24px;
     }
-    
     .info-item {
-        background: #f8f9fc;
-        padding: 12px 15px;
-        border-radius: 12px;
+        background: #F8FAFC;
+        padding: 14px 18px;
+        border-radius: 14px;
+        border: 1px solid var(--border-color);
     }
-    
     .info-label {
-        font-size: 0.7rem;
-        color: #666;
+        font-size: 0.75rem;
+        color: var(--text-muted);
         text-transform: uppercase;
-        letter-spacing: 1px;
+        font-weight: 700;
     }
-    
     .info-value {
-        font-size: 1rem;
+        font-size: 0.98rem;
         font-weight: 600;
-        color: #1a1a2e;
-        margin-top: 5px;
+        color: var(--text-main);
+        margin-top: 4px;
     }
     
     .rating-section {
-        background: #f8f9fc;
-        padding: 20px;
-        border-radius: 20px;
+        background: #F8FAFC;
+        padding: 24px;
+        border-radius: 18px;
         text-align: center;
-        margin-bottom: 20px;
+        border: 1px solid var(--border-color);
     }
-    
     .rating-number {
-        font-size: 3rem;
+        font-size: 2.8rem;
         font-weight: 800;
-        color: #4a6cf7;
+        color: var(--primary);
+        line-height: 1;
     }
-    
     .rating-stars {
-        color: #ffc107;
-        font-size: 1.2rem;
-        margin: 10px 0;
+        color: #F59E0B;
+        font-size: 1.3rem;
+        margin: 8px 0;
     }
-    
+
     .review-card {
-        background: #f8f9fc;
-        border-radius: 15px;
-        padding: 15px;
-        margin-bottom: 15px;
+        background: #F8FAFC;
+        border: 1px solid var(--border-color);
+        border-radius: 14px;
+        padding: 18px;
+        margin-bottom: 14px;
     }
-    
     .review-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 10px;
+        margin-bottom: 6px;
         flex-wrap: wrap;
     }
-    
     .reviewer-name {
         font-weight: 700;
-        color: #1a1a2e;
+        color: var(--text-main);
+        font-size: 0.92rem;
     }
-    
     .review-date {
-        font-size: 0.7rem;
-        color: #999;
+        font-size: 0.75rem;
+        color: var(--text-muted);
     }
-    
     .review-stars {
-        color: #ffc107;
-        font-size: 0.8rem;
-        margin: 5px 0;
+        color: #F59E0B;
+        font-size: 0.9rem;
+        margin-bottom: 6px;
     }
-    
     .review-comment {
-        color: #555;
+        color: #475569;
         font-size: 0.9rem;
         line-height: 1.5;
-        margin-top: 8px;
     }
-    
-    .btn-group {
-        display: flex;
-        gap: 10px;
-        flex-wrap: wrap;
-    }
-    
-    .btn-book-session {
-        display: inline-block;
-        background: linear-gradient(135deg, #28a745, #20c997);
-        color: white;
-        padding: 14px 25px;
-        border-radius: 12px;
-        text-decoration: none;
-        font-weight: 600;
-        font-size: 0.95rem;
-        flex: 1;
+
+    .pricing-card {
+        background: #F8FAFC;
+        padding: 24px;
+        border-radius: 18px;
+        border: 1px solid var(--border-color);
         text-align: center;
-        min-width: 140px;
-        transition: all 0.3s;
-        border: none;
-        cursor: pointer;
     }
-    
-    .btn-book-session:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 15px rgba(40,167,69,0.4);
-        color: white;
-    }
-    
-    .btn-chat {
-        display: inline-block;
-        background: linear-gradient(135deg, #4a6cf7, #6c5ce7);
-        color: white;
-        padding: 14px 25px;
-        border-radius: 12px;
-        text-decoration: none;
-        font-weight: 600;
-        font-size: 0.95rem;
-        flex: 1;
-        text-align: center;
-        min-width: 140px;
-        transition: all 0.3s;
-        border: none;
-        cursor: pointer;
-    }
-    
-    .btn-chat:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 15px rgba(74,108,247,0.4);
-        color: white;
-    }
-    
-    .btn-disabled {
-        background: #ccc;
-        color: #666;
-        padding: 14px 25px;
-        border-radius: 12px;
-        border: none;
-        font-weight: 600;
-        flex: 1;
-        text-align: center;
-        cursor: not-allowed;
-    }
-    
-    .price {
-        font-size: 2rem;
-        color: #4a6cf7;
+    .price-amount {
+        font-size: 2.2rem;
+        color: var(--primary);
         font-weight: 800;
+        line-height: 1;
+        margin: 12px 0 4px;
     }
-    
-    .alert {
-        padding: 12px;
-        border-radius: 10px;
-        margin-bottom: 15px;
+    .price-unit {
+        color: var(--text-muted);
+        font-size: 0.85rem;
+        margin-bottom: 20px;
     }
-    
-    .alert-success {
-        background: #d4edda;
-        color: #155724;
-    }
-    
-    .alert-danger {
-        background: #f8d7da;
-        color: #721c24;
-    }
-    
-    .row {
+
+    .btn-action-group {
         display: flex;
-        gap: 30px;
-        flex-wrap: wrap;
+        flex-direction: column;
+        gap: 10px;
     }
-    
-    .col-md-8 {
-        flex: 2;
-        min-width: 300px;
+    .btn-book-session {
+        background: linear-gradient(135deg, #059669 0%, #10B981 100%);
+        color: white;
+        padding: 13px 20px;
+        border-radius: 12px;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 0.95rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        box-shadow: 0 4px 14px rgba(5, 150, 105, 0.25);
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        transition: all 0.2s;
     }
-    
-    .col-md-4 {
-        flex: 1;
-        min-width: 250px;
+    .btn-book-session:hover {
+        color: white;
+        transform: translateY(-2px);
     }
-    
-    .mt-3 {
-        margin-top: 15px;
+    .btn-chat {
+        background: #111827;
+        color: white;
+        padding: 13px 20px;
+        border-radius: 12px;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 0.95rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        transition: all 0.2s;
     }
-    
-    @media (max-width: 768px) {
-        .info-grid {
-            grid-template-columns: 1fr;
-        }
-        .profile-body {
-            padding: 20px;
-        }
-        .btn-group {
-            flex-direction: column;
-        }
-        .sidebar {
-            width: 100%;
-            position: static;
-        }
-        .profile-wrapper {
-            flex-direction: column;
-        }
-        .row {
-            flex-direction: column;
-        }
+    .btn-chat:hover {
+        color: white;
+        background: #1E293B;
+    }
+
+    @media (max-width: 900px) {
+        .profile-wrapper { flex-direction: column; }
+        .row-grid { grid-template-columns: 1fr; }
+        .info-grid { grid-template-columns: 1fr; }
     }
 </style>
 
+<?php
+    $tutorAvatar = 'images/burhan.png';
+    if (!empty($tutor->profile_picture) && file_exists(public_path($tutor->profile_picture))) {
+        $tutorAvatar = $tutor->profile_picture;
+    } else {
+        $firstName = strtolower(explode(' ', str_replace(['Dr.', 'Prof.', 'Mr.', 'Ms.'], '', $tutor->name))[0] ?? 'burhan');
+        if (file_exists(public_path('images/' . $firstName . '.jpg'))) {
+            $tutorAvatar = 'images/' . $firstName . '.jpg';
+        } elseif (file_exists(public_path('images/' . $firstName . '.png'))) {
+            $tutorAvatar = 'images/' . $firstName . '.png';
+        }
+    }
+?>
+
 <div class="profile-container">
     <div class="profile-wrapper">
-        
-        <!-- Sidebar -->
+        <!-- Student Sidebar -->
         <?php echo $__env->make('student.partials.sidebar', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
-        
+
+        <!-- Main Content -->
         <div class="main-content">
             <div class="profile-card">
+                <!-- Profile Header -->
                 <div class="profile-header">
                     <div class="profile-avatar">
-                        <!-- ⭐ PICTURE - DATABASE SE SHOW KARO -->
-                        <?php if($tutor->profile_picture): ?>
-                            <img src="<?php echo e(asset($tutor->profile_picture)); ?>" alt="<?php echo e($tutor->name); ?>">
-                        <?php else: ?>
-                            <div class="no-image">👨‍🏫</div>
-                        <?php endif; ?>
+                        <img src="<?php echo e(asset($tutorAvatar)); ?>" alt="<?php echo e($tutor->name); ?>" onerror="this.src='https://ui-avatars.com/api/?name=<?php echo e(urlencode($tutor->name)); ?>&background=ECFDF5&color=059669'">
                     </div>
                     <h1 class="profile-name"><?php echo e($tutor->name); ?></h1>
-                    <div class="profile-email"><?php echo e($tutor->email); ?></div>
-                    <div class="profile-subject">📖 <?php echo e($tutor->subject); ?></div>
+                    <div class="profile-email"><i class="fa-regular fa-envelope"></i> <?php echo e($tutor->email); ?></div>
+                    <div class="profile-subject"><i class="fa-solid fa-book"></i> <?php echo e($tutor->subject); ?></div>
                 </div>
-                
+
+                <!-- Profile Body -->
                 <div class="profile-body">
-                    <div class="row">
-                        <div class="col-md-8">
+                    <div class="row-grid">
+                        
+                        <!-- Left Column -->
+                        <div>
                             <div class="info-section">
-                                <h3 class="info-title">About Me</h3>
-                                <p style="color: #555; line-height: 1.8;">
-                                    <?php echo e($tutor->bio ?? $tutor->qualification . ' with ' . $tutor->experience . ' years of teaching experience. Specialized in ' . $tutor->subject . ' for school, college, and university level students.'); ?>
+                                <h3 class="info-title"><i class="fa-solid fa-user"></i> About Instructor</h3>
+                                <p style="color: #475569; line-height: 1.8; font-size: 0.95rem; margin: 0;">
+                                    <?php echo e($tutor->bio ?? 'Senior lecturer specialized in ' . $tutor->subject . ' with ' . $tutor->experience . ' years of teaching experience.'); ?>
 
                                 </p>
                             </div>
-                            
+
                             <div class="info-section">
-                                <h3 class="info-title">Qualifications & Experience</h3>
+                                <h3 class="info-title"><i class="fa-solid fa-graduation-cap"></i> Qualifications & Details</h3>
                                 <div class="info-grid">
                                     <div class="info-item">
                                         <div class="info-label">Qualification</div>
-                                        <div class="info-value">🎓 <?php echo e($tutor->qualification); ?></div>
+                                        <div class="info-value"><?php echo e($tutor->qualification ?? 'Master Degree'); ?></div>
                                     </div>
                                     <div class="info-item">
                                         <div class="info-label">Experience</div>
-                                        <div class="info-value">📅 <?php echo e($tutor->experience); ?> years</div>
+                                        <div class="info-value"><?php echo e($tutor->experience ?? 5); ?>+ Years</div>
                                     </div>
                                     <div class="info-item">
-                                        <div class="info-label">Location</div>
-                                        <div class="info-value">📍 <?php echo e($tutor->location); ?></div>
+                                        <div class="info-label">Location / Mode</div>
+                                        <div class="info-value"><?php echo e($tutor->location ?? 'Islamabad'); ?> / Online</div>
                                     </div>
                                     <div class="info-item">
-                                        <div class="info-label">Availability</div>
-                                        <div class="info-value">⏰ <?php echo e($tutor->availability ?? 'Weekdays & Weekends'); ?></div>
+                                        <div class="info-label">Verification Status</div>
+                                        <div class="info-value" style="color:#059669;">✓ 100% Background Verified</div>
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="info-section">
-                                <h3 class="info-title">⭐ Ratings & Reviews</h3>
-                                
-                                <div class="rating-section">
+                                <h3 class="info-title"><i class="fa-solid fa-star"></i> Ratings & Feedback</h3>
+                                <div class="rating-section mb-4">
                                     <div class="rating-number"><?php echo e(number_format($avgRating, 1)); ?></div>
                                     <div class="rating-stars">
                                         <?php for($i = 1; $i <= 5; $i++): ?>
-                                            <?php if($i <= round($avgRating)): ?>
-                                                ★
-                                            <?php elseif($i - 0.5 <= $avgRating): ?>
-                                                ⭐
-                                            <?php else: ?>
-                                                ☆
-                                            <?php endif; ?>
-                                        <?php endfor; ?>
-                                    </div>
-                                    <div style="color: #666;">Based on <?php echo e($feedback->count()); ?> <?php echo e(Str::plural('review', $feedback->count())); ?></div>
-                                </div>
-                                
-                                <h4 style="margin-top: 20px; margin-bottom: 15px;">📝 Student Reviews</h4>
-                                
-                                <?php $__empty_1 = true; $__currentLoopData = $feedback; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $fb): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
-                                <div class="review-card">
-                                    <div class="review-header">
-                                        <span class="reviewer-name"><?php echo e($fb->student->name ?? 'Student'); ?></span>
-                                        <span class="review-date"><?php echo e($fb->created_at->format('M d, Y')); ?></span>
-                                    </div>
-                                    <div class="review-stars">
-                                        <?php for($i = 1; $i <= 5; $i++): ?>
-                                            <?php echo e($i <= $fb->rating ? '★' : '☆'); ?>
+                                            <?php echo e($i <= round($avgRating) ? '★' : '☆'); ?>
 
                                         <?php endfor; ?>
                                     </div>
-                                    <div class="review-comment">"<?php echo e($fb->comment); ?>"</div>
+                                    <div style="color: #64748B; font-size: 0.85rem;">Based on <?php echo e($feedback->count()); ?> Verified Student <?php echo e(Str::plural('Review', $feedback->count())); ?></div>
                                 </div>
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
-                                <div style="background: #f8f9fc; padding: 30px; text-align: center; border-radius: 15px; color: #999;">
-                                    No reviews yet. Be the first to review this tutor!
-                                </div>
-                                <?php endif; ?>
-                            </div>
-                        </div>
-                        
-                        <div class="col-md-4">
-                            <div class="info-section" style="background: #f8f9fc; padding: 20px; border-radius: 20px;">
-                                <h3 class="info-title">Session Pricing</h3>
-                                <div class="price">
-                                    Rs <?php echo e($tutor->hourly_rate ?? $tutor->experience * 100 + 1000); ?>
 
-                                </div>
-                                <p style="color: #666;">per hour</p>
-                                
-                                <?php
-                                    use App\Models\RequestModel;
-                                    $requestStatus = RequestModel::where('student_id', Session::get('student_id'))
-                                                        ->where('tutor_id', $tutor->id)
-                                                        ->first();
-                                ?>
+                                <!-- Reviews List -->
+                                <div class="mb-4">
+                                    <?php $__empty_1 = true; $__currentLoopData = $feedback; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $fb): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                                        <div class="review-card">
+                                            <div class="review-header">
+                                                <span class="reviewer-name"><?php echo e($fb->student->name ?? 'Verified Student'); ?></span>
+                                                <span class="review-date"><?php echo e($fb->created_at->format('M d, Y')); ?></span>
+                                            </div>
+                                            <div class="review-stars">
+                                                <?php for($i = 1; $i <= 5; $i++): ?>
+                                                    <?php echo e($i <= $fb->rating ? '★' : '☆'); ?>
 
-                                <?php if($requestStatus && $requestStatus->status == 'accepted'): ?>
-                                    <div class="btn-group">
-                                        <a href="/student/book-session-only/<?php echo e($tutor->id); ?>" class="btn-book-session">
-                                            📅 Book Session
-                                        </a>
-                                        <a href="/student/messages" class="btn-chat">
-                                            💬 Chat with Tutor
-                                        </a>
-                                    </div>
-                                <?php elseif($requestStatus && $requestStatus->status == 'pending'): ?>
-                                    <button class="btn-disabled" disabled>
-                                        ⏳ Request Pending
-                                    </button>
-                                <?php elseif($requestStatus && $requestStatus->status == 'rejected'): ?>
-                                    <button class="btn-disabled" disabled style="background:#dc3545; color:white;">
-                                        ❌ Request Rejected
-                                    </button>
-                                <?php else: ?>
-                                    <form action="/student/send-request" method="POST">
+                                                <?php endfor; ?>
+                                            </div>
+                                            <div class="review-comment">"<?php echo e($fb->comment); ?>"</div>
+                                        </div>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+                                        <div style="background: #F8FAFC; padding: 25px; text-align: center; border-radius: 14px; border: 1px dashed #CBD5E1; color: #94A3B8;">
+                                            No reviews yet. Be the first student to review this instructor!
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
+
+                                <!-- Quick Review Submit Form -->
+                                <div style="background:#F8FAFC; border-radius:16px; padding:18px; border:1px solid #E2E8F0;">
+                                    <h5 style="font-weight:700; font-size:0.95rem; color:#111827; margin-bottom:10px;"><i class="fa-solid fa-pen-to-square text-success"></i> Rate & Review this Instructor</h5>
+                                    <form action="/student/post-feedback" method="POST">
                                         <?php echo csrf_field(); ?>
                                         <input type="hidden" name="tutor_id" value="<?php echo e($tutor->id); ?>">
-                                        <button type="submit" class="btn-book-session" style="background: linear-gradient(135deg, #4a6cf7, #6c5ce7);">
-                                            📩 Send Request
+                                        <div class="mb-2">
+                                            <div id="starPicker" style="font-size:1.5rem; color:#F59E0B; cursor:pointer; user-select:none;">
+                                                <span onclick="setRating(1)">★</span>
+                                                <span onclick="setRating(2)">★</span>
+                                                <span onclick="setRating(3)">★</span>
+                                                <span onclick="setRating(4)">★</span>
+                                                <span onclick="setRating(5)">★</span>
+                                            </div>
+                                            <input type="hidden" name="rating" id="ratingValue" value="5">
+                                        </div>
+                                        <div class="mb-2">
+                                            <textarea name="comment" class="form-control form-control-sm" rows="2" placeholder="Write your experience with this instructor..." style="border-radius:8px;" required></textarea>
+                                        </div>
+                                        <button type="submit" class="btn btn-sm btn-success rounded-pill px-3 fw-bold">
+                                            <i class="fa-solid fa-paper-plane me-1"></i> Post Verified Review
                                         </button>
                                     </form>
-                                <?php endif; ?>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Column: Pricing & Booking -->
+                        <div>
+                            <div class="pricing-card">
+                                <h3 class="info-title" style="border: none; padding: 0; justify-content: center;"><i class="fa-solid fa-tag"></i> Session Pricing</h3>
+                                <div class="price-amount">Rs <?php echo e(number_format($tutor->hourly_rate ?? 1500)); ?></div>
+                                <div class="price-unit">per hourly 1-on-1 session</div>
+                                
+                               <!-- Request & Booking Flow -->
+<div style="background: white; border-radius: 14px; padding: 18px; border: 1px solid #E2E8F0; margin-bottom: 20px; text-align: left;">
+
+    <?php if(!$existingRequest): ?>
+        
+        <form action="/student/send-request" method="POST">
+            <?php echo csrf_field(); ?>
+            <input type="hidden" name="tutor_id" value="<?php echo e($tutor->id); ?>">
+            <button type="submit" class="btn-book-session w-100" style="background: linear-gradient(135deg, #059669 0%, #10B981 100%);">
+                <i class="fa-solid fa-paper-plane me-1"></i> Send Request
+            </button>
+        </form>
+
+    <?php elseif($existingRequest->status === 'pending'): ?>
+        
+        <button class="btn-book-session w-100" style="background:#94A3B8; cursor:not-allowed;" disabled>
+            <i class="fa-solid fa-clock me-1"></i> Request Sent - Waiting for Approval
+        </button>
+
+    <?php elseif($existingRequest->status === 'accepted'): ?>
+        
+        <a href="<?php echo e(url('/student/book-session-only/' . $tutor->id)); ?>" class="btn-book-session w-100" style="text-decoration:none; display:block; text-align:center; background: linear-gradient(135deg, #059669 0%, #10B981 100%);">
+            <i class="fa-solid fa-calendar-check me-1"></i> Book Session
+        </a>
+
+    <?php elseif($existingRequest->status === 'rejected'): ?>
+        
+        <div style="color:#DC2626; text-align:center; font-weight:600; padding: 10px 0;">
+            Request declined by tutor.
+        </div>
+        <form action="/student/send-request" method="POST" class="mt-2">
+            <?php echo csrf_field(); ?>
+            <input type="hidden" name="tutor_id" value="<?php echo e($tutor->id); ?>">
+            <button type="submit" class="btn-book-session w-100" style="background: linear-gradient(135deg, #059669 0%, #10B981 100%);">
+                Send Request Again
+            </button>
+        </form>
+    <?php endif; ?>
+
+</div>
+
+<?php if($existingRequest && $existingRequest->status === 'accepted'): ?>
+<div class="btn-action-group">
+    <a href="<?php echo e(url('/student/chat-only/' . $tutor->id)); ?>" class="btn-chat">
+        <i class="fa-solid fa-comments"></i> Direct In-App Chat
+    </a>
+</div>
+<?php endif; ?>
                                 
                                 <?php if(session('success')): ?>
-                                    <div class="alert alert-success mt-3"><?php echo e(session('success')); ?></div>
+                                    <div class="alert alert-success mt-3 text-start"><?php echo e(session('success')); ?></div>
                                 <?php endif; ?>
                                 <?php if(session('error')): ?>
-                                    <div class="alert alert-danger mt-3"><?php echo e(session('error')); ?></div>
+                                    <div class="alert alert-danger mt-3 text-start"><?php echo e(session('error')); ?></div>
                                 <?php endif; ?>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    function setRating(val) {
+        document.getElementById('ratingValue').value = val;
+        const spans = document.querySelectorAll('#starPicker span');
+        spans.forEach((span, idx) => {
+            span.innerText = (idx < val) ? '★' : '☆';
+        });
+    }
+</script>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\TutorConnect\resources\views/student/tutor-profile.blade.php ENDPATH**/ ?>

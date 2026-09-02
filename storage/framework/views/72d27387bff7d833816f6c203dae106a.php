@@ -1,207 +1,191 @@
-
-
-<?php $__env->startSection('title', 'Study Materials'); ?>
+<?php $__env->startSection('title', 'Study Materials - TutorConnect'); ?>
 
 <?php $__env->startSection('content'); ?>
 <style>
     .materials-container {
-        background: #f0f4f8;
-        min-height: 100vh;
-        padding: 30px 5%;
+        padding: 35px 5%;
+        background: #F8FAFC;
+        min-height: calc(100vh - 180px);
+        font-family: 'Poppins', sans-serif;
     }
-    
     .materials-wrapper {
         display: flex;
         gap: 30px;
         max-width: 1400px;
         margin: 0 auto;
     }
-    
-    /* Sidebar Styles - Same as Dashboard */
-    .sidebar {
-        width: 280px;
-        background: white;
-        border-radius: 25px;
-        padding: 25px;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        height: fit-content;
-        position: sticky;
-        top: 30px;
-    }
-    
-    .sidebar-logo {
-        text-align: center;
-        margin-bottom: 30px;
-        padding-bottom: 20px;
-        border-bottom: 2px solid #f0f4f8;
-    }
-    
-    .sidebar-logo h2 {
-        margin: 0;
-        font-size: 1.5rem;
-        color: #1a1a2e;
-    }
-    
-    .sidebar-logo span {
-        color: #4a6cf7;
-    }
-    
-    .sidebar-logo p {
-        font-size: 0.7rem;
-        color: #999;
-        margin: 5px 0 0;
-    }
-    
-    .sidebar-menu {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
-    
-    .sidebar-menu li {
-        margin-bottom: 8px;
-    }
-    
-    .sidebar-menu a {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        padding: 12px 15px;
-        color: #555;
-        text-decoration: none;
-        border-radius: 12px;
-        transition: all 0.3s;
-        font-weight: 500;
-    }
-    
-    .sidebar-menu a:hover {
-        background: #f0f4f8;
-        color: #4a6cf7;
-    }
-    
-    .sidebar-menu a.active {
-        background: linear-gradient(135deg, #4a6cf7, #6c5ce7);
-        color: white;
-    }
-    
-    .logout-link {
-        margin-top: 30px;
-        padding-top: 20px;
-        border-top: 1px solid #eee;
-    }
-    
-    /* Main Content */
     .main-content {
         flex: 1;
+        min-width: 0;
     }
     
-    .card {
+    .page-header {
+        background: linear-gradient(135deg, #111827 0%, #1e293b 100%);
+        border-radius: 20px;
+        padding: 28px 30px;
+        color: white;
+        margin-bottom: 28px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .page-header h1 {
+        font-size: 1.6rem;
+        font-weight: 800;
+        margin: 0;
+    }
+    .page-header p {
+        color: #94A3B8;
+        margin: 8px 0 0;
+        font-size: 0.95rem;
+    }
+
+    .data-card {
         background: white;
         border-radius: 20px;
-        padding: 25px;
-        margin-bottom: 25px;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        padding: 28px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+        border: 1px solid #E2E8F0;
     }
-    
-    .card-title {
-        font-size: 1.3rem;
-        font-weight: 700;
-        margin-bottom: 20px;
-        border-left: 4px solid #4a6cf7;
-        padding-left: 15px;
-    }
-    
+
     .materials-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: 20px;
+        gap: 22px;
     }
-    
     .material-card {
-        background: #f8f9fc;
-        border-radius: 15px;
-        padding: 20px;
-        transition: transform 0.3s;
+        background: #F8FAFC;
+        border-radius: 16px;
+        padding: 22px;
+        border: 1px solid #E2E8F0;
+        transition: all 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
     }
-    
     .material-card:hover {
-        transform: translateY(-5px);
+        background: white;
+        transform: translateY(-4px);
+        box-shadow: 0 12px 25px rgba(5, 150, 105, 0.12);
+        border-color: #10B981;
     }
-    
     .material-icon {
-        font-size: 2rem;
-        margin-bottom: 10px;
-    }
-    
-    .material-title {
-        font-size: 1rem;
-        font-weight: 700;
-        color: #1a1a2e;
-        margin-bottom: 5px;
-    }
-    
-    .material-type {
-        font-size: 0.8rem;
-        color: #4a6cf7;
-        margin-bottom: 8px;
-    }
-    
-    .material-meta {
-        font-size: 0.7rem;
-        color: #999;
+        font-size: 2.2rem;
         margin-bottom: 12px;
     }
-    
-    .btn-download {
-        background: linear-gradient(135deg, #4a6cf7, #6c5ce7);
-        color: white;
-        padding: 8px 15px;
-        border-radius: 8px;
-        text-decoration: none;
+    .material-title {
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: #111827;
+        margin-bottom: 4px;
+    }
+    .material-type {
         font-size: 0.8rem;
-        display: inline-block;
+        color: #059669;
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+    .material-meta {
+        font-size: 0.78rem;
+        color: #64748B;
+        margin-bottom: 12px;
+    }
+    .material-description {
+        font-size: 0.85rem;
+        color: #475569;
+        margin-bottom: 18px;
+        line-height: 1.5;
+    }
+    .btn-download {
+        background: #059669;
+        color: white;
+        padding: 10px 18px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 0.85rem;
+        text-align: center;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        transition: all 0.2s;
+    }
+    .btn-download:hover {
+        background: #047857;
+        color: white;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+        color: #94A3B8;
+    }
+    .empty-state i {
+        font-size: 3rem;
+        margin-bottom: 12px;
+    }
+
+    @media (max-width: 900px) {
+        .materials-wrapper {
+            flex-direction: column;
+        }
     }
 </style>
 
 <div class="materials-container">
     <div class="materials-wrapper">
-        
+        <!-- Student Sidebar -->
         <?php echo $__env->make('student.partials.sidebar', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
-        
+
+        <!-- Main Content -->
         <div class="main-content">
-            <div class="card">
-                <h3 class="card-title">📚 Study Materials</h3>
-                
-                <div class="materials-grid">
-                    <?php $__empty_1 = true; $__currentLoopData = $materials; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $material): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
-                    <div class="material-card">
-                        <div class="material-icon">
-                            <?php if(str_contains($material->material_type, 'PDF')): ?> 📄
-                            <?php elseif(str_contains($material->material_type, 'Assignment')): ?> 📝
-                            <?php elseif(str_contains($material->material_type, 'Paper')): ?> 📋
-                            <?php elseif(str_contains($material->material_type, 'MCQ')): ?> ❓
-                            <?php elseif(str_contains($material->material_type, 'Slide')): ?> 📊
-                            <?php else: ?> 📁
-                            <?php endif; ?>
-                        </div>
-                        <div class="material-title"><?php echo e($material->title); ?></div>
-                        <div class="material-type"><?php echo e($material->material_type); ?></div>
-                        <div class="material-meta">
-                            By: <?php echo e($material->tutor->name); ?> • <?php echo e($material->created_at->format('M d, Y')); ?>
+            <div class="page-header">
+                <h1><i class="fa-solid fa-book-open"></i> Shared Study Materials</h1>
+                <p>Download handouts, formula sheets, past exam papers, and guides uploaded by your tutors</p>
+            </div>
 
-                        </div>
-                        <div class="material-description" style="font-size:0.8rem; color:#666; margin-bottom:12px;">
-                            <?php echo e(Str::limit($material->description, 60)); ?>
+            <div class="data-card">
+                <?php if($materials && $materials->count() > 0): ?>
+                    <div class="materials-grid">
+                        <?php $__currentLoopData = $materials; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $mat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <?php
+                                $ext = strtolower(pathinfo($mat->file_path ?? '', PATHINFO_EXTENSION));
+                                $icon = '📄';
+                                if($ext == 'pdf') $icon = '📄';
+                                elseif(in_array($ext, ['doc', 'docx'])) $icon = '📋';
+                                elseif(in_array($ext, ['zip', 'rar'])) $icon = '📦';
+                                elseif(in_array($ext, ['xls', 'xlsx'])) $icon = '📊';
+                            ?>
+                            <div class="material-card">
+                                <div>
+                                    <div class="material-icon"><?php echo e($icon); ?></div>
+                                    <div class="material-title"><?php echo e($mat->title); ?></div>
+                                    <div class="material-type">
+                                        <?php echo e(strtoupper($ext ?: 'PDF')); ?> Resource • <?php echo e($mat->tutor->name ?? 'Faculty Instructor'); ?>
 
-                        </div>
-                        <a href="/student/material/download/<?php echo e($material->id); ?>" class="btn-download">📥 Download</a>
+                                    </div>
+                                    <div class="material-meta">
+                                        <i class="fa-regular fa-clock"></i> Uploaded <?php echo e($mat->created_at ? $mat->created_at->format('M d, Y') : 'Recently'); ?>
+
+                                    </div>
+                                    <div class="material-description">
+                                        <?php echo e($mat->description ?? 'Comprehensive learning and revision material shared by instructor.'); ?>
+
+                                    </div>
+                                </div>
+                                <a href="<?php echo e(url('/student/material/download/' . $mat->id)); ?>" class="btn-download">
+                                    <i class="fa-solid fa-download"></i> Download Resource
+                                </a>
+                            </div>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </div>
-                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
-                    <div style="text-align:center; padding:50px; color:#999; grid-column:1/-1;">
-                        No study materials available yet. Check back later!
+                <?php else: ?>
+                    <div class="empty-state">
+                        <i class="fa-regular fa-folder-open"></i>
+                        <h4 class="mt-2" style="font-weight:700; color:#111827;">No Study Materials Shared Yet</h4>
+                        <p class="text-muted small">When your verified tutors upload notes, exercises, or exam guides, they will appear here.</p>
                     </div>
-                    <?php endif; ?>
-                </div>
+                <?php endif; ?>
             </div>
         </div>
     </div>

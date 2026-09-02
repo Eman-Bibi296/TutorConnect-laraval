@@ -82,8 +82,17 @@ class AuthController extends Controller
             'subject' => 'required',
             'qualification' => 'required',
             'experience' => 'required|integer',
-            'location' => 'required'
+            'location' => 'required',
+            'profile_picture' => 'nullable|image|max:5120'
         ]);
+
+        $profilePicPath = null;
+        if ($request->hasFile('profile_picture')) {
+            $file = $request->file('profile_picture');
+            $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('images/uploads'), $filename);
+            $profilePicPath = 'images/uploads/' . $filename;
+        }
 
         Tutor::create([
             'name' => $request->name,
@@ -92,7 +101,10 @@ class AuthController extends Controller
             'subject' => $request->subject,
             'qualification' => $request->qualification,
             'experience' => $request->experience,
+            'hourly_rate' => $request->hourly_rate ?? '1500',
             'location' => $request->location,
+            'bio' => $request->bio,
+            'profile_picture' => $profilePicPath ?? 'images/burhan.png',
             'is_verified' => true
         ]);
 

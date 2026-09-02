@@ -1,564 +1,335 @@
 @extends('layouts.app')
 
-@section('title', 'Reviews & Feedback')
+@section('title', 'Reviews & Feedback - TutorConnect')
 
 @section('content')
 <style>
-    /* ===== ALL YOUR EXISTING STYLES (SAME) ===== */
     .reviews-container {
-        background: #f0f4f8;
-        min-height: 100vh;
-        padding: 30px 5%;
+        padding: 35px 5%;
+        background: #F8FAFC;
+        min-height: calc(100vh - 180px);
+        font-family: 'Poppins', sans-serif;
     }
-    
     .reviews-wrapper {
         display: flex;
         gap: 30px;
         max-width: 1400px;
         margin: 0 auto;
     }
-    
-    /* Sidebar Styles */
-    .sidebar {
-        width: 280px;
-        background: white;
-        border-radius: 25px;
-        padding: 25px;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        height: fit-content;
-        position: sticky;
-        top: 30px;
-    }
-    
-    .sidebar-logo {
-        text-align: center;
-        margin-bottom: 30px;
-        padding-bottom: 20px;
-        border-bottom: 2px solid #f0f4f8;
-    }
-    
-    .sidebar-logo h2 {
-        margin: 0;
-        font-size: 1.5rem;
-        color: #1a1a2e;
-    }
-    
-    .sidebar-logo span {
-        color: #4a6cf7;
-    }
-    
-    .sidebar-logo p {
-        font-size: 0.7rem;
-        color: #999;
-        margin: 5px 0 0;
-    }
-    
-    .sidebar-menu {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
-    
-    .sidebar-menu li {
-        margin-bottom: 8px;
-    }
-    
-    .sidebar-menu a {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        padding: 12px 15px;
-        color: #555;
-        text-decoration: none;
-        border-radius: 12px;
-        transition: all 0.3s;
-        font-weight: 500;
-    }
-    
-    .sidebar-menu a:hover {
-        background: #f0f4f8;
-        color: #4a6cf7;
-    }
-    
-    .sidebar-menu a.active {
-        background: linear-gradient(135deg, #4a6cf7, #6c5ce7);
-        color: white;
-    }
-    
-    .logout-link {
-        margin-top: 30px;
-        padding-top: 20px;
-        border-top: 1px solid #eee;
-    }
-    
-    /* Main Content */
     .main-content {
         flex: 1;
+        min-width: 0;
     }
     
-    .my-reviews-heading {
-        font-size: 1.8rem;
-        font-weight: 700;
-        color: #1a1a2e;
-        margin-bottom: 25px;
+    .page-header {
+        background: linear-gradient(135deg, #111827 0%, #1e293b 100%);
+        border-radius: 20px;
+        padding: 28px 30px;
+        color: white;
+        margin-bottom: 28px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.08);
     }
-    
+    .page-header h1 {
+        font-size: 1.6rem;
+        font-weight: 800;
+        margin: 0;
+    }
+    .page-header p {
+        color: #94A3B8;
+        margin: 8px 0 0;
+        font-size: 0.95rem;
+    }
+
     .stats-grid {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
         gap: 20px;
-        margin-bottom: 30px;
+        margin-bottom: 28px;
     }
-    
     .stat-card {
         background: white;
-        border-radius: 20px;
-        padding: 20px;
+        border-radius: 18px;
+        padding: 22px;
         text-align: center;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+        border: 1px solid #E2E8F0;
+        transition: all 0.25s ease;
     }
-    
+    .stat-card:hover {
+        transform: translateY(-3px);
+        border-color: #10B981;
+    }
     .stat-number {
-        font-size: 2rem;
+        font-size: 2.2rem;
         font-weight: 800;
-        color: #4a6cf7;
+        color: #059669;
+        margin-bottom: 4px;
     }
-    
     .stat-label {
-        color: #666;
+        color: #64748B;
+        font-weight: 700;
         font-size: 0.8rem;
-        margin-top: 5px;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
     }
-    
-    .my-review-card {
-        background: #ffe4e1;
-        border-radius: 20px;
-        padding: 25px;
-        margin-bottom: 30px;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-    }
-    
-    .my-review-card h3 {
-        margin: 0 0 15px;
-        font-size: 1.2rem;
-        color: #1a1a2e;
-    }
-    
-    .my-review-box {
-        background: rgba(255,255,255,0.6);
-        border-radius: 15px;
-        padding: 20px;
-    }
-    
-    .my-review-stars {
-        color: #ffc107;
-        font-size: 1.2rem;
-        margin-bottom: 10px;
-    }
-    
-    .my-review-text {
-        color: #555;
-        font-size: 0.9rem;
-        line-height: 1.4;
-        margin-bottom: 15px;
-    }
-    
-    .btn-delete {
-        background: #ff6b6b;
-        color: white;
-        border: none;
-        padding: 6px 18px;
-        border-radius: 8px;
-        cursor: pointer;
-        font-size: 0.8rem;
-    }
-    
-    .btn-delete:hover {
-        background: #e55a5a;
-    }
-    
-    .give-feedback {
+
+    .data-card {
         background: white;
         border-radius: 20px;
-        padding: 25px;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        padding: 28px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+        border: 1px solid #E2E8F0;
+        margin-bottom: 28px;
     }
-    
-    .give-feedback h3 {
-        margin: 0 0 20px;
-        font-size: 1.2rem;
-        color: #1a1a2e;
+    .data-card h3 {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #111827;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
     }
-    
+
+    .my-review-box {
+        background: #F8FAFC;
+        border: 1px solid #E2E8F0;
+        border-radius: 16px;
+        padding: 22px;
+        margin-bottom: 16px;
+    }
+    .my-review-stars {
+        color: #F59E0B;
+        font-size: 1.4rem;
+        letter-spacing: 2px;
+        margin-bottom: 10px;
+    }
+    .my-review-text {
+        color: #334155;
+        font-size: 0.95rem;
+        line-height: 1.6;
+        margin-bottom: 16px;
+        font-style: italic;
+    }
+
     .form-group {
         margin-bottom: 20px;
     }
-    
     .form-group label {
         display: block;
-        font-weight: 600;
+        font-weight: 700;
         margin-bottom: 8px;
-        color: #333;
+        color: #111827;
+        font-size: 0.9rem;
     }
-    
     .form-group select, .form-group textarea {
         width: 100%;
-        padding: 12px;
-        border: 2px solid #e0e0e0;
+        padding: 12px 16px;
+        border: 1.5px solid #CBD5E1;
         border-radius: 12px;
         font-size: 0.95rem;
-    }
-    
-    .form-group select:focus, .form-group textarea:focus {
-        border-color: #4a6cf7;
         outline: none;
+        transition: all 0.2s ease;
+        font-family: inherit;
+        background: white;
     }
-    
+    .form-group select:focus, .form-group textarea:focus {
+        border-color: #059669;
+        box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
+    }
+
     .rating-select {
-        display: flex;
-        gap: 10px;
-        margin-bottom: 15px;
-    }
-    
-    .rating-star {
+        display: inline-flex;
+        gap: 6px;
         font-size: 2rem;
+        color: #F59E0B;
         cursor: pointer;
-        color: #ddd;
-        transition: color 0.2s;
+        user-select: none;
+        margin-bottom: 12px;
     }
-    
-    .rating-star:hover, .rating-star.selected {
-        color: #ffc107;
-    }
-    
+
     .submit-feedback {
-        background: #ff69b4;
+        background: linear-gradient(135deg, #059669 0%, #10B981 100%);
         color: white;
         border: none;
-        padding: 8px 25px;
-        border-radius: 20px;
+        padding: 12px 28px;
+        border-radius: 30px;
+        font-weight: 700;
+        font-size: 0.92rem;
         cursor: pointer;
-        font-weight: 600;
-        font-size: 0.85rem;
-        transition: all 0.3s;
-        width: auto;
-        display: inline-block;
-    }
-    
-    .submit-feedback:hover {
-        background: #ff1493;
-        transform: translateY(-2px);
-    }
-    
-    .alert {
-        padding: 12px;
-        border-radius: 10px;
-        margin-bottom: 20px;
-    }
-    
-    .alert-success {
-        background: #d4edda;
-        color: #155724;
-    }
-    
-    .alert-danger {
-        background: #f8d7da;
-        color: #721c24;
-    }
-
-    /* ===== ⭐ TOAST NOTIFICATION (NEW) ===== */
-    .toast {
-        position: fixed;
-        bottom: 30px;
-        right: 30px;
-        background: #28a745;
-        color: white;
-        padding: 16px 30px;
-        border-radius: 12px;
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-        z-index: 9999;
-        font-weight: 600;
-        font-size: 0.95rem;
-        display: none;
+        box-shadow: 0 4px 14px rgba(5, 150, 105, 0.25);
+        display: inline-flex;
         align-items: center;
-        gap: 12px;
-        animation: slideUp 0.4s ease;
-        max-width: 400px;
+        gap: 8px;
+        transition: all 0.2s;
+    }
+    .submit-feedback:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 18px rgba(5, 150, 105, 0.35);
     }
 
-    .toast.error {
-        background: #dc3545;
-    }
-
-    .toast.success {
-        background: #28a745;
-    }
-
-    @keyframes slideUp {
-        0% {
-            transform: translateY(100px);
-            opacity: 0;
+    @media (max-width: 900px) {
+        .reviews-wrapper {
+            flex-direction: column;
         }
-        100% {
-            transform: translateY(0);
-            opacity: 1;
-        }
-    }
-
-    .toast-close {
-        background: transparent;
-        border: none;
-        color: white;
-        font-size: 1.2rem;
-        cursor: pointer;
-        padding: 0 5px;
-        opacity: 0.7;
-    }
-
-    .toast-close:hover {
-        opacity: 1;
     }
 </style>
 
+@php
+    use App\Models\Feedback;
+    use App\Models\Tutor;
+    use App\Models\Booking;
+    use Illuminate\Support\Facades\Session;
+
+    $studentId = Session::get('student_id');
+    
+    $reviews = collect([]);
+    $avgRatingGiven = 5.0;
+    $eligibleTutors = collect([]);
+
+    if ($studentId) {
+        try {
+            $reviews = Feedback::where('student_id', $studentId)->with('tutor')->orderBy('created_at', 'desc')->get();
+            $avgRatingGiven = $reviews->count() > 0 ? $reviews->avg('rating') : 5.0;
+
+            // Tutors student had confirmed/completed sessions with
+            $bookedTutorIds = Booking::where('student_id', $studentId)
+                ->whereIn('status', ['confirmed', 'completed'])
+                ->pluck('tutor_id')
+                ->unique()
+                ->toArray();
+
+            $eligibleTutors = Tutor::whereIn('id', $bookedTutorIds)->get();
+            if($eligibleTutors->isEmpty()) {
+                $eligibleTutors = Tutor::where('is_verified', true)->get();
+            }
+        } catch (\Throwable $e) {
+            $reviews = collect([]);
+            $eligibleTutors = collect([]);
+        }
+    }
+@endphp
+
 <div class="reviews-container">
     <div class="reviews-wrapper">
-        
+        <!-- Student Sidebar -->
         @include('student.partials.sidebar')
-        
+
+        <!-- Main Content -->
         <div class="main-content">
-            
-            <h2 class="my-reviews-heading">📝 My Reviews</h2>
-            
-            @php
-                use Illuminate\Support\Facades\DB;
-                $studentId = Session::get('student_id');
-                
-                // Get user's own review
-                $myReview = \App\Models\Feedback::where('student_id', $studentId)->first();
-                
-                // Get related tutor IDs
-                $acceptedTutorIds = DB::table('requests')
-                    ->where('student_id', $studentId)
-                    ->where('status', 'accepted')
-                    ->pluck('tutor_id')
-                    ->toArray();
-                
-                $chattedTutorIds = DB::table('messages')
-                    ->where(function($q) use ($studentId) {
-                        $q->where('sender_id', $studentId)->where('sender_type', 'student')
-                          ->orWhere('receiver_id', $studentId)->where('receiver_type', 'student');
-                    })
-                    ->select(DB::raw('CASE 
-                        WHEN sender_type = "tutor" THEN sender_id 
-                        ELSE receiver_id 
-                    END as tutor_id'))
-                    ->distinct()
-                    ->pluck('tutor_id')
-                    ->toArray();
-                
-                $relatedTutorIds = array_unique(array_merge($acceptedTutorIds, $chattedTutorIds));
-                
-                // Filter reviews - only related tutors
-                $filteredReviews = $reviews->filter(function($review) use ($relatedTutorIds) {
-                    return in_array($review->tutor_id, $relatedTutorIds);
-                });
-                
-                // ========== DYNAMIC STATS (SAHI) ==========
-                $avgRating = $filteredReviews->avg('rating') ?? 0;
-                $totalReviews = $filteredReviews->count();
-                // =========================================
-                
-                // Eligible tutors
-                $eligibleTutors = DB::table('requests')
-                    ->join('tutors', 'requests.tutor_id', '=', 'tutors.id')
-                    ->where('requests.student_id', $studentId)
-                    ->where('requests.status', 'accepted')
-                    ->whereNotIn('tutors.id', function($query) use ($studentId) {
-                        $query->select('tutor_id')
-                              ->from('feedback')
-                              ->where('student_id', $studentId);
-                    })
-                    ->whereExists(function($query) use ($studentId) {
-                        $query->select(DB::raw(1))
-                              ->from('messages')
-                              ->whereRaw('(messages.sender_id = requests.student_id AND messages.receiver_id = requests.tutor_id)')
-                              ->orWhereRaw('(messages.sender_id = requests.tutor_id AND messages.receiver_id = requests.student_id)');
-                    })
-                    ->select('tutors.id', 'tutors.name', 'tutors.subject')
-                    ->get();
-            @endphp
-            
-            <!-- Stats - DYNAMIC -->
+            <div class="page-header">
+                <h1><i class="fa-solid fa-star"></i> Reviews & Feedback</h1>
+                <p>Track reviews given to tutors and evaluate your recent learning sessions</p>
+            </div>
+
+            <!-- Stats Grid -->
             <div class="stats-grid">
                 <div class="stat-card">
-                    <div class="stat-number">{{ number_format($avgRating, 1) }}</div>
+                    <div class="stat-number">{{ number_format($avgRatingGiven, 1) }}</div>
                     <div class="stat-label">Avg. Rating / 5.0</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number">{{ $totalReviews }}</div>
-                    <div class="stat-label">TOTAL REVIEWS</div>
+                    <div class="stat-number" style="color: #059669;">{{ $reviews->count() }}</div>
+                    <div class="stat-label">Total Reviews Given</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number">{{ $eligibleTutors->count() }}</div>
-                    <div class="stat-label">TUTORS TO REVIEW</div>
+                    <div class="stat-number" style="color: #D97706;">{{ $reviews->pluck('tutor_id')->unique()->count() }}</div>
+                    <div class="stat-label">Instructors Reviewed</div>
                 </div>
             </div>
-            
-            <!-- MY REVIEW -->
-            @if($myReview)
-            <div class="my-review-card">
-                <h3>⭐ My Review</h3>
-                <div class="my-review-box">
-                    <div class="my-review-stars">
-                        @for($i = 1; $i <= 5; $i++)
-                            {{ $i <= $myReview->rating ? '★' : '☆' }}
-                        @endfor
-                    </div>
-                    <div class="my-review-text">"{{ $myReview->comment }}"</div>
-                    <div>
-                        <!-- ⭐ DELETE FORM - BINA CONFIRM POPUP KE -->
-                        <form action="/student/review/delete/{{ $myReview->id }}" method="POST" style="display: inline;" id="deleteForm">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn-delete" id="deleteBtn">
-                                🗑️ Delete Review
-                            </button>
-                        </form>
-                    </div>
+
+            @if(session('success'))
+                <div class="alert alert-success rounded-4 mb-4 border-0 shadow-sm">
+                    <i class="fa-solid fa-circle-check me-2"></i> {{ session('success') }}
                 </div>
-            </div>
             @endif
-            
-            <!-- GIVE FEEDBACK -->
-            @if(!$myReview)
-            <div class="give-feedback">
-                <h3>✍️ Give Feedback to a Tutor</h3>
-                
-                @if(session('success'))
-                    <div class="alert alert-success">{{ session('success') }}</div>
-                @endif
-                @if(session('error'))
-                    <div class="alert alert-danger">{{ session('error') }}</div>
-                @endif
-                
-                @if($eligibleTutors->count() > 0)
+            @if(session('error'))
+                <div class="alert alert-danger rounded-4 mb-4 border-0 shadow-sm">
+                    <i class="fa-solid fa-triangle-exclamation me-2"></i> {{ session('error') }}
+                </div>
+            @endif
+
+            <!-- My Submitted Reviews -->
+            <div class="data-card">
+                <h3><i class="fa-solid fa-award" style="color:#F59E0B;"></i> My Submitted Reviews</h3>
+                @forelse($reviews as $rev)
+                    <div class="my-review-box">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <div>
+                                <h5 class="m-0 fw-bold text-dark">{{ $rev->tutor->name ?? 'Instructor' }}</h5>
+                                <small class="text-muted">{{ $rev->tutor->subject ?? '' }} • {{ $rev->created_at->format('M d, Y') }}</small>
+                            </div>
+                            <form action="/student/review/delete/{{ $rev->id }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this review?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill px-3">
+                                    <i class="fa-solid fa-trash-can me-1"></i> Delete Review
+                                </button>
+                            </form>
+                        </div>
+                        <div class="my-review-stars">
+                            @for($i = 1; $i <= 5; $i++)
+                                {{ $i <= $rev->rating ? '★' : '☆' }}
+                            @endfor
+                        </div>
+                        <div class="my-review-text">"{{ $rev->comment }}"</div>
+                    </div>
+                @empty
+                    <div class="text-center py-4 text-muted">
+                        <i class="fa-regular fa-comment-dots fs-1 mb-2 text-secondary"></i>
+                        <p class="mb-0">You haven't submitted any tutor reviews yet.</p>
+                    </div>
+                @endforelse
+            </div>
+
+            <!-- Submit New Review -->
+            <div class="data-card">
+                <h3><i class="fa-solid fa-pen-to-square" style="color:var(--primary);"></i> Leave Feedback for an Instructor</h3>
                 <form action="/student/post-feedback" method="POST">
                     @csrf
-                    
-                    <div class="form-group">
-                        <label>Select Tutor</label>
-                        <select name="tutor_id" required>
-                            <option value="">-- Select Tutor --</option>
+                    <div class="form-group mb-3">
+                        <label>Select Faculty Member / Tutor</label>
+                        <select name="tutor_id" class="form-select" required>
                             @foreach($eligibleTutors as $tutor)
                                 <option value="{{ $tutor->id }}">{{ $tutor->name }} ({{ $tutor->subject }})</option>
                             @endforeach
                         </select>
                     </div>
-                    
-                    <div class="form-group">
-                        <label>Your Rating</label>
-                        <div class="rating-select">
-                            <span class="rating-star" data-rating="1">☆</span>
-                            <span class="rating-star" data-rating="2">☆</span>
-                            <span class="rating-star" data-rating="3">☆</span>
-                            <span class="rating-star" data-rating="4">☆</span>
-                            <span class="rating-star" data-rating="5">☆</span>
+
+                    <div class="form-group mb-3">
+                        <label>Rating (Click to Rate)</label>
+                        <div class="rating-select" id="revStars">
+                            <span onclick="setRevStar(1)">★</span>
+                            <span onclick="setRevStar(2)">★</span>
+                            <span onclick="setRevStar(3)">★</span>
+                            <span onclick="setRevStar(4)">★</span>
+                            <span onclick="setRevStar(5)">★</span>
                         </div>
-                        <input type="hidden" name="rating" id="ratingValue" required>
+                        <input type="hidden" name="rating" id="reviewRatingInput" value="5">
                     </div>
-                    
-                    <div class="form-group">
-                        <label>Your Review / Feedback</label>
-                        <textarea name="comment" rows="4" placeholder="Share your experience with the tutor..." required></textarea>
+
+                    <div class="form-group mb-4">
+                        <label>Your Feedback & Experience</label>
+                        <textarea name="comment" rows="4" placeholder="Share specific details about teaching style, punctuality, and concept clarity..." required></textarea>
                     </div>
-                    
-                    <button type="submit" class="submit-feedback">Submit Feedback →</button>
+
+                    <button type="submit" class="submit-feedback">
+                        <i class="fa-solid fa-paper-plane"></i> Submit Feedback
+                    </button>
                 </form>
-                @else
-                <div style="text-align:center; padding:30px; background:#f8f9fc; border-radius:15px;">
-                    <p style="color:#666;">📭 No tutors available to review right now.</p>
-                    <p style="color:#999; font-size:0.8rem;">Once you chat with a tutor, they will appear here for feedback.</p>
-                </div>
-                @endif
             </div>
-            @endif
-            
         </div>
     </div>
 </div>
 
-<!-- ===== ⭐ TOAST NOTIFICATION HTML ===== -->
-<div id="toast" class="toast">
-    <span id="toastMessage">✅ Review deleted successfully!</span>
-    <button class="toast-close" onclick="hideToast()">✕</button>
-</div>
-
 <script>
-    // ===== STAR RATING (Already exists) =====
-    const stars = document.querySelectorAll('.rating-star');
-    let selectedRating = 0;
-    
-    stars.forEach(star => {
-        star.addEventListener('click', function() {
-            selectedRating = this.getAttribute('data-rating');
-            document.getElementById('ratingValue').value = selectedRating;
-            
-            stars.forEach((s, index) => {
-                if (index < selectedRating) {
-                    s.innerHTML = '★';
-                    s.classList.add('selected');
-                } else {
-                    s.innerHTML = '☆';
-                    s.classList.remove('selected');
-                }
-            });
+    function setRevStar(num) {
+        document.getElementById('reviewRatingInput').value = num;
+        const spans = document.querySelectorAll('#revStars span');
+        spans.forEach((span, idx) => {
+            span.innerText = (idx < num) ? '★' : '☆';
         });
-        
-        star.addEventListener('mouseenter', function() {
-            const hoverRating = this.getAttribute('data-rating');
-            stars.forEach((s, index) => {
-                if (index < hoverRating) {
-                    s.innerHTML = '★';
-                } else {
-                    s.innerHTML = '☆';
-                }
-            });
-        });
-        
-        star.addEventListener('mouseleave', function() {
-            stars.forEach((s, index) => {
-                if (index < selectedRating) {
-                    s.innerHTML = '★';
-                } else {
-                    s.innerHTML = '☆';
-                }
-            });
-        });
-    });
-
-    // ===== ⭐ TOAST FUNCTIONS (NEW) =====
-    function showToast(message, type = 'success') {
-        const toast = document.getElementById('toast');
-        const toastMessage = document.getElementById('toastMessage');
-        
-        toastMessage.textContent = message;
-        toast.className = 'toast ' + type;
-        toast.style.display = 'flex';
-        
-        setTimeout(function() {
-            hideToast();
-        }, 3000);
     }
-    
-    function hideToast() {
-        const toast = document.getElementById('toast');
-        toast.style.display = 'none';
-    }
-    
-    // ===== ⭐ DELETE BUTTON - TOAST DIKHAO (NEW) =====
-    document.getElementById('deleteBtn')?.addEventListener('click', function(e) {
-        showToast('🗑️ Review deleted successfully!', 'success');
-        // Form submit ho jayega, page refresh ho jayega
-    });
 </script>
 @endsection

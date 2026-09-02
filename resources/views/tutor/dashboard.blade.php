@@ -1,13 +1,14 @@
 @extends('layouts.app')
 
-@section('title', 'Tutor Dashboard')
+@section('title', 'Tutor Dashboard - TutorConnect')
 
 @section('content')
 <style>
     .dashboard-container {
-        background: #f0f4f8;
-        min-height: 100vh;
-        padding: 30px 5%;
+        background: #F8FAFC;
+        min-height: calc(100vh - 180px);
+        padding: 35px 5%;
+        font-family: 'Poppins', sans-serif;
     }
     .dashboard-wrapper {
         display: flex;
@@ -17,217 +18,383 @@
     }
     .main-content {
         flex: 1;
+        min-width: 0;
     }
     .welcome-card {
-        background: linear-gradient(135deg, #bb911e, #bb911e);
+        background: linear-gradient(135deg, #111827 0%, #1e293b 100%);
         border-radius: 20px;
-        padding: 25px;
+        padding: 28px 30px;
         color: white;
-        margin-bottom: 30px;
+        margin-bottom: 28px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .welcome-card h1 {
+        margin: 0;
+        font-size: 1.6rem;
+        font-weight: 700;
+    }
+    .welcome-card p {
+        margin: 8px 0 0;
+        color: #94A3B8;
+        font-size: 0.95rem;
     }
     .stats-grid {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
         gap: 20px;
         margin-bottom: 30px;
     }
     .stat-card {
-        background: #69e09b;
-        border-radius: 20px;
-        padding: 20px;
+        background: white;
+        border-radius: 18px;
+        padding: 22px;
         text-align: center;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+        border: 1px solid #E2E8F0;
+        transition: all 0.3s ease;
+    }
+    .stat-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 25px rgba(5, 150, 105, 0.1);
+        border-color: #10B981;
     }
     .stat-number {
-        font-size: 2rem;
+        font-size: 2.2rem;
         font-weight: 800;
-        color: #4a6cf7;
+        color: #059669;
+        margin-bottom: 4px;
     }
-    .requests-table {
-        background: #69e09b;
+    .stat-label {
+        color: #64748B;
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
+    .data-card {
+        background: white;
         border-radius: 20px;
         padding: 25px;
         margin-bottom: 30px;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+        border: 1px solid #E2E8F0;
     }
-    table {
+    .data-card h3 {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #111827;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .table-responsive {
+        overflow-x: auto;
+    }
+    .custom-table {
         width: 100%;
-        border-collapse: collapse;
+        border-collapse: separate;
+        border-spacing: 0;
     }
-    th {
+    .custom-table th {
         text-align: left;
-        padding: 12px;
-        background: #69e09b;
-        border-bottom: 2px solid #eee;
+        padding: 12px 16px;
+        background: #F8FAFC;
+        color: #475569;
+        font-size: 0.8rem;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        border-bottom: 1px solid #E2E8F0;
+        text-transform: uppercase;
     }
-    td {
-        padding: 12px;
-        border-bottom: 1px solid #eee;
+    .custom-table td {
+        padding: 14px 16px;
+        border-bottom: 1px solid #F1F5F9;
+        color: #334155;
+        font-size: 0.92rem;
+        vertical-align: middle;
     }
-    .status-pending {
-        background: #119c62;
-        color: #333;
-        padding: 4px 10px;
+    .custom-table tr:hover td {
+        background: #F8FAFC;
+    }
+    .badge-pending {
+        background: #FEF3C7;
+        color: #92400E;
+        padding: 5px 12px;
         border-radius: 20px;
-        font-size: 0.7rem;
-        display: inline-block;
+        font-size: 0.75rem;
+        font-weight: 700;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
     }
-    .status-accepted {
-        background: #28a745;
-        color: white;
-        padding: 4px 10px;
+    .badge-accepted, .badge-confirmed {
+        background: #DCFCE7;
+        color: #166534;
+        padding: 5px 12px;
         border-radius: 20px;
-        font-size: 0.7rem;
-        display: inline-block;
+        font-size: 0.75rem;
+        font-weight: 700;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
     }
-    .btn-accept {
-        background: #77c98a;
+    .badge-completed {
+        background: #E0E7FF;
+        color: #3730A3;
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+    }
+    .badge-rejected {
+        background: #FEE2E2;
+        color: #991B1B;
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+    }
+    .btn-action-accept {
+        background: #059669;
         color: white;
         border: none;
-        padding: 5px 12px;
+        padding: 6px 14px;
         border-radius: 8px;
+        font-size: 0.85rem;
+        font-weight: 600;
         cursor: pointer;
+        transition: all 0.2s;
     }
-    .btn-reject {
-        background: #dc3545;
+    .btn-action-accept:hover {
+        background: #047857;
+    }
+    .btn-action-reject {
+        background: #EF4444;
         color: white;
         border: none;
-        padding: 5px 12px;
+        padding: 6px 14px;
         border-radius: 8px;
+        font-size: 0.85rem;
+        font-weight: 600;
         cursor: pointer;
+        transition: all 0.2s;
     }
-    .booking-table {
-        background: #69e09b;
-        border-radius: 20px;
-        padding: 25px;
-        margin-bottom: 30px;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    .btn-action-reject:hover {
+        background: #DC2626;
     }
-    .btn-confirm {
-        background: #28a745;
+    .btn-action-complete {
+        background: #3B82F6;
         color: white;
         border: none;
-        padding: 5px 12px;
+        padding: 6px 14px;
         border-radius: 8px;
+        font-size: 0.85rem;
+        font-weight: 600;
         cursor: pointer;
+        transition: all 0.2s;
     }
-    .btn-complete {
-        background: #17a2b8;
-        color: white;
-        border: none;
-        padding: 5px 12px;
-        border-radius: 8px;
-        cursor: pointer;
+    .btn-action-complete:hover {
+        background: #2563EB;
     }
-    .status-confirmed {
-        background: #28a745;
-        color: white;
-        padding: 4px 10px;
-        border-radius: 20px;
-        font-size: 0.7rem;
-        display: inline-block;
-    }
-    .status-completed {
-        background: #17a2b8;
-        color: white;
-        padding: 4px 10px;
-        border-radius: 20px;
-        font-size: 0.7rem;
-        display: inline-block;
+
+    @media (max-width: 900px) {
+        .dashboard-wrapper {
+            flex-direction: column;
+        }
     }
 </style>
 
 <div class="dashboard-container">
     <div class="dashboard-wrapper">
-        
-        @include('tutor.partials.sidebar')
-        
+        <!-- Tutor Sidebar -->
+        @include('tutor.Partials.sidebar')
+
+        <!-- Main Content -->
         <div class="main-content">
             <div class="welcome-card">
-                <h1>Welcome back, {{ Session::get('tutor_name') }}! </h1>
-                <p>Here's what's happening with your tutoring sessions today.</p>
+                <h1>Welcome back, {{ $tutor->name ?? 'Instructor' }}! 👨‍🏫</h1>
+                <p>Here's what is happening with your tutoring sessions and students today.</p>
             </div>
 
+            <!-- Stats Grid -->
             <div class="stats-grid">
-                <div class="stat-card"><div class="stat-number">{{ $totalRequests ?? 0 }}</div><div>Total Requests</div></div>
-                <div class="stat-card"><div class="stat-number">{{ $activeStudents ?? 0 }}</div><div>Active Students</div></div>
-                <div class="stat-card"><div class="stat-number">{{ $pendingRequests ?? 0 }}</div><div>Pending Action</div></div>
+                <div class="stat-card">
+                    <div class="stat-number">{{ $totalRequests }}</div>
+                    <div class="stat-label">Total Requests</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">{{ $activeStudents }}</div>
+                    <div class="stat-label">Active Students</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" style="color: #D97706;">{{ $pendingRequests }}</div>
+                    <div class="stat-label">Pending Requests</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" style="color: #059669;">
+                        ⭐ {{ number_format($avgRating ?? 5.0, 1) }}
+                    </div>
+                    <div class="stat-label">{{ $totalReviews }} Student Reviews</div>
+                </div>
             </div>
 
-            <div class="requests-table">
-                <h3>Student Requests Management</h3>
-                <table>
-                    <thead>
-                        <tr><th>STUDENT NAME</th><th>SUBJECT</th><th>LOCATION/AREA</th><th>REQUESTED DATE</th><th>STATUS</th><th>ACTIONS</th></tr>
-                    </thead>
-                    <tbody>
-                        @forelse($requests as $req)
-                        <tr>
-                            <td>{{ $req->student->name ?? 'N/A' }}</td>
-                            <td>{{ $req->tutor->subject ?? 'N/A' }}</td>
-                            <td>{{ $req->student->location ?? 'N/A' }}</td>
-                            <td>{{ $req->created_at->format('M d, Y') }}</td>
-                            <td>@if($req->status == 'pending')<span class="status-pending">Pending</span>@elseif($req->status == 'accepted')<span class="status-accepted">Accepted ✓</span>@else<span class="status-pending" style="background:#dc3545; color:white;">Rejected</span>@endif</td>
-                            <td>@if($req->status == 'pending')
-                                <form action="/tutor/update-status" method="POST" style="display:inline;">
-                                    @csrf
-                                    <input type="hidden" name="request_id" value="{{ $req->id }}">
-                                    <input type="hidden" name="status" value="accepted">
-                                    <button type="submit" class="btn-accept">Accept</button>
-                                </form>
-                                <form action="/tutor/update-status" method="POST" style="display:inline;">
-                                    @csrf
-                                    <input type="hidden" name="request_id" value="{{ $req->id }}">
-                                    <input type="hidden" name="status" value="rejected">
-                                    <button type="submit" class="btn-reject">Reject</button>
-                                </form>
-                                @else<span style="color:green;">✓ {{ ucfirst($req->status) }}</span>@endif
-                            </td>
-                        </tr>
-                        @empty
-                        <tr><td colspan="6" style="text-align:center;">No requests yet</td></tr>
-                        @endforelse
-                    </tbody>
-                </table>
+            @if(session('success'))
+                <div class="alert alert-success rounded-4 mb-4 border-0 shadow-sm">
+                    <i class="fa-solid fa-circle-check me-2"></i> {{ session('success') }}
+                </div>
+            @endif
+            @if(session('error'))
+                <div class="alert alert-danger rounded-4 mb-4 border-0 shadow-sm">
+                    <i class="fa-solid fa-triangle-exclamation me-2"></i> {{ session('error') }}
+                </div>
+            @endif
+
+            <!-- Requests Table -->
+            <div class="data-card">
+                <h3><i class="fas fa-user-clock text-success"></i> Student Requests Management</h3>
+                <div class="table-responsive">
+                    <table class="custom-table">
+                        <thead>
+                            <tr>
+                                <th>STUDENT NAME</th>
+                                <th>SUBJECT</th>
+                                <th>LOCATION</th>
+                                <th>REQUESTED DATE</th>
+                                <th>STATUS</th>
+                                <th>ACTIONS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($requests as $req)
+                                @php
+                                    $studentName = $req->student->name ?? 'Student';
+                                    $firstName = strtolower(explode(' ', $studentName)[0]);
+                                    $studentAvatar = 'images/eman.jpg';
+                                    if (file_exists(public_path('images/' . $firstName . '.jpg'))) {
+                                        $studentAvatar = 'images/' . $firstName . '.jpg';
+                                    } elseif (file_exists(public_path('images/' . $firstName . '.png'))) {
+                                        $studentAvatar = 'images/' . $firstName . '.png';
+                                    }
+                                @endphp
+                                <tr>
+                                    <td>
+                                        <img src="{{ asset($studentAvatar) }}" style="width:30px;height:30px;border-radius:50%;object-fit:cover;margin-right:8px;vertical-align:middle;border:1.5px solid #10B981;" alt="{{ $studentName }}" onerror="this.src='https://ui-avatars.com/api/?name={{ urlencode($studentName) }}&background=ECFDF5&color=059669'">
+                                        <strong>{{ $studentName }}</strong>
+                                    </td>
+                                    <td>{{ $tutor->subject ?? 'Computer Science' }}</td>
+                                    <td>{{ $req->student->location ?? 'Islamabad' }}</td>
+                                    <td>{{ $req->created_at ? $req->created_at->format('M d, Y') : 'Recently' }}</td>
+                                    <td>
+                                        @if($req->status == 'pending')
+                                            <span class="badge-pending"><i class="fas fa-clock"></i> Pending</span>
+                                        @elseif($req->status == 'accepted')
+                                            <span class="badge-accepted"><i class="fas fa-check-circle"></i> Accepted</span>
+                                        @else
+                                            <span class="badge-rejected"><i class="fas fa-times-circle"></i> Declined</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if($req->status == 'pending')
+                                            <form action="/tutor/update-status" method="POST" style="display:inline-block;">
+                                                @csrf
+                                                <input type="hidden" name="request_id" value="{{ $req->id }}">
+                                                <input type="hidden" name="status" value="accepted">
+                                                <button type="submit" class="btn-action-accept me-1"><i class="fas fa-check"></i> Accept</button>
+                                            </form>
+                                            <form action="/tutor/update-status" method="POST" style="display:inline-block;">
+                                                @csrf
+                                                <input type="hidden" name="request_id" value="{{ $req->id }}">
+                                                <input type="hidden" name="status" value="rejected">
+                                                <button type="submit" class="btn-action-reject"><i class="fas fa-times"></i> Reject</button>
+                                            </form>
+                                        @else
+                                            <span class="text-muted small"><i class="fas fa-check text-success me-1"></i> Processed</span>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="6" class="text-center py-4 text-muted">No student connection requests found.</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
-            <div class="booking-table">
-                <h3>Booking Requests from Students</h3>
-                <table>
-                    <thead>
-                        <tr><th>STUDENT NAME</th><th>DATE</th><th>TIME</th><th>MODE</th><th>SESSIONS/WEEK</th><th>STATUS</th><th>ACTION</th></tr>
-                    </thead>
-                    <tbody>
-                        @forelse($bookings as $booking)
-                        <tr>
-                            <td>{{ $booking->student->name ?? 'N/A' }}</td>
-                            <td>{{ $booking->preferred_date }}</td>
-                            <td>{{ \Carbon\Carbon::parse($booking->preferred_time)->format('h:i A') }}</td>
-                            <td>{{ $booking->mode }}</td>
-                            <td>{{ $booking->sessions_per_week }}</td>
-                            <td>@if($booking->status == 'pending')<span class="status-pending">Pending</span>@elseif($booking->status == 'confirmed')<span class="status-confirmed">Confirmed ✓</span>@elseif($booking->status == 'completed')<span class="status-completed">Completed ✓</span>@else<span class="status-pending" style="background:#dc3545; color:white;">Cancelled</span>@endif</td>
-                            <td>@if($booking->status == 'pending')
-                                <form action="/tutor/update-booking-status" method="POST" style="display:inline;">
-                                    @csrf
-                                    <input type="hidden" name="booking_id" value="{{ $booking->id }}">
-                                    <input type="hidden" name="status" value="confirmed">
-                                    <button type="submit" class="btn-confirm">Accept Booking</button>
-                                </form>
-                                @elseif($booking->status == 'confirmed')
-                                <form action="/tutor/complete-session" method="POST" style="display:inline;">
-                                    @csrf
-                                    <input type="hidden" name="booking_id" value="{{ $booking->id }}">
-                                    <button type="submit" class="btn-complete">Complete Session</button>
-                                </form>
-                                @elseif($booking->status == 'completed')<span style="color:#17a2b8;">✓ Completed</span>
-                                @else<span style="color:#999;">Cancelled</span>@endif
-                            </td>
-                        </tr>
-                        @empty
-                        <tr><td colspan="7" style="text-align:center; padding:30px;">No booking requests yet</td></tr>
-                        @endforelse
-                    </tbody>
-                </table>
+            <!-- Bookings Table -->
+            <div class="data-card">
+                <h3><i class="fas fa-calendar-check text-primary"></i> Live Session Bookings</h3>
+                <div class="table-responsive">
+                    <table class="custom-table">
+                        <thead>
+                            <tr>
+                                <th>STUDENT</th>
+                                <th>DATE & TIME</th>
+                                <th>MODE</th>
+                                <th>FEE</th>
+                                <th>STATUS</th>
+                                <th>ACTIONS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($bookings as $booking)
+                                @php
+                                    $studentName = $booking->student->name ?? 'Student';
+                                    $firstName = strtolower(explode(' ', $studentName)[0]);
+                                    $studentAvatar = 'images/eman.jpg';
+                                    if (file_exists(public_path('images/' . $firstName . '.jpg'))) {
+                                        $studentAvatar = 'images/' . $firstName . '.jpg';
+                                    } elseif (file_exists(public_path('images/' . $firstName . '.png'))) {
+                                        $studentAvatar = 'images/' . $firstName . '.png';
+                                    }
+                                @endphp
+                                <tr>
+                                    <td>
+                                        <img src="{{ asset($studentAvatar) }}" style="width:30px;height:30px;border-radius:50%;object-fit:cover;margin-right:8px;vertical-align:middle;border:1.5px solid #10B981;" alt="{{ $studentName }}" onerror="this.src='https://ui-avatars.com/api/?name={{ urlencode($studentName) }}&background=ECFDF5&color=059669'">
+                                        <strong>{{ $studentName }}</strong>
+                                    </td>
+                                    <td>
+                                        <strong>{{ $booking->date ?? $booking->preferred_date ?? 'Upcoming' }}</strong><br>
+                                        <small class="text-muted">{{ $booking->time ?? '04:00 PM - 05:00 PM' }}</small>
+                                    </td>
+                                    <td><span class="badge bg-light text-dark border">Online 1-on-1</span></td>
+                                    <td style="font-weight:700; color:#059669;">Rs {{ number_format($tutor->hourly_rate ?? 1500) }}</td>
+                                    <td>
+                                        @if($booking->status == 'confirmed')
+                                            <span class="badge-confirmed"><i class="fas fa-check-circle"></i> Confirmed</span>
+                                        @elseif($booking->status == 'completed')
+                                            <span class="badge-completed"><i class="fas fa-award"></i> Completed</span>
+                                        @else
+                                            <span class="badge-pending"><i class="fas fa-clock"></i> {{ ucfirst($booking->status) }}</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if($booking->status == 'confirmed')
+                                            <form action="/tutor/complete-session" method="POST" style="display:inline-block;">
+                                                @csrf
+                                                <input type="hidden" name="booking_id" value="{{ $booking->id }}">
+                                                <button type="submit" class="btn-action-complete"><i class="fas fa-award me-1"></i> Mark Completed</button>
+                                            </form>
+                                        @else
+                                            <span class="text-muted small">—</span>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="6" class="text-center py-4 text-muted">No active session bookings found.</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

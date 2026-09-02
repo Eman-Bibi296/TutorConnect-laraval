@@ -1,13 +1,14 @@
 @extends('layouts.app')
 
-@section('title', 'Study Materials')
+@section('title', 'Study Materials - Tutor Portal - TutorConnect')
 
 @section('content')
 <style>
     .materials-container {
-        background: #f0f4f8;
-        min-height: 100vh;
-        padding: 30px 5%;
+        padding: 35px 5%;
+        background: #F8FAFC;
+        min-height: calc(100vh - 180px);
+        font-family: 'Poppins', sans-serif;
     }
     .materials-wrapper {
         display: flex;
@@ -15,216 +16,269 @@
         max-width: 1400px;
         margin: 0 auto;
     }
-    
-    /* ========== SIDEBAR STYLES - SAME AS DASHBOARD ========== */
-    .sidebar {
-        width: 280px;
-        background: white;
-        border-radius: 25px;
-        padding: 25px;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        height: fit-content;
-        position: sticky;
-        top: 30px;
-    }
-    
-    .sidebar-logo {
-        text-align: center;
-        margin-bottom: 30px;
-        padding-bottom: 20px;
-        border-bottom: 2px solid #f0f4f8;
-    }
-    
-    .sidebar-logo h2 {
-        margin: 0;
-        font-size: 1.5rem;
-        color: #1a1a2e;
-    }
-    
-    .sidebar-logo span {
-        color: #4a6cf7;
-    }
-    
-    .sidebar-logo p {
-        font-size: 0.7rem;
-        color: #999;
-        margin: 5px 0 0;
-    }
-    
-    .sidebar-menu {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
-    
-    .sidebar-menu li {
-        margin-bottom: 8px;
-    }
-    
-    .sidebar-menu a {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        padding: 12px 15px;
-        color: #555;
-        text-decoration: none;
-        border-radius: 12px;
-        transition: all 0.3s;
-        font-weight: 500;
-    }
-    
-    .sidebar-menu a:hover {
-        background: #f0f4f8;
-        color: #4a6cf7;
-    }
-    
-    .sidebar-menu a.active {
-        background: linear-gradient(135deg, #4a6cf7, #6c5ce7);
-        color: white;
-    }
-    
-    .badge {
-        display: inline-block;
-        padding: 2px 8px;
-        border-radius: 50%;
-        font-size: 0.7rem;
-        font-weight: 600;
-        margin-left: 10px;
-        color: white;
-    }
-    .badge-message { background: #4a6cf7; }
-    .badge-request { background: #ffc107; color: #333; }
-    .badge-booking { background: #28a745; }
-    
-    .logout-link {
-        margin-top: 30px;
-        padding-top: 20px;
-        border-top: 1px solid #eee;
-    }
-    /* ========== END SIDEBAR STYLES ========== */
-    
     .main-content {
         flex: 1;
+        min-width: 0;
     }
     
-    .card {
-        background: #dab6b6;
+    .page-header {
+        background: linear-gradient(135deg, #111827 0%, #1e293b 100%);
         border-radius: 20px;
-        padding: 25px;
-        margin-bottom: 25px;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        padding: 28px 30px;
+        color: white;
+        margin-bottom: 28px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.08);
     }
-    
-    .card-title {
-        font-size: 1.3rem;
+    .page-header h1 {
+        font-size: 1.6rem;
+        font-weight: 800;
+        margin: 0;
+    }
+    .page-header p {
+        color: #94A3B8;
+        margin: 8px 0 0;
+        font-size: 0.95rem;
+    }
+
+    .upload-section-card {
+        background: white;
+        border-radius: 20px;
+        padding: 28px;
+        margin-bottom: 28px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+        border: 1px solid #E2E8F0;
+    }
+    .upload-section-card h3 {
+        margin: 0 0 20px;
+        font-size: 1.25rem;
         font-weight: 700;
-        margin-bottom: 20px;
-        border-left: 4px solid #4a6cf7;
-        padding-left: 15px;
+        color: #111827;
+        display: flex;
+        align-items: center;
+        gap: 10px;
     }
     
+    .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin-bottom: 16px;
+    }
     .form-group {
-        margin-bottom: 20px;
+        margin-bottom: 16px;
     }
-    
     .form-group label {
-        font-weight: 600;
         display: block;
+        font-weight: 600;
         margin-bottom: 8px;
+        color: #111827;
+        font-size: 0.9rem;
     }
-    
-    .form-group input, .form-group select, .form-group textarea {
+    .form-group input, .form-group textarea {
         width: 100%;
-        padding: 10px;
-        border: 2px solid #e0e0e0;
-        border-radius: 10px;
+        padding: 12px 16px;
+        border: 1.5px solid #CBD5E1;
+        border-radius: 12px;
+        font-size: 0.95rem;
+        outline: none;
+        transition: all 0.2s ease;
+        background: white;
+        font-family: inherit;
     }
-    
+    .form-group input:focus, .form-group textarea:focus {
+        border-color: #059669;
+        box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
+    }
+
     .btn-upload {
-        background: linear-gradient(135deg, #4a6cf7, #6c5ce7);
+        background: linear-gradient(135deg, #059669 0%, #10B981 100%);
         color: white;
-        padding: 12px 25px;
         border: none;
-        border-radius: 10px;
+        padding: 12px 28px;
+        border-radius: 30px;
+        font-weight: 700;
+        font-size: 0.95rem;
         cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 0 4px 14px rgba(5, 150, 105, 0.25);
+        transition: all 0.2s;
     }
-    
-    .materials-table {
+    .btn-upload:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 18px rgba(5, 150, 105, 0.35);
+    }
+
+    .materials-table-card {
+        background: white;
+        border-radius: 20px;
+        padding: 28px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+        border: 1px solid #E2E8F0;
+    }
+    .materials-table-card h3 {
+        margin: 0 0 20px;
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #111827;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .table-responsive {
+        overflow-x: auto;
+    }
+    .custom-table {
         width: 100%;
-        border-collapse: collapse;
+        border-collapse: separate;
+        border-spacing: 0;
     }
-    
-    .materials-table th, .materials-table td {
-        padding: 12px;
+    .custom-table th {
         text-align: left;
-        border-bottom: 1px solid #eee;
-    }
-    
-    .btn-delete {
-        background: #dc3545;
-        color: white;
-        padding: 5px 12px;
-        border-radius: 6px;
-        text-decoration: none;
+        padding: 12px 16px;
+        background: #F8FAFC;
+        color: #475569;
         font-size: 0.8rem;
+        font-weight: 700;
+        border-bottom: 1px solid #E2E8F0;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
     }
-    
-    .alert {
-        padding: 12px;
-        border-radius: 10px;
-        margin-bottom: 20px;
+    .custom-table td {
+        padding: 14px 16px;
+        border-bottom: 1px solid #F1F5F9;
+        color: #334155;
+        font-size: 0.9rem;
+        vertical-align: middle;
     }
-    .alert-success {
-        background: #d4edda;
-        color: #155724;
+
+    .btn-action-delete {
+        background: #FEF2F2;
+        color: #DC2626;
+        border: 1px solid #FECACA;
+        padding: 6px 14px;
+        border-radius: 8px;
+        font-size: 0.82rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+    .btn-action-delete:hover {
+        background: #DC2626;
+        color: white;
+    }
+
+    @media (max-width: 900px) {
+        .materials-wrapper {
+            flex-direction: column;
+        }
+        .form-grid {
+            grid-template-columns: 1fr;
+        }
     }
 </style>
 
 <div class="materials-container">
     <div class="materials-wrapper">
-        
-        @include('tutor.partials.sidebar')
-        
+        <!-- Tutor Sidebar -->
+        @include('tutor.Partials.sidebar')
+
+        <!-- Main Content -->
         <div class="main-content">
-            <div class="card">
-                <h3 class="card-title">Upload Study Material</h3>
-                @if(session('success'))<div class="alert alert-success">{{ session('success') }}</div>@endif
-                <form action="/tutor/upload-material" method="POST" enctype="multipart/form-data">
+            <div class="page-header">
+                <h1><i class="fa-solid fa-folder-open"></i> Upload Study Materials</h1>
+                <p>Share lecture slides, practice questions, and notes with your connected students</p>
+            </div>
+
+            @if(session('success'))
+                <div class="alert alert-success rounded-4 mb-4 border-0 shadow-sm">
+                    <i class="fa-solid fa-circle-check me-2"></i> {{ session('success') }}
+                </div>
+            @endif
+            @if(session('error'))
+                <div class="alert alert-danger rounded-4 mb-4 border-0 shadow-sm">
+                    <i class="fa-solid fa-triangle-exclamation me-2"></i> {{ session('error') }}
+                </div>
+            @endif
+
+            <!-- Upload Section -->
+            <div class="upload-section-card">
+                <h3><i class="fa-solid fa-cloud-arrow-up" style="color:var(--primary);"></i> Publish New Resource</h3>
+                <form action="/tutor/material/upload" method="POST" enctype="multipart/form-data">
                     @csrf
-                    <div class="form-group"><label>Title</label><input type="text" name="title" required></div>
-                    <div class="form-group">
-                        <label>Material Type</label>
-                        <select name="material_type" required>
-                            <option value="">Select Type</option>
-                            <option value="PDF Notes">📄 PDF Notes</option>
-                            <option value="Assignment">📝 Assignment</option>
-                            <option value="Past Paper">📋 Past Paper</option>
-                            <option value="MCQs">❓ MCQs</option>
-                            <option value="Lecture Slides">📊 Lecture Slides</option>
-                            <option value="Word Document">📃 Word Document</option>
-                            <option value="Practice Exercise">✏️ Practice Exercise</option>
-                            <option value="Study Guide">📖 Study Guide</option>
-                        </select>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label><i class="fa-solid fa-heading"></i> Document Title</label>
+                            <input type="text" name="title" placeholder="e.g. Laravel Full-Stack MVC Architecture Notes" required>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fa-solid fa-file-arrow-up"></i> Choose File (PDF / Doc / Slides)</label>
+                            <input type="file" name="file" required>
+                        </div>
                     </div>
-                    <div class="form-group"><label>Description (Optional)</label><textarea name="description" rows="3"></textarea></div>
-                    <div class="form-group"><label>File (PDF, DOC, DOCX, PPT, PPTX, TXT - Max 10MB)</label><input type="file" name="file" required></div>
-                    <button type="submit" class="btn-upload"> Upload Material</button>
+
+                    <div class="form-group">
+                        <label><i class="fa-solid fa-align-left"></i> Summary / Instructions for Students</label>
+                        <textarea name="description" rows="2" placeholder="Explain what concepts this material covers..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-upload">
+                        <i class="fa-solid fa-upload"></i> <span>Upload & Share with Students</span>
+                    </button>
                 </form>
             </div>
-            
-            <div class="card">
-                <h3 class="card-title">My Uploaded Materials</h3>
-                <table class="materials-table">
-                    <thead><tr><th>Title</th><th>Type</th><th>Uploaded</th><th>Action</th></tr></thead>
-                    <tbody>
-                        @forelse($materials as $material)
-                        <tr><td>{{ $material->title }}</td><td>{{ $material->material_type }}</td><td>{{ $material->created_at->format('M d, Y') }}</td><td><a href="/tutor/material/delete/{{ $material->id }}" class="btn-delete" onclick="return confirm('Delete?')">Delete</a></td></tr>
-                        @empty
-                        <td><td colspan="4" style="text-align:center;">No materials uploaded yet</td></tr>
-                        @endforelse
-                    </tbody>
-                </table>
+
+            <!-- Uploaded Materials Table -->
+            <div class="materials-table-card">
+                <h3><i class="fa-solid fa-list" style="color:var(--primary);"></i> Uploaded Materials</h3>
+                <div class="table-responsive">
+                    <table class="custom-table">
+                        <thead>
+                            <tr>
+                                <th>Document Title</th>
+                                <th>Summary</th>
+                                <th>Upload Date</th>
+                                <th style="text-align:right;">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($materials as $mat)
+                                @php
+                                    $ext = strtolower(pathinfo($mat->file_path ?? '', PATHINFO_EXTENSION));
+                                @endphp
+                                <tr>
+                                    <td style="font-weight: 700; color: #111827;">
+                                        <i class="fa-solid fa-file-pdf text-danger me-2"></i>
+                                        {{ $mat->title }}
+                                        <span class="badge bg-light text-muted border ms-1" style="font-size:0.7rem;">{{ strtoupper($ext ?: 'PDF') }}</span>
+                                    </td>
+                                    <td>{{ $mat->description ?? 'Standard study notes and lecture guide.' }}</td>
+                                    <td>{{ $mat->created_at ? $mat->created_at->format('M d, Y') : 'Recently' }}</td>
+                                    <td style="text-align:right;">
+                                        <form action="/tutor/material/delete/{{ $mat->id }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this study material?');" style="display:inline-block;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn-action-delete">
+                                                <i class="fa-solid fa-trash-can me-1"></i> Delete
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="4" class="text-center py-4 text-muted">
+                                        You haven't uploaded any study resources yet.
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
             </div>
+
         </div>
     </div>
 </div>

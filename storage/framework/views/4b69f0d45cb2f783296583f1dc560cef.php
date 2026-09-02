@@ -1,318 +1,207 @@
-
-
-<?php $__env->startSection('title', 'Messages'); ?>
+<?php $__env->startSection('title', 'Messages - Student Portal - TutorConnect'); ?>
 
 <?php $__env->startSection('content'); ?>
 <style>
     .chat-container {
-        background: #f0f4f8;
-        min-height: 100vh;
-        padding: 30px 5%;
+        background: #F8FAFC;
+        min-height: calc(100vh - 180px);
+        padding: 35px 5%;
+        font-family: 'Poppins', sans-serif;
     }
-    
     .chat-wrapper {
         display: flex;
-        gap: 30px;
+        gap: 25px;
         max-width: 1400px;
         margin: 0 auto;
+        height: 680px;
     }
-    
-    /* Left Sidebar - Professional Postal */
-    .sidebar {
-        width: 280px;
-        background: white;
-        border-radius: 25px;
-        padding: 25px;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        height: fit-content;
-        position: sticky;
-        top: 30px;
-    }
-    
-    .sidebar-logo {
-        text-align: center;
-        margin-bottom: 30px;
-        padding-bottom: 20px;
-        border-bottom: 2px solid #f0f4f8;
-    }
-    
-    .sidebar-logo h2 {
-        margin: 0;
-        font-size: 1.5rem;
-        color: #1a1a2e;
-    }
-    
-    .sidebar-logo span {
-        color: #4a6cf7;
-    }
-    
-    .sidebar-logo p {
-        font-size: 0.7rem;
-        color: #999;
-        margin: 5px 0 0;
-    }
-    
-    .sidebar-menu {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
-    
-    .sidebar-menu li {
-        margin-bottom: 8px;
-    }
-    
-    .sidebar-menu a {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        padding: 12px 15px;
-        color: #555;
-        text-decoration: none;
-        border-radius: 12px;
-        transition: all 0.3s;
-        font-weight: 500;
-    }
-    
-    .sidebar-menu a:hover {
-        background: #f0f4f8;
-        color: #4a6cf7;
-    }
-    
-    .sidebar-menu a.active {
-        background: linear-gradient(135deg, #4a6cf7, #6c5ce7);
-        color: white;
-    }
-    
-    .logout-link {
-        margin-top: 30px;
-        padding-top: 20px;
-        border-top: 1px solid #eee;
-    }
-    
-    /* Conversations Sidebar */
     .conversations-sidebar {
         width: 320px;
         background: white;
-        border-radius: 25px;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        border-radius: 20px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+        border: 1px solid #E2E8F0;
         overflow: hidden;
         display: flex;
         flex-direction: column;
     }
-    
     .conv-header {
-        padding: 20px;
-        border-bottom: 1px solid #f0f4f8;
+        padding: 20px 22px;
+        border-bottom: 1px solid #F1F5F9;
     }
-    
     .conv-header h3 {
         margin: 0;
-        font-size: 1.2rem;
-        color: #1a1a2e;
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #111827;
     }
-    
     .search-box {
-        padding: 15px;
-        border-bottom: 1px solid #f0f4f8;
+        padding: 12px 18px;
+        border-bottom: 1px solid #F1F5F9;
     }
-    
     .search-box input {
         width: 100%;
-        padding: 10px 15px;
-        border: 2px solid #e0e0e0;
-        border-radius: 25px;
-        font-size: 0.85rem;
+        padding: 10px 16px;
+        border: 1.5px solid #E2E8F0;
+        border-radius: 12px;
+        font-size: 0.88rem;
         outline: none;
+        transition: all 0.2s;
     }
-    
     .search-box input:focus {
-        border-color: #4a6cf7;
+        border-color: #059669;
+        box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
     }
-    
     .conversations-list {
         flex: 1;
         overflow-y: auto;
-        max-height: 500px;
     }
-    
     .conversation-item {
         display: flex;
         align-items: center;
         gap: 12px;
-        padding: 15px;
+        padding: 14px 18px;
         cursor: pointer;
-        transition: background 0.2s;
-        border-bottom: 1px solid #f0f4f8;
+        transition: all 0.2s;
+        border-bottom: 1px solid #F8FAFC;
     }
-    
     .conversation-item:hover {
-        background: #f8f9fc;
+        background: #F8FAFC;
     }
-    
-    /* Remove blue color from active - change to light gray */
     .conversation-item.active {
-        background: #e8f0fe;
-        border-left: 3px solid #4a6cf7;
+        background: #ECFDF5;
+        border-left: 4px solid #10B981;
     }
-    
-    .conversation-item.active .conv-name {
-        color: #1a1a2e;
-    }
-    
-    .conv-avatar-letter {
-        width: 45px;
-        height: 45px;
-        background: #ff69b4;
+    .conv-avatar-img {
+        width: 44px;
+        height: 44px;
         border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.2rem;
-        font-weight: 700;
-        color: white;
+        object-fit: cover;
+        border: 2px solid #10B981;
         flex-shrink: 0;
     }
-    
-    .conv-info {
-        flex: 1;
-    }
-    
+    .conv-info { flex: 1; min-width: 0; }
     .conv-name {
-        font-weight: 600;
-        color: #1a1a2e;
-        margin-bottom: 3px;
-    }
-    
-    .conv-preview {
-        font-size: 0.7rem;
-        color: #999;
+        font-weight: 700;
+        color: #111827;
+        font-size: 0.95rem;
+        margin-bottom: 2px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
     }
-    
-    /* Main Chat Area */
+    .conv-preview {
+        font-size: 0.78rem;
+        color: #64748B;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
     .chat-main {
         flex: 1;
         background: white;
-        border-radius: 25px;
+        border-radius: 20px;
         display: flex;
         flex-direction: column;
         overflow: hidden;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+        border: 1px solid #E2E8F0;
+        min-width: 0;
     }
-    
     .chat-header {
-        padding: 20px;
-        border-bottom: 1px solid #f0f4f8;
+        padding: 16px 22px;
+        border-bottom: 1px solid #F1F5F9;
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 14px;
+        background: white;
     }
-    
-    .chat-avatar-letter {
-        width: 50px;
-        height: 50px;
-        background: #ff69b4;
+    .chat-avatar-img {
+        width: 46px;
+        height: 46px;
         border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.3rem;
-        font-weight: 700;
-        color: white;
+        object-fit: cover;
+        border: 2px solid #10B981;
     }
-    
     .chat-info h3 {
         margin: 0;
         font-size: 1.1rem;
         font-weight: 700;
-        color: #1a1a2e;
+        color: #111827;
     }
-    
     .chat-info p {
-        margin: 3px 0 0;
-        font-size: 0.7rem;
-        color: #999;
+        margin: 2px 0 0;
+        font-size: 0.8rem;
+        color: #059669;
+        font-weight: 600;
     }
-    
     .messages-area {
         flex: 1;
-        padding: 20px;
+        padding: 22px;
         overflow-y: auto;
-        background: #fafbfc;
+        background: #F8FAFC;
         display: flex;
         flex-direction: column;
-        gap: 15px;
+        gap: 14px;
     }
-    
     .message-row {
         display: flex;
-        margin-bottom: 0;
     }
-    
     .message-row.sent {
         justify-content: flex-end;
     }
-    
     .message-row.received {
         justify-content: flex-start;
     }
-    
     .message-bubble {
-        max-width: 60%;
-        padding: 10px 16px;
+        max-width: 65%;
+        padding: 11px 18px;
         border-radius: 18px;
-        font-size: 0.85rem;
-        line-height: 1.4;
+        font-size: 0.9rem;
+        line-height: 1.45;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.02);
     }
-    
     .message-row.sent .message-bubble {
-        background: linear-gradient(135deg, #4a6cf7, #6c5ce7);
+        background: linear-gradient(135deg, #059669 0%, #10B981 100%);
         color: white;
         border-bottom-right-radius: 4px;
     }
-    
     .message-row.received .message-bubble {
         background: white;
-        border: 1px solid #e8e8e8;
-        color: #333;
+        border: 1px solid #E2E8F0;
+        color: #1E293B;
         border-bottom-left-radius: 4px;
     }
-    
     .message-time {
-        font-size: 0.55rem;
+        font-size: 0.65rem;
         margin-top: 4px;
-        opacity: 0.7;
+        opacity: 0.8;
     }
-    
     .chat-input-area {
-        padding: 15px 20px;
+        padding: 16px 20px;
         background: white;
-        border-top: 1px solid #f0f4f8;
+        border-top: 1px solid #F1F5F9;
         display: flex;
-        gap: 10px;
+        gap: 12px;
         align-items: center;
     }
-    
     .chat-input-area input {
         flex: 1;
-        padding: 12px 16px;
-        border: 2px solid #e8e8e8;
+        padding: 12px 18px;
+        border: 1.5px solid #CBD5E1;
         border-radius: 25px;
-        font-size: 0.85rem;
+        font-size: 0.92rem;
         outline: none;
+        transition: all 0.2s;
     }
-    
     .chat-input-area input:focus {
-        border-color: #4a6cf7;
+        border-color: #059669;
+        box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
     }
-    
     .send-btn {
-        width: 42px;
-        height: 42px;
-        background: linear-gradient(135deg, #4a6cf7, #6c5ce7);
+        width: 44px;
+        height: 44px;
+        background: linear-gradient(135deg, #059669 0%, #10B981 100%);
         border: none;
         border-radius: 50%;
         color: white;
@@ -320,21 +209,31 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        transition: all 0.2s;
+        box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
     }
-    
+    .send-btn:hover {
+        transform: scale(1.05);
+    }
     .no-messages {
         text-align: center;
-        padding: 50px;
-        color: #999;
+        padding: 60px 20px;
+        color: #94A3B8;
+        font-size: 0.95rem;
+    }
+    @media (max-width: 900px) {
+        .chat-wrapper { flex-direction: column; height: auto; }
+        .conversations-sidebar { width: 100%; height: 260px; }
+        .chat-main { height: 500px; }
     }
 </style>
 
 <div class="chat-container">
     <div class="chat-wrapper">
-        
+        <!-- Student Sidebar -->
         <?php echo $__env->make('student.partials.sidebar', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
         
-        <!-- Conversations List -->
+        <!-- Conversations Sidebar -->
         <div class="conversations-sidebar">
             <div class="conv-header">
                 <h3>Messages</h3>
@@ -344,30 +243,69 @@
             </div>
             <div class="conversations-list" id="conversationsList">
                 <?php
+                    use App\Models\Tutor;
+                    use App\Models\Message;
                     use App\Models\RequestModel;
                     $studentId = Session::get('student_id');
-                    $allTutors = RequestModel::where('student_id', $studentId)
-                        ->where('status', 'accepted')
-                        ->with('tutor')
-                        ->get();
+                    
+                    $allTutors = collect([]);
+                    if ($studentId) {
+                        try {
+                            $tutorIdsFromMsgs = Message::where('sender_id', $studentId)->where('sender_type', 'student')->pluck('receiver_id')
+                                ->merge(Message::where('receiver_id', $studentId)->where('receiver_type', 'student')->pluck('sender_id'))
+                                ->unique()->toArray();
+                                
+                            $tutorIdsFromReqs = RequestModel::where('student_id', $studentId)->pluck('tutor_id')->toArray();
+                            $allTutorIds = array_unique(array_merge($tutorIdsFromMsgs, $tutorIdsFromReqs));
+                            
+                            if (empty($allTutorIds)) {
+                                $allTutors = Tutor::where('is_verified', true)->limit(6)->get();
+                            } else {
+                                $allTutors = Tutor::whereIn('id', $allTutorIds)->get();
+                                if ($allTutors->isEmpty()) {
+                                    $allTutors = Tutor::where('is_verified', true)->limit(6)->get();
+                                }
+                            }
+                        } catch (\Throwable $e) {
+                            $allTutors = collect([]);
+                        }
+                    }
+                    
+                    $activeTutorId = request('tutor_id') ?? ($allTutors->first()->id ?? null);
                 ?>
                 
                 <?php $__empty_1 = true; $__currentLoopData = $allTutors; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $conv): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
-                    <?php if($conv->tutor): ?>
-                    <div class="conversation-item" onclick="selectTutor(<?php echo e($conv->tutor->id); ?>, '<?php echo e($conv->tutor->name); ?>', this)">
-                        <div class="conv-avatar-letter">
-                            <?php echo e(strtoupper(substr($conv->tutor->name, 0, 1))); ?>
-
-                        </div>
+                    <?php
+                        $tutorAvatar = 'images/burhan.png';
+                        if (!empty($conv->profile_picture) && file_exists(public_path($conv->profile_picture))) {
+                            $tutorAvatar = $conv->profile_picture;
+                        } else {
+                            $firstName = strtolower(explode(' ', str_replace(['Dr.', 'Prof.', 'Mr.', 'Ms.'], '', $conv->name))[0] ?? 'burhan');
+                            if (file_exists(public_path('images/' . $firstName . '.jpg'))) {
+                                $tutorAvatar = 'images/' . $firstName . '.jpg';
+                            } elseif (file_exists(public_path('images/' . $firstName . '.png'))) {
+                                $tutorAvatar = 'images/' . $firstName . '.png';
+                            }
+                        }
+                        
+                        $lastMsg = Message::where(function($q) use ($studentId, $conv) {
+                            $q->where('sender_id', $studentId)->where('receiver_id', $conv->id);
+                        })->orWhere(function($q) use ($studentId, $conv) {
+                            $q->where('sender_id', $conv->id)->where('receiver_id', $studentId);
+                        })->orderBy('created_at', 'desc')->first();
+                    ?>
+                    <div class="conversation-item <?php echo e($conv->id == $activeTutorId ? 'active' : ''); ?>" 
+                         id="conv-item-<?php echo e($conv->id); ?>"
+                         onclick="selectTutor(<?php echo e($conv->id); ?>, '<?php echo e(addslashes($conv->name)); ?>', '<?php echo e(addslashes($conv->subject)); ?>', '<?php echo e(asset($tutorAvatar)); ?>', this)">
+                        <img src="<?php echo e(asset($tutorAvatar)); ?>" alt="<?php echo e($conv->name); ?>" class="conv-avatar-img" onerror="this.src='https://ui-avatars.com/api/?name=<?php echo e(urlencode($conv->name)); ?>&background=ECFDF5&color=059669'">
                         <div class="conv-info">
-                            <div class="conv-name"><?php echo e($conv->tutor->name); ?></div>
-                            <div class="conv-preview">Click to chat</div>
+                            <div class="conv-name"><?php echo e($conv->name); ?></div>
+                            <div class="conv-preview"><?php echo e($lastMsg ? $lastMsg->message : 'Click to chat with instructor'); ?></div>
                         </div>
                     </div>
-                    <?php endif; ?>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                     <div style="padding: 30px; text-align: center; color: #999;">
-                        No conversations yet.<br>Send a request to a tutor.
+                        No conversations yet.<br>Select a tutor from the dashboard.
                     </div>
                 <?php endif; ?>
             </div>
@@ -376,20 +314,20 @@
         <!-- Main Chat Area -->
         <div class="chat-main" id="chatMain">
             <div class="chat-header" id="chatHeader">
-                <div class="chat-avatar-letter" id="chatAvatar">?</div>
+                <img id="chatHeaderImg" src="<?php echo e(asset('images/burhan.png')); ?>" class="chat-avatar-img" style="display:none;" alt="Tutor">
                 <div class="chat-info">
                     <h3 id="chatTutorName">Select a Tutor</h3>
-                    <p id="chatTutorStatus">Tutor</p>
+                    <p id="chatTutorStatus">Online Verified Instructor</p>
                 </div>
             </div>
             
             <div class="messages-area" id="messagesArea">
-                <div class="no-messages">Select a conversation from the left</div>
+                <div class="no-messages">Loading messages...</div>
             </div>
             
             <div class="chat-input-area" id="chatInputArea">
                 <input type="text" id="messageInput" placeholder="Type your message..." disabled>
-                <button class="send-btn" onclick="sendMessage()" disabled>
+                <button class="send-btn" id="sendBtn" onclick="sendMessage()" disabled>
                     <i class="fas fa-paper-plane"></i>
                 </button>
             </div>
@@ -401,26 +339,28 @@
     let currentTutorId = null;
     let currentTutorName = null;
     
-    function selectTutor(tutorId, tutorName, element) {
+    function selectTutor(tutorId, tutorName, tutorSubject, tutorAvatarUrl, element) {
         currentTutorId = tutorId;
         currentTutorName = tutorName;
         
-        // Update active class
         document.querySelectorAll('.conversation-item').forEach(item => {
             item.classList.remove('active');
         });
-        element.classList.add('active');
+        if (element) {
+            element.classList.add('active');
+        }
         
-        // Update chat header
         document.getElementById('chatTutorName').innerText = tutorName;
-        document.getElementById('chatTutorStatus').innerHTML = 'Tutor';
-        document.getElementById('chatAvatar').innerHTML = tutorName.charAt(0).toUpperCase();
+        document.getElementById('chatTutorStatus').innerHTML = tutorSubject ? ('<i class="fa-solid fa-circle text-success me-1" style="font-size:8px;"></i> ' + tutorSubject) : 'Instructor';
+        const img = document.getElementById('chatHeaderImg');
+        if (tutorAvatarUrl) {
+            img.src = tutorAvatarUrl;
+            img.style.display = 'block';
+        }
         
-        // Enable input
         document.getElementById('messageInput').disabled = false;
-        document.querySelector('.send-btn').disabled = false;
+        document.getElementById('sendBtn').disabled = false;
         
-        // Load messages
         loadMessages();
     }
     
@@ -431,8 +371,8 @@
             .then(response => response.json())
             .then(data => {
                 const area = document.getElementById('messagesArea');
-                if(data.length === 0) {
-                    area.innerHTML = '<div class="no-messages">No messages yet. Send a message to start the conversation!</div>';
+                if(!data || data.length === 0) {
+                    area.innerHTML = '<div class="no-messages"><i class="fa-regular fa-comments fs-2 mb-2 d-block text-muted"></i>No messages exchanged yet.<br>Send a message below to start your conversation!</div>';
                     return;
                 }
                 area.innerHTML = data.map(msg => `
@@ -481,13 +421,19 @@
         if (e.key === 'Enter') sendMessage();
     });
     
-    // Search conversations
     document.getElementById('searchConversation')?.addEventListener('keyup', function(e) {
         const term = e.target.value.toLowerCase();
         document.querySelectorAll('.conversation-item').forEach(item => {
             const name = item.querySelector('.conv-name').innerText.toLowerCase();
             item.style.display = name.includes(term) ? 'flex' : 'none';
         });
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const activeItem = document.querySelector('.conversation-item.active') || document.querySelector('.conversation-item');
+        if (activeItem) {
+            activeItem.click();
+        }
     });
 </script>
 <?php $__env->stopSection(); ?>
