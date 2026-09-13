@@ -277,7 +277,7 @@
                                                     <i class="fa-solid fa-comments"></i> Chat
                                                 </a>
                                             @endif
-                                            @if($b->status == 'confirmed' || $b->status == 'pending')
+                                            @if($b->status == 'pending')
                                                 <a href="{{ url('/payment/' . $b->id) }}" class="btn-table-action btn-action-pay me-1">
                                                     <i class="fa-solid fa-credit-card"></i> Pay Fee
                                                 </a>

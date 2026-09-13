@@ -14,30 +14,23 @@ class Payment extends Model
         'student_id',
         'tutor_id',
         'amount',
+        'platform_fee',
+        'tutor_earning',
         'currency',
         'transaction_id',
         'status'
     ];
 
-    /**
-     * Relationship: Payment belongs to a Booking
-     */
     public function booking()
     {
         return $this->belongsTo(Booking::class, 'booking_id');
     }
 
-    /**
-     * Relationship: Payment belongs to a Student
-     */
     public function student()
     {
         return $this->belongsTo(Student::class, 'student_id');
     }
 
-    /**
-     * Relationship: Payment belongs to a Tutor
-     */
     public function tutor()
     {
         return $this->belongsTo(Tutor::class, 'tutor_id');

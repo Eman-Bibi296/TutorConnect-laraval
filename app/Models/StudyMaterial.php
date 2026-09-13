@@ -8,6 +8,7 @@ class StudyMaterial extends Model
 {
     protected $fillable = [
         'tutor_id',
+        'student_id',
         'title',
         'material_type',
         'description',
@@ -23,4 +24,8 @@ class StudyMaterial extends Model
     {
         return $this->belongsTo(Tutor::class, 'tutor_id');
     }
+    public function student()
+ {
+     return $this->belongsTo(Student::class, 'student_id');
+ }
 }

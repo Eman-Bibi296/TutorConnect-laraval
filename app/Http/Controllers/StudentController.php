@@ -318,7 +318,7 @@ class StudentController extends Controller
         
          DB::table('bookings')
         ->where('student_id', $studentId)
-        ->where('status', 'confirmed')
+        ->whereIn('status', ['confirmed', 'completed'])
         ->where('student_viewed', 0)
         ->update(['student_viewed' => 1]);
         $bookings = Booking::where('student_id', $studentId)
@@ -440,11 +440,18 @@ class StudentController extends Controller
             ->distinct()
             ->pluck('tutor_id')
             ->toArray();
-        
+
+
+         $studentId2 = $studentId;
         $materials = \App\Models\StudyMaterial::whereIn('tutor_id', $tutorIds)
+                        ->where(function($q) use ($studentId2) {
+                 $q->whereNull('student_id')
+                   ->orWhere('student_id', $studentId2);
+              })
                         ->with('tutor')
                         ->orderBy('created_at', 'desc')
                         ->get();
+
         
         return view('student.study-materials', compact('materials'));
     }
@@ -456,7 +463,7 @@ class StudentController extends Controller
         $studentId = Session::get('student_id');
         $hasConfirmedBooking = Booking::where('student_id', $studentId)
             ->where('tutor_id', $material->tutor_id)
-            ->where('status', 'confirmed')
+            ->whereIn('status', ['confirmed', 'completed'])
             ->exists();
         
         if(!$hasConfirmedBooking) {
@@ -466,7 +473,7 @@ class StudentController extends Controller
         $filePath = public_path($material->file_path);
         
         if(file_exists($filePath)) {
-            return response()->download($filePath, $material->file_name);
+            return response()->file($filePath);
         }
         
         return back()->with('error', 'File not found!');
@@ -496,7 +503,7 @@ class StudentController extends Controller
     {
         DB::table('bookings')
             ->where('student_id', Session::get('student_id'))
-            ->where('status', 'confirmed')
+             ->whereIn('status', ['confirmed', 'completed'])
             ->update(['student_viewed' => 1]);
         
         return response()->json(['success' => true]);

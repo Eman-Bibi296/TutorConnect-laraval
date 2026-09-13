@@ -278,7 +278,7 @@
                                                     <i class="fa-solid fa-comments"></i> Chat
                                                 </a>
                                             <?php endif; ?>
-                                            <?php if($b->status == 'confirmed' || $b->status == 'pending'): ?>
+                                            <?php if($b->status == 'pending'): ?>
                                                 <a href="<?php echo e(url('/payment/' . $b->id)); ?>" class="btn-table-action btn-action-pay me-1">
                                                     <i class="fa-solid fa-credit-card"></i> Pay Fee
                                                 </a>

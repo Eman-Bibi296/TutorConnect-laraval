@@ -54,17 +54,31 @@
         <small style="color: #D97706; font-weight: 600;">Active & Completed Sessions</small>
     </div>
 
-    <div class="stat-card">
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
-            <div class="stat-label">TOTAL REVENUE</div>
-            <div style="width: 44px; height: 44px; border-radius: 14px; background: #F3E8FF; color: #9333EA; display: flex; align-items: center; justify-content: center; font-size: 1.25rem;">
-                <i class="fa-solid fa-money-bill-trend-up"></i>
-            </div>
+    
+   <div class="stat-card">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+        <div class="stat-label">TOTAL VOLUME</div>
+        <div style="width: 44px; height: 44px; border-radius: 14px; background: #F3E8FF; color: #9333EA; display: flex; align-items: center; justify-content: center; font-size: 1.25rem;">
+            <i class="fa-solid fa-money-bill-trend-up"></i>
         </div>
-        <div class="stat-number">Rs {{ number_format($totalRevenue, 0) }}</div>
-        <small style="color: #10B981; font-weight: 600;">Platform settled volume</small>
     </div>
+    <div class="stat-number">Rs {{ number_format($totalRevenue, 0) }}</div>
+    <small style="color: #10B981; font-weight: 600;">Total student payments processed</small>
 </div>
+
+<div class="stat-card">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+        <div class="stat-label">PLATFORM COMMISSION (20%)</div>
+        <div style="width: 44px; height: 44px; border-radius: 14px; background: #ECFDF5; color: #059669; display: flex; align-items: center; justify-content: center; font-size: 1.25rem;">
+            <i class="fa-solid fa-sack-dollar"></i>
+        </div>
+    </div>
+    <div class="stat-number">Rs {{ number_format($totalCommission, 0) }}</div>
+    <small style="color: #059669; font-weight: 600;">Platform earnings from bookings</small>
+</div>
+</div>
+
+
 
 <!-- SECTION 1: RECENT TUTORS -->
 <div class="section-card">

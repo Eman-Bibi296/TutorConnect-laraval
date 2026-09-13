@@ -105,10 +105,12 @@ class AuthController extends Controller
             'location' => $request->location,
             'bio' => $request->bio,
             'profile_picture' => $profilePicPath ?? 'images/burhan.png',
-            'is_verified' => true
+            'is_verified' => false
         ]);
 
-        return redirect('/tutor/login')->with('success', 'Registration successful! Please login.');
+          $newTutor = Tutor::where('email', $request->email)->first();
+          Session::put('pending_tutor_id', $newTutor->id);
+          return redirect('/tutor/registration-pending');
     }
 
     // ==================== TUTOR LOGIN (WITH REGISTRATION CHECK) ====================
@@ -140,12 +142,51 @@ class AuthController extends Controller
                 Session::put('user_type', 'tutor');
                 return redirect('/tutor/dashboard');
             } else {
-                return back()->with('error', 'Your account is pending admin verification.');
+                Session::put('pending_tutor_id', $tutor->id);
+                 return redirect('/tutor/registration-pending');
             }
         }
 
         return back()->with('error', 'Invalid credentials');
     }
+
+
+
+    
+    // ==================== TUTOR PENDING STATUS PAGE ====================
+ public function showPendingStatus()
+{
+   $tutorId = Session::get('pending_tutor_id');
+   $tutor = $tutorId ? Tutor::find($tutorId) : null;
+
+  if (!$tutor) {
+      return redirect('/tutor/register');
+   }
+
+    return view('auth.tutor-pending', compact('tutor'));
+}
+
+ // ==================== CHECK VERIFICATION STATUS (AJAX POLLING) ====================
+ public function checkVerificationStatus()
+{
+    $tutorId = Session::get('pending_tutor_id');
+    $tutor = $tutorId ? Tutor::find($tutorId) : null;
+
+    return response()->json([
+       'verified' => $tutor ? (bool)$tutor->is_verified : false
+    ]);
+ }
+
+
+
+
+
+
+
+
+
+
+
 
     // ==================== LOGOUT ====================
     public function logout()

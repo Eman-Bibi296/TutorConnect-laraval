@@ -187,6 +187,7 @@ class TutorController extends Controller
         $booking = Booking::find($request->booking_id);
         if ($booking) {
             $booking->status = 'completed';
+            $booking->student_viewed = 0;
             $booking->save();
             return back()->with('success', 'Session marked as completed! Student can now review you.');
         }
@@ -273,9 +274,19 @@ class TutorController extends Controller
     {
         $tutorId = Session::get('tutor_id');
         $materials = StudyMaterial::where('tutor_id', $tutorId)
+                        ->with('student')
                         ->orderBy('created_at', 'desc')
                         ->get();
-        return view('tutor.study-materials', compact('materials'));
+
+         $acceptedStudents = \App\Models\RequestModel::where('tutor_id', $tutorId)
+          ->where('status', 'accepted')
+           ->with('student')
+           ->get()
+           ->pluck('student')
+            ->filter();
+
+
+         return view('tutor.study-materials', compact('materials', 'acceptedStudents'));
     }
 
     public function uploadMaterial(Request $request)
@@ -295,6 +306,7 @@ class TutorController extends Controller
 
         StudyMaterial::create([
             'tutor_id' => $tutorId,
+            'student_id' => $request->student_id ?: null,
             'title' => $request->title,
              'material_type' => $request->material_type ?? 'document',
             'description' => $request->description,

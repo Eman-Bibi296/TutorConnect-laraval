@@ -30,6 +30,8 @@ class AdminController extends Controller
         $totalBookings = Booking::count();
         $pendingTutors = Tutor::where('is_verified', false)->count();
         $totalRevenue = Booking::where('status', 'confirmed')->sum('amount') ?? 0;
+        $totalCommission = \App\Models\Payment::sum('platform_fee') ?? 0;
+        $totalTutorPayouts = \App\Models\Payment::sum('tutor_earning') ?? 0;
         
         // Recent data for charts
         $recentStudents = Student::orderBy('created_at', 'desc')->take(5)->get();
@@ -40,6 +42,7 @@ class AdminController extends Controller
         return view('admin.dashboard', compact(
             'totalStudents', 'totalTutors', 'totalRequests', 
             'totalBookings', 'pendingTutors', 'totalRevenue',
+             'totalCommission', 'totalTutorPayouts',
             'recentStudents', 'recentTutors', 'recentBookings', 'recentReviews'
         ));
     }
@@ -123,6 +126,27 @@ class AdminController extends Controller
         $review->delete();
         return back()->with('success', 'Review deleted successfully');
     }
+     
+     // ==================== PAYMENTS MANAGEMENT ====================
+ public function payments()
+ {
+    $payments = \App\Models\Payment::with(['student', 'tutor', 'booking'])
+        ->orderBy('created_at', 'desc')
+        ->get();
+
+    $totalVolume = $payments->sum('amount');
+    $totalCommission = $payments->sum('platform_fee');
+    $totalTutorPayouts = $payments->sum('tutor_earning');
+
+    return view('admin.payments', compact('payments', 'totalVolume', 'totalCommission', 'totalTutorPayouts'));
+ }
+
+
+
+
+
+
+
 
     // ==================== MESSAGES MANAGEMENT ====================
     public function messages()

@@ -253,6 +253,7 @@
                 <li><a href="/admin/requests" class="{{ request()->is('admin/requests*') ? 'active' : '' }}"><i class="fa-solid fa-envelope-open-text"></i> Requests</a></li>
                 <li><a href="/admin/messages" class="{{ request()->is('admin/messages*') ? 'active' : '' }}"><i class="fa-solid fa-comments"></i> Messages</a></li>
                 <li><a href="/admin/reviews" class="{{ request()->is('admin/reviews*') ? 'active' : '' }}"><i class="fa-solid fa-star"></i> Reviews</a></li>
+                <li><a href="/admin/payments" class="{{ request()->is('admin/payments*') ? 'active' : '' }}"><i class="fa-solid fa-receipt"></i> Payments</a></li>
             </ul>
             
             <div style="margin-top: auto; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1);">

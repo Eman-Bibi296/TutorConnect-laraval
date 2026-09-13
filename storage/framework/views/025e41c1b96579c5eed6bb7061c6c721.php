@@ -76,9 +76,15 @@
         width: 44px;
         height: 44px;
         border-radius: 50%;
-        object-fit: cover;
         border: 2px solid #10B981;
         flex-shrink: 0;
+        background: #059669;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+         font-size: 1.1rem;
     }
     .conv-info { flex: 1; min-width: 0; }
     .conv-name {
@@ -120,9 +126,14 @@
         width: 46px;
         height: 46px;
         border-radius: 50%;
-        object-fit: cover;
         border: 2px solid #10B981;
-    }
+        background: #059669;
+        color: white;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 1.3rem;
+     }
     .chat-info h3 {
         margin: 0;
         font-size: 1.1rem;
@@ -278,14 +289,7 @@
                 
                 <?php $__empty_1 = true; $__currentLoopData = $allStudents; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $student): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                     <?php
-                        $firstName = strtolower(explode(' ', $student->name)[0]);
-                        $studentAvatar = null;
-                        if (file_exists(public_path('images/' . $firstName . '.jpg'))) {
-                            $studentAvatar = 'images/' . $firstName . '.jpg';
-                        } elseif (file_exists(public_path('images/' . $firstName . '.png'))) {
-                            $studentAvatar = 'images/' . $firstName . '.png';
-                        }
-                        $studentAvatarFinal = $studentAvatar ? asset($studentAvatar) : 'https://ui-avatars.com/api/?name=' . urlencode($student->name) . '&background=ECFDF5&color=059669';
+                        
                         
                         $lastMsg = Message::where(function($q) use ($tutorId, $student) {
                             $q->where('sender_id', $student->id)->where('receiver_id', $tutorId);
@@ -295,8 +299,8 @@
                     ?>
                     <div class="conversation-item <?php echo e($student->id == $activeStudentId ? 'active' : ''); ?>" 
                          id="conv-item-<?php echo e($student->id); ?>"
-                         onclick="selectStudent(<?php echo e($student->id); ?>, '<?php echo e(addslashes($student->name)); ?>', '<?php echo e(addslashes($student->email)); ?>', '<?php echo e($studentAvatarFinal); ?>', this)">
-                        <img src="<?php echo e($studentAvatarFinal); ?>" alt="<?php echo e($student->name); ?>" class="conv-avatar-img">
+                        onclick="selectStudent(<?php echo e($student->id); ?>, '<?php echo e(addslashes($student->name)); ?>', '<?php echo e(addslashes($student->email)); ?>', this)">
+                        <div class="conv-avatar-img"><?php echo e(strtoupper(substr($student->name, 0, 1))); ?></div>
                         <div class="conv-info">
                             <div class="conv-name"><?php echo e($student->name); ?></div>
                             <div class="conv-preview"><?php echo e($lastMsg ? $lastMsg->message : 'Click to open conversation'); ?></div>
@@ -313,7 +317,7 @@
         <!-- Main Chat Area -->
         <div class="chat-main" id="chatMain">
             <div class="chat-header" id="chatHeader">
-                <img id="chatHeaderImg" src="<?php echo e(asset('images/eman.jpg')); ?>" class="chat-avatar-img" style="display:none;" alt="Student">
+                <div id="chatHeaderImg" class="chat-avatar-img" style="display:none;"></div>
                 <div class="chat-info">
                     <h3 id="chatStudentName">Select a Student</h3>
                     <p id="chatStudentStatus">Enrolled Student</p>
@@ -338,7 +342,7 @@
     let currentStudentId = null;
     let currentStudentName = null;
     
-    function selectStudent(studentId, studentName, studentEmail, studentAvatarUrl, element) {
+    function selectStudent(studentId, studentName, studentEmail, element) {
         currentStudentId = studentId;
         currentStudentName = studentName;
         
@@ -352,10 +356,11 @@
         document.getElementById('chatStudentName').innerText = studentName;
         document.getElementById('chatStudentStatus').innerHTML = '<i class="fa-solid fa-circle text-success me-1" style="font-size:8px;"></i> Active Student (' + studentEmail + ')';
         const img = document.getElementById('chatHeaderImg');
-        if (studentAvatarUrl) {
-            img.src = studentAvatarUrl;
-            img.style.display = 'block';
-        }
+        
+        img.textContent = studentName.charAt(0).toUpperCase();
+        img.style.display = 'flex';
+
+
         
         document.getElementById('messageInput').disabled = false;
         document.getElementById('sendBtn').disabled = false;

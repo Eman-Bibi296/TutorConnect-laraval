@@ -191,7 +191,7 @@
         ->count() : 0;
 
     $unreadBkCount = $studentId ? Booking::where('student_id', $studentId)
-        ->where('status', 'confirmed')
+        ->whereIn('status', ['confirmed', 'completed'])
         ->where('student_viewed', 0)
         ->count() : 0;
 

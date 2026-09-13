@@ -146,6 +146,16 @@
                 <p>Download handouts, formula sheets, past exam papers, and guides uploaded by your tutors</p>
             </div>
 
+         @if(session('error'))
+          <div class="alert alert-danger rounded-4 mb-4 border-0 shadow-sm">
+          <i class="fa-solid fa-triangle-exclamation me-2"></i> {{ session('error') }}
+         </div>
+          @endif
+
+
+
+
+
             <div class="data-card">
                 @if($materials && $materials->count() > 0)
                     <div class="materials-grid">
@@ -172,8 +182,10 @@
                                         {{ $mat->description ?? 'Comprehensive learning and revision material shared by instructor.' }}
                                     </div>
                                 </div>
-                                <a href="{{ url('/student/material/download/' . $mat->id) }}" class="btn-download">
-                                    <i class="fa-solid fa-download"></i> Download Resource
+                                 <a href="{{ url('/student/material/download/' . $mat->id) }}" target="_blank" class="btn-download">
+                                   
+                                
+                                <i class="fa-solid fa-download"></i> Download Resource
                                 </a>
                             </div>
                         @endforeach

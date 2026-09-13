@@ -234,12 +234,12 @@
                                         <?php echo e($studentName); ?>
 
                                     </td>
-                                    <td><?php echo e($booking->topic ?? 'Course syllabus revision'); ?></td>
+                                     <td><?php echo e($booking->message ?? 'Course syllabus revision'); ?></td>
                                     <td>
                                         <strong><?php echo e($booking->preferred_date ? \Carbon\Carbon::parse($booking->preferred_date)->format('M d, Y') : date('M d, Y')); ?></strong><br>
                                         <small class="text-muted"><?php echo e($booking->formatted_time); ?></small>
                                     </td>
-                                    <td><span class="badge bg-light text-dark border">Online 1-on-1</span></td>
+                                    <td><span class="badge bg-light text-dark border"><?php echo e(ucfirst($booking->mode ?? 'Online')); ?></span></td>
                                     
 
 

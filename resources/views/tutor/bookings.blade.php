@@ -231,12 +231,12 @@
                                         
                                         {{ $studentName }}
                                     </td>
-                                    <td>{{ $booking->topic ?? 'Course syllabus revision' }}</td>
+                                     <td>{{ $booking->message ?? 'Course syllabus revision' }}</td>
                                     <td>
                                         <strong>{{ $booking->preferred_date ? \Carbon\Carbon::parse($booking->preferred_date)->format('M d, Y') : date('M d, Y') }}</strong><br>
                                         <small class="text-muted">{{ $booking->formatted_time }}</small>
                                     </td>
-                                    <td><span class="badge bg-light text-dark border">Online 1-on-1</span></td>
+                                    <td><span class="badge bg-light text-dark border">{{ ucfirst($booking->mode ?? 'Online') }}</span></td>
                                     
 
 

@@ -284,7 +284,7 @@
                                 @endphp
                                 <tr>
                                     <td>
-                                        <img src="{{ asset($studentAvatar) }}" style="width:30px;height:30px;border-radius:50%;object-fit:cover;margin-right:8px;vertical-align:middle;border:1.5px solid #10B981;" alt="{{ $studentName }}" onerror="this.src='https://ui-avatars.com/api/?name={{ urlencode($studentName) }}&background=ECFDF5&color=059669'">
+                        
                                         <strong>{{ $studentName }}</strong>
                                     </td>
                                     <td>{{ $tutor->subject ?? 'Computer Science' }}</td>
@@ -339,6 +339,7 @@
                                 <th>DATE & TIME</th>
                                 <th>MODE</th>
                                 <th>FEE</th>
+                                 <th>YOUR EARNING (80%)</th>
                                 <th>STATUS</th>
                                 <th>ACTIONS</th>
                             </tr>
@@ -355,17 +356,23 @@
                                         $studentAvatar = 'images/' . $firstName . '.png';
                                     }
                                 @endphp
+
+                                 @php
+    $sessionFee = $booking->amount ?? $tutor->hourly_rate ?? 1500;
+   $tutorEarning = round($sessionFee * 0.80, 2);
+     @endphp
                                 <tr>
                                     <td>
-                                        <img src="{{ asset($studentAvatar) }}" style="width:30px;height:30px;border-radius:50%;object-fit:cover;margin-right:8px;vertical-align:middle;border:1.5px solid #10B981;" alt="{{ $studentName }}" onerror="this.src='https://ui-avatars.com/api/?name={{ urlencode($studentName) }}&background=ECFDF5&color=059669'">
+                                    
                                         <strong>{{ $studentName }}</strong>
                                     </td>
                                     <td>
                                         <strong>{{ $booking->date ?? $booking->preferred_date ?? 'Upcoming' }}</strong><br>
                                         <small class="text-muted">{{ $booking->time ?? '04:00 PM - 05:00 PM' }}</small>
                                     </td>
-                                    <td><span class="badge bg-light text-dark border">Online 1-on-1</span></td>
-                                    <td style="font-weight:700; color:#059669;">Rs {{ number_format($tutor->hourly_rate ?? 1500) }}</td>
+                                     <td><span class="badge bg-light text-dark border">{{ ucfirst($booking->mode ?? 'Online') }}</span></td>
+                                    <td style="color:#64748B;">Rs {{ number_format($sessionFee) }}</td>
+                                    <td style="font-weight:700; color:#059669;">Rs {{ number_format($tutorEarning) }}</td>
                                     <td>
                                         @if($booking->status == 'confirmed')
                                             <span class="badge-confirmed"><i class="fas fa-check-circle"></i> Confirmed</span>
@@ -389,7 +396,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="6" class="text-center py-4 text-muted">No active session bookings found.</td>
+                                    <td colspan="7" class="text-center py-4 text-muted">No active session bookings found.</td>
                                 </tr>
                             @endforelse
                         </tbody>

@@ -48,7 +48,7 @@
                     <tr>
                         <td style="font-weight: 700; color: #111827;">
                             <div style="display: flex; align-items: center; gap: 10px;">
-                                <img src="{{ asset($studentAvatar) }}" style="width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 2px solid #10B981;" alt="{{ $student->name }}" onerror="this.src='https://ui-avatars.com/api/?name={{ urlencode($student->name) }}&background=ECFDF5&color=059669'">
+                            
                                 <div>
                                     <div>{{ $student->name }}</div>
                                     <small class="text-muted" style="font-weight: 400; font-size: 0.75rem;">ID: #ST-{{ $student->id }}</small>

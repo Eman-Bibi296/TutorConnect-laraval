@@ -106,9 +106,14 @@ class PaymentController extends Controller
 
             $txId = $request->payment_intent_id ?? ('pi_demo_' . uniqid());
             $amount = (float)($request->amount ?? $booking->amount ?? 1500);
+           $platformFee = round($amount * 0.20, 2);
+            $tutorEarning = round($amount - $platformFee, 2);
+
+
+
             
             // Atomically update Booking and create/update Payment ledger
-            DB::transaction(function() use ($booking, $studentId, $request, $txId, $amount) {
+            DB::transaction(function() use ($booking, $studentId, $request, $txId, $amount, $platformFee, $tutorEarning) {
                 $booking->status = 'confirmed';
                 $booking->payment_status = 'paid';
                 $booking->payment_id = $txId;
@@ -122,6 +127,8 @@ class PaymentController extends Controller
                         'student_id' => $studentId,
                         'tutor_id' => $booking->tutor_id ?? $request->tutor_id,
                         'amount' => $amount,
+                        'platform_fee' => $platformFee,
+                         'tutor_earning' => $tutorEarning,
                         'currency' => 'usd',
                         'transaction_id' => $txId,
                         'status' => 'completed'

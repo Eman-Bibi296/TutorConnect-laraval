@@ -212,6 +212,7 @@
                     <div class="form-grid">
                         <div class="form-group">
                             <label><i class="fa-solid fa-heading"></i> Document Title</label>
+        
                             <input type="text" name="title" placeholder="e.g. Laravel Full-Stack MVC Architecture Notes" required>
                         </div>
                         <div class="form-group">
@@ -219,6 +220,17 @@
                             <input type="file" name="file" required>
                         </div>
                     </div>
+
+
+                    <div class="form-group">
+     <label><i class="fa-solid fa-user-graduate"></i> Send To (Optional)</label>
+     <select name="student_id" style="width: 100%; padding: 12px 16px; border: 1.5px solid #CBD5E1; border-radius: 12px; font-size: 0.95rem; background: white;">
+         <option value="">All My Students</option>
+        @foreach($acceptedStudents as $student)
+            <option value="{{ $student->id }}">{{ $student->name }}</option>
+        @endforeach
+    </select>
+ </div>
 
                     <div class="form-group">
                         <label><i class="fa-solid fa-align-left"></i> Summary / Instructions for Students</label>
@@ -240,8 +252,10 @@
                             <tr>
                                 <th>Document Title</th>
                                 <th>Summary</th>
+                                 <th>Sent To</th>
                                 <th>Upload Date</th>
                                 <th style="text-align:right;">Actions</th>
+                                
                             </tr>
                         </thead>
                         <tbody>
@@ -256,6 +270,13 @@
                                         <span class="badge bg-light text-muted border ms-1" style="font-size:0.7rem;">{{ strtoupper($ext ?: 'PDF') }}</span>
                                     </td>
                                     <td>{{ $mat->description ?? 'Standard study notes and lecture guide.' }}</td>
+
+                            <td>
+                            <span class="badge {{ $mat->student_id ? 'bg-info text-dark' : 'bg-secondary' }}">
+                              {{ $mat->student->name ?? 'All Students' }}
+                            </span>
+                        </td>
+
                                     <td>{{ $mat->created_at ? $mat->created_at->format('M d, Y') : 'Recently' }}</td>
                                     <td style="text-align:right;">
                                         <form action="/tutor/material/delete/{{ $mat->id }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this study material?');" style="display:inline-block;">
@@ -269,7 +290,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="4" class="text-center py-4 text-muted">
+                                    <td colspan="5" class="text-center py-4 text-muted">
                                         You haven't uploaded any study resources yet.
                                     </td>
                                 </tr>

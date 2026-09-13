@@ -31,6 +31,14 @@ Route::post('/student/login', [AuthController::class, 'studentLogin']);
 Route::get('/tutor/register', [AuthController::class, 'showTutorRegister']);
 Route::post('/tutor/register', [AuthController::class, 'tutorRegister']);
 Route::get('/tutor/login', [AuthController::class, 'showTutorLogin']);
+
+
+Route::get('/tutor/registration-pending', [AuthController::class, 'showPendingStatus']);
+Route::get('/tutor/check-verification-status', [AuthController::class, 'checkVerificationStatus']);
+
+
+
+
 Route::post('/tutor/login', [AuthController::class, 'tutorLogin']);
 
 // ==================== LOGOUT ====================
@@ -113,6 +121,7 @@ Route::post('/admin/booking/cancel/{id}', [AdminController::class, 'bookingCance
 
 Route::get('/admin/reviews', [AdminController::class, 'reviews'])->name('admin.reviews');
 Route::delete('/admin/review/delete/{id}', [AdminController::class, 'reviewDelete']);
+Route::get('/admin/payments', [AdminController::class, 'payments'])->name('admin.payments');
 
 Route::get('/admin/messages', [AdminController::class, 'messages'])->name('admin.messages');
 Route::delete('/admin/message/delete/{id}', [AdminController::class, 'messageDelete']);
@@ -123,3 +132,4 @@ Route::get('/payment/{bookingId}', [PaymentController::class, 'showPaymentPage']
 Route::post('/create-payment-intent', [PaymentController::class, 'createPaymentIntent']);
 Route::post('/book-and-pay', [PaymentController::class, 'bookAndPay']);
 Route::get('/booking/success/{bookingId}', [PaymentController::class, 'bookingSuccess']);
+
