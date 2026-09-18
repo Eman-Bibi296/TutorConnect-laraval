@@ -182,16 +182,19 @@
             </div>
         <?php endif; ?>
         
-        <form action="/student/login" method="POST">
+        <form action="/student/login" method="POST" autocomplete="off">
             <?php echo csrf_field(); ?>
             <div class="form-group">
                 <label><i class="fa-regular fa-envelope"></i> Email Address</label>
-                <input type="email" name="email" value="<?php echo e(old('email')); ?>" placeholder="e.g. eman@student.com" required>
+                <input type="email" name="email" placeholder="e.g. eman@student.com" autocomplete="off" required>
             </div>
             
             <div class="form-group">
                 <label><i class="fa-solid fa-lock"></i> Password</label>
-                <input type="password" name="password" placeholder="••••••••" required>
+                <input type="password" name="password" placeholder="••••••••" autocomplete="new-password" required>
+                <div style="text-align: right; margin-top: 8px;">
+      <a href="/forgot-password?type=student" style="color: #059669; font-size: 0.85rem; font-weight: 600; text-decoration: none;">Forgot Password?</a>
+     </div>
             </div>
             
             <button type="submit" class="btn-auth-submit">

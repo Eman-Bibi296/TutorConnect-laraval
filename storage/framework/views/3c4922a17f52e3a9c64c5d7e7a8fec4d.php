@@ -182,7 +182,7 @@
             </div>
         <?php endif; ?>
         
-        <form action="/student/register" method="POST">
+        <form action="/student/register" method="POST" autocomplete="off">
             <?php echo csrf_field(); ?>
             <div class="form-group">
                 <label><i class="fa-regular fa-user"></i> Full Name</label>
@@ -191,12 +191,12 @@
             
             <div class="form-group">
                 <label><i class="fa-regular fa-envelope"></i> Email Address</label>
-                <input type="email" name="email" placeholder="e.g. eman@student.com" value="<?php echo e(old('email')); ?>" required>
+                <input type="email" name="email" placeholder="e.g. eman@student.com" value="<?php echo e(old('email')); ?>" autocomplete="off" required>
             </div>
             
             <div class="form-group">
                 <label><i class="fa-solid fa-lock"></i> Password</label>
-                <input type="password" name="password" placeholder="Create a secure password" minlength="6" required>
+                <input type="password" name="password" placeholder="Create a secure password" minlength="6" autocomplete="new-password" required>
             </div>
             
             <div class="form-group">

@@ -369,7 +369,7 @@
                                     </td>
                                     <td>
                                         <strong><?php echo e($booking->date ?? $booking->preferred_date ?? 'Upcoming'); ?></strong><br>
-                                        <small class="text-muted"><?php echo e($booking->time ?? '04:00 PM - 05:00 PM'); ?></small>
+                                        <small class="text-muted"><?php echo e($booking->formatted_time); ?></small>
                                     </td>
                                      <td><span class="badge bg-light text-dark border"><?php echo e(ucfirst($booking->mode ?? 'Online')); ?></span></td>
                                     <td style="color:#64748B;">Rs <?php echo e(number_format($sessionFee)); ?></td>

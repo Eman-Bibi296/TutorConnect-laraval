@@ -368,7 +368,7 @@
                                     </td>
                                     <td>
                                         <strong>{{ $booking->date ?? $booking->preferred_date ?? 'Upcoming' }}</strong><br>
-                                        <small class="text-muted">{{ $booking->time ?? '04:00 PM - 05:00 PM' }}</small>
+                                        <small class="text-muted">{{ $booking->formatted_time }}</small>
                                     </td>
                                      <td><span class="badge bg-light text-dark border">{{ ucfirst($booking->mode ?? 'Online') }}</span></td>
                                     <td style="color:#64748B;">Rs {{ number_format($sessionFee) }}</td>

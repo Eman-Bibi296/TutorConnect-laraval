@@ -212,6 +212,7 @@
                                 <th>Subject / Goal</th>
                                 <th>Scheduled Time</th>
                                 <th>Mode</th>
+                                <th>Sessions/Week</th>
                                 <th>Status</th>
                                 <th style="text-align:right;">Actions</th>
                             </tr>
@@ -240,17 +241,8 @@
                                         <small class="text-muted"><?php echo e($booking->formatted_time); ?></small>
                                     </td>
                                     <td><span class="badge bg-light text-dark border"><?php echo e(ucfirst($booking->mode ?? 'Online')); ?></span></td>
-                                    
-
-
-
-
-
-
-
-
-
-
+                                    <td style="font-weight: 600; color: #059669;"><?php echo e($booking->sessions_per_week ?? 1); ?>x</td>
+                
                                     <td>
     <?php if($booking->status == 'confirmed' && !$booking->tutor_confirmed): ?>
         <span class="status-badge status-pending"><i class="fa-solid fa-clock"></i> Payment Received</span>
@@ -295,7 +287,7 @@
                                 </tr>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                                 <tr>
-                                    <td colspan="6" class="text-center py-4 text-muted">No scheduled sessions found.</td>
+                                    <td colspan="7" class="text-center py-4 text-muted">No scheduled sessions found.</td>
                                 </tr>
                             <?php endif; ?>
                         </tbody>

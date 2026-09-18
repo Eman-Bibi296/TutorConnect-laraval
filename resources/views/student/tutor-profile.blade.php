@@ -325,9 +325,16 @@
                                         <div class="info-value">{{ $tutor->experience ?? 5 }}+ Years</div>
                                     </div>
                                     <div class="info-item">
-                                        <div class="info-label">Location / Mode</div>
-                                        <div class="info-value">{{ $tutor->location ?? 'Islamabad' }} / Online</div>
+                                        <div class="info-label">Location</div>
+                                        <div class="info-value">{{ $tutor->location ?? 'Islamabad' }}</div>
                                     </div>
+
+                          <div class="info-item">
+                        <div class="info-label">Weekly Availability</div>
+                       <div class="info-value">{{ $tutor->availability ?? 'Flexible / By Arrangement' }}</div>
+                      </div>
+                              
+
                                     <div class="info-item">
                                         <div class="info-label">Verification Status</div>
                                         <div class="info-value" style="color:#059669;">✓ 100% Background Verified</div>

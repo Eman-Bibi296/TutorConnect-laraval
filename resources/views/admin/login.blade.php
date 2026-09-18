@@ -184,16 +184,16 @@
             </div>
         @endif
         
-        <form action="/admin/login" method="POST">
+        <form action="/admin/login" method="POST" autocomplete="off">
             @csrf
             <div class="form-group">
                 <label><i class="fa-regular fa-envelope"></i> Administrative Email</label>
-                <input type="email" name="email" value="{{ old('email') }}" placeholder="admin@tutorconnect.com" required>
+                <input type="email" name="email" placeholder="admin@tutorconnect.com" autocomplete="off" required>
             </div>
             
             <div class="form-group">
                 <label><i class="fa-solid fa-lock"></i> Password</label>
-                <input type="password" name="password" placeholder="••••••••" required>
+                <input type="password" name="password" placeholder="••••••••" autocomplete="new-password" required>
             </div>
             
             <button type="submit" class="btn-auth-submit">

@@ -210,6 +210,7 @@
                                 <th>Subject / Goal</th>
                                 <th>Scheduled Time</th>
                                 <th>Mode</th>
+                                <th>Sessions/Week</th>
                                 <th>Status</th>
                                 <th style="text-align:right;">Actions</th>
                             </tr>
@@ -237,17 +238,8 @@
                                         <small class="text-muted">{{ $booking->formatted_time }}</small>
                                     </td>
                                     <td><span class="badge bg-light text-dark border">{{ ucfirst($booking->mode ?? 'Online') }}</span></td>
-                                    
-
-
-
-
-
-
-
-
-
-
+                                    <td style="font-weight: 600; color: #059669;">{{ $booking->sessions_per_week ?? 1 }}x</td>
+                
                                     <td>
     @if($booking->status == 'confirmed' && !$booking->tutor_confirmed)
         <span class="status-badge status-pending"><i class="fa-solid fa-clock"></i> Payment Received</span>
@@ -281,18 +273,12 @@
         </form>
     @endif
 </td>
-
-
-
-
-
-
-                                    
+   
                                     
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="6" class="text-center py-4 text-muted">No scheduled sessions found.</td>
+                                    <td colspan="7" class="text-center py-4 text-muted">No scheduled sessions found.</td>
                                 </tr>
                             @endforelse
                         </tbody>

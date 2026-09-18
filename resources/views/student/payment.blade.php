@@ -275,7 +275,7 @@
                     </div>
                     <div class="summary-row">
                         <span class="label"><i class="fa-solid fa-laptop me-1"></i> Learning Mode</span>
-                        <span class="val">Online 1-on-1 Interactive</span>
+                        <span class="val">{{ ucfirst($booking->mode ?? 'Online') }}</span>
                     </div>
                     <div class="summary-row" style="border-top:1px dashed #CBD5E1; padding-top:12px; margin-top:8px;">
                         <span class="label" style="font-weight:700; color:#111827;">Total Amount</span>

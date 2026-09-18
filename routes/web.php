@@ -6,6 +6,7 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TutorController;
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\PasswordResetController;
 
 // ==================== HOME PAGES ====================
 Route::get('/', function () {
@@ -133,3 +134,9 @@ Route::post('/create-payment-intent', [PaymentController::class, 'createPaymentI
 Route::post('/book-and-pay', [PaymentController::class, 'bookAndPay']);
 Route::get('/booking/success/{bookingId}', [PaymentController::class, 'bookingSuccess']);
 
+Route::get('/forgot-password', [PasswordResetController::class, 'showForgotForm']);
+Route::post('/forgot-password', [PasswordResetController::class, 'sendOtp']);
+Route::get('/verify-otp', [PasswordResetController::class, 'showOtpForm']);
+Route::post('/verify-otp', [PasswordResetController::class, 'verifyOtp']);
+Route::get('/reset-password', [PasswordResetController::class, 'showResetForm']);
+Route::post('/reset-password', [PasswordResetController::class, 'resetPassword']);

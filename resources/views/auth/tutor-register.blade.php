@@ -195,7 +195,7 @@
             </div>
         @endif
         
-        <form action="/tutor/register" method="POST" enctype="multipart/form-data">
+        <form action="/tutor/register" method="POST" enctype="multipart/form-data" autocomplete="off">
             @csrf
             <div class="form-row">
                 <div class="form-group">
@@ -204,14 +204,14 @@
                 </div>
                 <div class="form-group">
                     <label><i class="fa-regular fa-envelope"></i> Email Address</label>
-                    <input type="email" name="email" placeholder="e.g. burhan@example.com" value="{{ old('email') }}" required>
+                    <input type="email" name="email" placeholder="e.g. burhan@example.com" value="{{ old('email') }}" autocomplete="off" required>
                 </div>
             </div>
             
             <div class="form-row">
                 <div class="form-group">
                     <label><i class="fa-solid fa-lock"></i> Password</label>
-                    <input type="password" name="password" placeholder="Create password (min 6 chars)" minlength="6" required>
+                    <input type="password" name="password" placeholder="Create password (min 6 chars)" minlength="6" autocomplete="new-password" required>
                 </div>
                 <div class="form-group">
                     <label><i class="fa-solid fa-lock"></i> Confirm Password</label>

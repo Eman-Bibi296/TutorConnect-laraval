@@ -204,18 +204,22 @@
             </div>
         </div>
         
-        <form id="loginForm" action="/student/login" method="POST">
+        <form id="loginForm" action="/student/login" method="POST" autocomplete="off">
             @csrf
             
             <div class="form-group">
                 <label><i class="fas fa-envelope me-1 text-muted"></i> Email Address</label>
-                <input type="email" id="loginEmail" name="email" placeholder="name@example.com" value="{{ old('email') }}" required>
+                <input type="email" id="loginEmail" name="email" placeholder="name@example.com" autocomplete="off" required>
             </div>
             
             <div class="form-group">
                 <label><i class="fas fa-lock me-1 text-muted"></i> Password</label>
-                <input type="password" name="password" placeholder="Enter your password" required>
-            </div>
+                <input type="password" name="password" placeholder="Enter your password" autocomplete="new-password" required>
+                 <div style="text-align: right; margin-top: 8px;">
+        <a href="/forgot-password" style="color: #059669; font-size: 0.85rem; font-weight: 600; text-decoration: none;">Forgot Password?</a>
+    </div>
+</div>
+            
             
             <button type="submit" class="btn-login-submit">
                 <i class="fas fa-sign-in-alt"></i> Login to Dashboard
