@@ -209,7 +209,7 @@
                                 <tr>
                                     <th>Tutor Name</th>
                                     <th>Subject</th>
-                                    <th>Hourly Rate</th>
+                                    <th>Monthly Rate</th>
                                     <th>Date Sent</th>
                                     <th>Status</th>
                                     <th style="text-align:right;">Actions</th>
@@ -239,7 +239,7 @@
                                             {{ $t->name ?? 'Tutor' }}
                                         </td>
                                         <td>{{ $t->subject ?? 'Computer Science' }}</td>
-                                        <td style="font-weight:700; color:#059669;">Rs {{ number_format($t->hourly_rate ?? 1500) }}/hr</td>
+                                        <td style="font-weight:700; color:#059669;">Rs {{ number_format($t->hourly_rate ?? 1500) }}/month</td>
                                         <td>{{ $req->created_at->format('M d, Y') }}</td>
                                         <td>
                                             @if($req->status == 'accepted')

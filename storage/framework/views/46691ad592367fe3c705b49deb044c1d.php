@@ -224,19 +224,21 @@
             <!-- Welcome Banner -->
             <div class="welcome-banner">
                 <h2>Hello, <span><?php echo e(explode(' ', $student->name ?? 'Student')[0]); ?></span>! 👋</h2>
-                <p>Find and book verified tutors for computer science, mathematics, engineering, and science.</p>
+                <p>Find and book verified tutors for computer science, mathematics and science.</p>
             </div>
 
             <!-- Search Card -->
             <div class="search-card">
                 <div class="search-row">
-                    <select id="dashSubjectFilter" class="search-input" onchange="filterDashTutors()">
-                        <option value="all">All Subjects</option>
-                        <option value="Computer Science">Computer Science</option>
-                        <option value="Mathematics">Mathematics & Calculus</option>
-                        <option value="Physics">Physics & Electronics</option>
-                        <option value="Chemistry">Chemistry</option>
-                        <option value="English">English</option>
+                     <?php
+            $uniqueSubjects = $tutors->pluck('subject')->filter()->unique()->sort()->values();
+             ?>
+             <select id="dashSubjectFilter" class="search-input" onchange="filterDashTutors()">
+            <option value="all">All Subjects</option>
+       <?php $__currentLoopData = $uniqueSubjects; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $subj): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+      <option value="<?php echo e($subj); ?>"><?php echo e($subj); ?></option>
+          <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        
                     </select>
                     <input type="text" id="dashKeywordInput" class="search-input" placeholder="Search by tutor name, keyword or city..." oninput="filterDashTutors()">
                     <button type="button" class="search-btn" onclick="filterDashTutors()"><i class="fas fa-search me-1"></i> Search</button>
@@ -274,7 +276,7 @@
                             <p class="text-muted small mb-3"><?php echo e(Str::limit($t->bio ?? 'Experienced instructor ready to help you succeed in your studies.', 85)); ?></p>
                             <div class="tutor-stats">
                                 <span>⭐ <?php echo e(number_format($avg, 1)); ?> (<?php echo e($revCount); ?> reviews)</span>
-                                <span style="color:#059669; font-weight:800;">Rs <?php echo e(number_format($t->hourly_rate ?? 1500)); ?>/hr</span>
+                                 <span style="color:#059669; font-weight:800;">Rs <?php echo e(number_format($t->hourly_rate ?? 1500)); ?>/month</span>
                             </div>
                         </div>
                         <div class="tutor-actions">

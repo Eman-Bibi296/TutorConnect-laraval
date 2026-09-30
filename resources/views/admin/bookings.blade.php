@@ -6,9 +6,9 @@
 <div class="topbar-card" style="display: flex; align-items: center; justify-content: space-between; background: white; padding: 20px 24px; border-radius: 20px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04); border: 1px solid #E2E8F0; margin-bottom: 25px; flex-wrap: wrap; gap: 12px;">
     <div>
         <h2 style="font-size: 1.45rem; font-weight: 800; color: #111827; margin: 0;">
-            <i class="fa-solid fa-calendar-check text-success me-2"></i> Session Bookings &amp; Schedules
+            <i class="fa-solid fa-calendar-check text-success me-2"></i> Tutor Bookings 
         </h2>
-        <p style="font-size: 0.85rem; color: #64748B; margin: 2px 0 0;">Manage scheduled sessions, tutor payments, and completed session records</p>
+        <p style="font-size: 0.85rem; color: #64748B; margin: 2px 0 0;">View and manage tutor booking and payment status.</p>
     </div>
     <div style="display: flex; align-items: center; gap: 12px;">
         <span class="badge bg-success bg-opacity-10 text-success rounded-pill px-3 py-2" style="font-size: 0.85rem; font-weight: 700;">
@@ -23,9 +23,9 @@
             <thead>
                 <tr>
                     <th>Student</th>
-                    <th>Instructor</th>
+                    <th>Tutor</th>
                     <th>Date &amp; Time</th>
-                    <th>Subject &amp; Goal</th>
+                    <th>Subject </th>
                     <th>Fee Rate</th>
                     <th>Status</th>
                     <th style="text-align: right;">Action</th>

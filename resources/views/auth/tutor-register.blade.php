@@ -179,7 +179,7 @@
         <div class="auth-header">
             <div class="auth-header-icon"><i class="fa-solid fa-chalkboard-user"></i></div>
             <h2>Register as a Tutor</h2>
-            <p>Join our instructor network and connect with students needing your expertise</p>
+            <p>Register as a tutor to connect with students.</p>
         </div>
         
         @if(session('success'))
@@ -200,7 +200,7 @@
             <div class="form-row">
                 <div class="form-group">
                     <label><i class="fa-regular fa-user"></i> Full Name</label>
-                    <input type="text" name="name" placeholder="e.g. Dr. Burhan Ahmad" value="{{ old('name') }}" required>
+                    <input type="text" name="name" placeholder="e.g.  Burhan Ahmad" value="{{ old('name') }}" required>
                 </div>
                 <div class="form-group">
                     <label><i class="fa-regular fa-envelope"></i> Email Address</label>
@@ -221,12 +221,12 @@
             
             <div class="form-row">
                 <div class="form-group">
-                    <label><i class="fa-solid fa-book"></i> Subject Expertise</label>
+                    <label><i class="fa-solid fa-book"></i> Subject</label>
                     <input type="text" name="subject" placeholder="e.g. Computer Science, Physics, Math" value="{{ old('subject') }}" required>
                 </div>
                 <div class="form-group">
                     <label><i class="fa-solid fa-graduation-cap"></i> Highest Qualification</label>
-                    <input type="text" name="qualification" placeholder="e.g. PhD Computer Science, MPhil" value="{{ old('qualification') }}" required>
+                    <input type="text" name="qualification" placeholder="e.g. BS Computer Science" value="{{ old('qualification') }}" required>
                 </div>
             </div>
             
@@ -236,7 +236,7 @@
                     <input type="number" name="experience" placeholder="e.g. 5" min="1" max="40" value="{{ old('experience') }}" required>
                 </div>
                 <div class="form-group">
-                    <label><i class="fa-solid fa-money-bill-wave"></i> Hourly Rate (PKR)</label>
+                    <label><i class="fa-solid fa-money-bill-wave"></i>Monthly Rate (PKR)</label>
                     <input type="number" name="hourly_rate" placeholder="e.g. 1500" min="500" step="100" value="{{ old('hourly_rate', 1500) }}" required>
                 </div>
             </div>
@@ -269,7 +269,7 @@
             
             <div class="form-group">
                 <label><i class="fa-solid fa-pencil"></i> Brief Teaching Bio</label>
-                <textarea name="bio" rows="2" class="form-control" placeholder="Introduce yourself, teaching experience and methodology..." style="padding: 12px 16px; border: 1.5px solid #CBD5E1; border-radius: 12px; font-family: inherit; font-size: 0.95rem;">{{ old('bio') }}</textarea>
+                <textarea name="bio" rows="2" class="form-control" placeholder="Briefly introduce yourself, your experience, and subjects you offer..." style="padding: 12px 16px; border: 1.5px solid #CBD5E1; border-radius: 12px; font-family: inherit; font-size: 0.95rem;">{{ old('bio') }}</textarea>
             </div>
 
             <button type="submit" class="btn-auth-submit">

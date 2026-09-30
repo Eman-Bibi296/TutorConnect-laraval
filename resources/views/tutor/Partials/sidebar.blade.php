@@ -193,7 +193,10 @@
         ->count() : 0;
 
     $newTutorBookings = $tutorId ? Booking::where('tutor_id', $tutorId)
-        ->where('status', 'confirmed')
+     ->where(function($q) {
+      $q->where('status', 'confirmed')->orWhere('payment_verification_status', 'submitted');
+  })
+        
         ->where('is_viewed', 0)
         ->count() : 0;
 

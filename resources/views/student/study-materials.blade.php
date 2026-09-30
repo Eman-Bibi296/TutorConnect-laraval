@@ -143,7 +143,7 @@
         <div class="main-content">
             <div class="page-header">
                 <h1><i class="fa-solid fa-book-open"></i> Shared Study Materials</h1>
-                <p>Download handouts, formula sheets, past exam papers, and guides uploaded by your tutors</p>
+                <p>Access study plans, notes, and reference files shared by your tutors.</p>
             </div>
 
          @if(session('error'))

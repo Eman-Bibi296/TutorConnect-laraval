@@ -181,7 +181,7 @@
         <div class="main-content">
             <div class="page-header">
                 <h1><i class="fa-solid fa-calendar-check"></i> My Scheduled Bookings</h1>
-                <p>Manage confirmed tutoring sessions, view payment status, and join classes</p>
+                <p>Manage confirmed bookings and view payment status.</p>
             </div>
 
             <!-- Stats Grid -->
@@ -195,7 +195,7 @@
                         <?php echo e($bookings->where('status', 'confirmed')->count()); ?>
 
                     </div>
-                    <div class="stat-label">Confirmed Sessions</div>
+                    <div class="stat-label">CONFIRMED BOOKINGS</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-number" style="color: #D97706;">
@@ -209,7 +209,7 @@
             <!-- Bookings List Card -->
             <div class="data-card">
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h3 class="m-0"><i class="fa-solid fa-calendar-days" style="color: #059669;"></i> Active Tutoring Sessions</h3>
+                    <h3 class="m-0"><i class="fa-solid fa-calendar-days" style="color: #059669;"></i> Active Bookings</h3>
                     <a href="/student/dashboard" class="btn btn-sm btn-outline-success rounded-pill px-3"><i class="fas fa-plus me-1"></i> Book New Tutor</a>
                 </div>
 
@@ -256,7 +256,7 @@
                                             <strong><?php echo e($b->preferred_date ? \Carbon\Carbon::parse($b->preferred_date)->format('M d, Y') : date('M d, Y')); ?></strong><br>
                                             <small class="text-muted"><?php echo e($b->formatted_time); ?></small>
                                         </td>
-                                        <td><span class="badge bg-light text-dark border"><i class="fa-solid fa-video me-1 text-success"></i> Online 1-on-1</span></td>
+                                       <td><span class="badge bg-light text-dark border"><i class="fa-solid fa-video me-1 text-success"></i> <?php echo e(ucfirst($b->mode ?? 'Online')); ?></span></td>
                                         <td style="font-weight:700; color:#059669;">Rs <?php echo e(number_format($t->hourly_rate ?? 1500)); ?></td>
                                         <td>
                                             <?php if($b->status == 'confirmed' && !$b->tutor_confirmed): ?>

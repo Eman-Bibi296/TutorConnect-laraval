@@ -288,7 +288,7 @@
                     </svg>
                     <div class="brand-text">
                         <span class="brand-name">Tutor<span class="brand-accent">Connect</span></span>
-                        <span class="brand-tagline">EXPERT LEARNING PLATFORM</span>
+                        <span class="brand-tagline">TUTOR BOOKING PLATFORM</span>
                     </div>
                 </a>
                 
@@ -348,7 +348,7 @@
                         </svg>
                         <h4 style="color:white; margin:0; font-weight:800;">Tutor<span style="color:#10B981;">Connect</span></h4>
                     </div>
-                    <p style="font-size: 0.9rem; line-height: 1.6; color: #94A3B8;">Pakistan's premier peer-to-peer tutoring network connecting verified faculty instructors with ambitious students for personalized 1-on-1 learning.</p>
+                    <p style="font-size: 0.9rem; line-height: 1.6; color: #94A3B8;">A simple and reliable platform connecting students with verified tutors across Sheikupura.</p>
                 </div>
                 <div class="col-lg-2 col-md-6">
                     <h5 style="color:white; font-weight:700; font-size:1rem; margin-bottom:18px;">Quick Links</h5>

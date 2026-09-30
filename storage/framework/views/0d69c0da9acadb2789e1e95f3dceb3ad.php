@@ -163,7 +163,7 @@
         <div class="main-content">
             <div class="page-header">
                 <h1><i class="fa-solid fa-inbox"></i> Incoming Student Requests</h1>
-                <p>Accept or decline student inquiries seeking tutoring in your subjects</p>
+                <p>Accept or decline connection requests from students.</p>
             </div>
 
             <!-- Stats Grid -->
@@ -203,7 +203,7 @@
 
             <!-- Requests Table -->
             <div class="data-card">
-                <h3><i class="fa-solid fa-users" style="color:var(--primary);"></i> Students Requesting Guidance</h3>
+                <h3><i class="fa-solid fa-users" style="color:var(--primary);"></i> Students Requesting </h3>
                 <div class="table-responsive">
                     <table class="custom-table">
                         <thead>

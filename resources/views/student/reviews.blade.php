@@ -220,7 +220,7 @@
         <div class="main-content">
             <div class="page-header">
                 <h1><i class="fa-solid fa-star"></i> Reviews & Feedback</h1>
-                <p>Track reviews given to tutors and evaluate your recent learning sessions</p>
+                <p>Track reviews submitted for tutors and share your experience.</p>
             </div>
 
             <!-- Stats Grid -->
@@ -235,7 +235,7 @@
                 </div>
                 <div class="stat-card">
                     <div class="stat-number" style="color: #D97706;">{{ $reviews->pluck('tutor_id')->unique()->count() }}</div>
-                    <div class="stat-label">Instructors Reviewed</div>
+                    <div class="stat-label">TUTORS REVIEWED</div>
                 </div>
             </div>
 
@@ -285,11 +285,11 @@
 
             <!-- Submit New Review -->
             <div class="data-card">
-                <h3><i class="fa-solid fa-pen-to-square" style="color:var(--primary);"></i> Leave Feedback for an Instructor</h3>
+                <h3><i class="fa-solid fa-pen-to-square" style="color:var(--primary);"></i> Leave Feedback for a Tutor</h3>
                 <form action="/student/post-feedback" method="POST">
                     @csrf
                     <div class="form-group mb-3">
-                        <label>Select Faculty Member / Tutor</label>
+                        <label>Select Tutor</label>
                         <select name="tutor_id" class="form-select" required>
                             @foreach($eligibleTutors as $tutor)
                                 <option value="{{ $tutor->id }}">{{ $tutor->name }} ({{ $tutor->subject }})</option>
@@ -311,7 +311,7 @@
 
                     <div class="form-group mb-4">
                         <label>Your Feedback & Experience</label>
-                        <textarea name="comment" rows="4" placeholder="Share specific details about teaching style, punctuality, and concept clarity..." required></textarea>
+                        <textarea name="comment" rows="4" placeholder="Share your feedback regarding communication, punctuality, and experience..." required></textarea>
                     </div>
 
                     <button type="submit" class="submit-feedback">

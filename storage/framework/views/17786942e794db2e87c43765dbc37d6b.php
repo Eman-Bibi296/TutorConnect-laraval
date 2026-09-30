@@ -158,7 +158,7 @@
         <div class="main-content">
             <div class="page-header">
                 <h1><i class="fa-solid fa-star"></i> Reviews & Ratings</h1>
-                <p>Student feedback and performance ratings received from completed sessions</p>
+                <p>Student feedback and ratings received from completed bookings.</p>
             </div>
 
             <!-- Big Rating Summary Card -->
@@ -175,7 +175,7 @@
 
             <!-- Testimonials Card -->
             <div class="reviews-list-card">
-                <h3><i class="fa-regular fa-comment-dots" style="color:var(--primary);"></i> Student Testimonials</h3>
+                <h3><i class="fa-regular fa-comment-dots" style="color:var(--primary);"></i> Student Reviews</h3>
                 
                 <?php $__empty_1 = true; $__currentLoopData = $reviewsList; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $rev): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                     <?php
@@ -194,7 +194,7 @@
                             
                                 <div>
                                     <span><?php echo e($studentName); ?></span>
-                                    <small class="d-block text-muted" style="font-weight:400; font-size:0.75rem;">Verified Student Learner</small>
+                                    <small class="d-block text-muted" style="font-weight:400; font-size:0.75rem;">Verified Student </small>
                                 </div>
                             </span>
                             <span class="review-date"><?php echo e($rev->created_at ? $rev->created_at->format('M d, Y') : 'Recently'); ?></span>

@@ -164,8 +164,8 @@
         <!-- Main Content -->
         <div class="main-content">
             <div class="page-header">
-                <h1><i class="fa-solid fa-calendar-check"></i> Session Bookings</h1>
-                <p>Manage and conduct scheduled tutoring sessions with enrolled students</p>
+                <h1><i class="fa-solid fa-calendar-check"></i> Booking Requests</h1>
+                <p>Manage and view scheduled bookings with students.</p>
             </div>
 
             <!-- Stats Grid -->
@@ -178,7 +178,7 @@
                     <div class="stat-number" style="color: #059669;">
                         {{ $bookings->where('status', 'confirmed')->count() }}
                     </div>
-                    <div class="stat-label">Confirmed Sessions</div>
+                    <div class="stat-label">CONFIRMED BOOKINGS</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-number" style="color: #D97706;">
@@ -201,7 +201,7 @@
 
             <!-- Bookings List -->
             <div class="data-card">
-                <h3><i class="fa-solid fa-calendar-days" style="color:var(--primary);"></i> Scheduled Sessions</h3>
+                <h3><i class="fa-solid fa-calendar-days" style="color:var(--primary);"></i> Scheduled Bookings</h3>
                 <div class="table-responsive">
                     <table class="custom-table">
                         <thead>
@@ -240,30 +240,42 @@
                                     <td><span class="badge bg-light text-dark border">{{ ucfirst($booking->mode ?? 'Online') }}</span></td>
                                     <td style="font-weight: 600; color: #059669;">{{ $booking->sessions_per_week ?? 1 }}x</td>
                 
-                                    <td>
-    @if($booking->status == 'confirmed' && !$booking->tutor_confirmed)
-        <span class="status-badge status-pending"><i class="fa-solid fa-clock"></i> Payment Received</span>
-    @elseif($booking->status == 'confirmed' && $booking->tutor_confirmed)
+                                <td>
+    @if($booking->payment_verification_status == 'submitted')
+        <span class="status-badge status-pending"><i class="fa-solid fa-hourglass-half"></i> Payment Submitted</span>
+    @elseif($booking->payment_verification_status == 'rejected')
+        <span class="status-badge" style="background:#FEF2F2; color:#DC2626; border:1px solid #FECACA;"><i class="fa-solid fa-circle-xmark"></i> Payment Rejected</span>
+    @elseif($booking->status == 'confirmed')
         <span class="status-badge status-confirmed"><i class="fa-solid fa-circle-check"></i> Confirmed</span>
     @elseif($booking->status == 'completed')
         <span class="status-badge status-completed"><i class="fa-solid fa-award"></i> Completed</span>
     @else
-        <span class="status-badge status-pending"><i class="fa-solid fa-clock"></i> {{ ucfirst($booking->status) }}</span>
+        <span class="status-badge status-pending"><i class="fa-solid fa-clock"></i> Awaiting Payment</span>
     @endif
 </td>
 <td style="text-align:right;">
     <a href="/tutor/messages" class="btn-table-action btn-action-chat me-1">
         <i class="fa-solid fa-comment"></i> Chat
     </a>
-    @if($booking->status == 'confirmed' && !$booking->tutor_confirmed)
-        <form action="/tutor/confirm-payment" method="POST" style="display:inline-block;">
+    @if($booking->payment_verification_status == 'submitted')
+        <div style="font-size:0.75rem; color:#64748B; margin-bottom:4px;">
+            <strong>{{ $booking->payment_method }}</strong>: {{ $booking->transaction_reference }}
+        </div>
+        <form action="/tutor/verify-manual-payment" method="POST" style="display:inline-block;">
             @csrf
             <input type="hidden" name="booking_id" value="{{ $booking->id }}">
             <button type="submit" class="btn-table-action btn-action-complete">
-                <i class="fa-solid fa-circle-check"></i> Confirm Payment
+                <i class="fa-solid fa-circle-check"></i> Verify Payment
             </button>
         </form>
-    @elseif($booking->status == 'confirmed' && $booking->tutor_confirmed)
+        <form action="/tutor/reject-manual-payment" method="POST" style="display:inline-block;" onsubmit="return confirm('Reject this payment?');">
+            @csrf
+            <input type="hidden" name="booking_id" value="{{ $booking->id }}">
+            <button type="submit" class="btn-table-action" style="background:#FEF2F2; color:#DC2626;">
+                <i class="fa-solid fa-xmark"></i> Reject
+            </button>
+        </form>
+    @elseif($booking->status == 'confirmed')
         <form action="/tutor/complete-session" method="POST" style="display:inline-block;">
             @csrf
             <input type="hidden" name="booking_id" value="{{ $booking->id }}">
@@ -273,8 +285,8 @@
         </form>
     @endif
 </td>
+
    
-                                    
                                 </tr>
                             @empty
                                 <tr>

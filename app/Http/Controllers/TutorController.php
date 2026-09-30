@@ -413,7 +413,9 @@ class TutorController extends Controller
         // ⭐ MARK AS VIEWED WHEN TUTOR OPENS BOOKINGS PAGE
         \DB::table('bookings')
             ->where('tutor_id', $tutorId)
-            ->where('status', 'confirmed')
+             ->where(function($q) {
+      $q->where('status', 'confirmed')->orWhere('payment_verification_status', 'submitted');
+  })
             ->where('is_viewed', 0)
             ->update(['is_viewed' => 1]);
         
@@ -440,4 +442,52 @@ class TutorController extends Controller
     }
     return back()->with('error', 'Booking not found');
 }
+// ==================== VERIFY MANUAL PAYMENT ====================
+ public function verifyManualPayment(Request $request)
+ {
+     $booking = Booking::find($request->booking_id);
+     if (!$booking) {
+         return back()->with('error', 'Booking not found');
+     }
+
+     $amount = (float)($booking->amount ?? 1500);
+     $platformFee = round($amount * 0.20, 2);
+    $tutorEarning = round($amount - $platformFee, 2);
+
+     $booking->status = 'confirmed';
+     $booking->payment_status = 'paid';
+     $booking->payment_verification_status = 'verified';
+     $booking->tutor_confirmed = 1;
+     $booking->is_viewed = 0;
+     $booking->student_viewed = 0;
+     $booking->save();
+
+     \App\Models\Payment::updateOrCreate(
+         ['booking_id' => $booking->id],
+         [
+             'student_id' => $booking->student_id,
+             'tutor_id' => $booking->tutor_id,
+            'amount' => $amount,
+             'platform_fee' => $platformFee,
+             'tutor_earning' => $tutorEarning,
+             'currency' => 'pkr',
+             'transaction_id' => $booking->transaction_reference,
+             'status' => 'completed'
+         ]
+    );
+
+     return back()->with('success', 'Payment verified! Booking confirmed.');
+ }
+ // ==================== REJECT MANUAL PAYMENT ====================
+ public function rejectManualPayment(Request $request)
+ {
+     $booking = Booking::find($request->booking_id);
+     if ($booking) {
+         $booking->payment_verification_status = 'rejected';
+         $booking->save();
+         return back()->with('success', 'Payment marked as rejected. Student has been notified.');
+     }
+     return back()->with('error', 'Booking not found');
+ }
+
 }

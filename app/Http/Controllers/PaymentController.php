@@ -3,16 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Booking;
-use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\DB;
-use Stripe\Stripe;
-use Stripe\PaymentIntent;
 
 class PaymentController extends Controller
 {
-    // ===== SHOW PAYMENT PAGE =====
+    // ===== SHOW MANUAL PAYMENT PAGE =====
     public function showPaymentPage($bookingId)
     {
         $studentId = Session::get('student_id');
@@ -21,135 +17,41 @@ class PaymentController extends Controller
         }
 
         $booking = Booking::with('tutor')->findOrFail($bookingId);
-        
-        // Check if booking belongs to logged-in student
+
         if ($booking->student_id != $studentId) {
             return redirect('/student/dashboard')->with('error', 'Unauthorized access!');
         }
-        
-        $stripeKey = config('services.stripe.key') ?? env('STRIPE_KEY');
-        return view('student.payment', compact('booking', 'stripeKey'));
+
+        return view('student.payment', compact('booking'));
     }
 
-    // ===== CREATE PAYMENT INTENT =====
-    public function createPaymentIntent(Request $request)
+    // ===== SUBMIT TRANSACTION PROOF =====
+    public function submitPaymentProof(Request $request)
     {
-        try {
-            $studentId = Session::get('student_id');
-            
-            if (!$studentId) {
-                return response()->json(['success' => false, 'message' => 'Please login first']);
-            }
-            
-            $amount = (float)($request->amount ?? 1000);
-            $secretKey = config('services.stripe.secret') ?? env('STRIPE_SECRET');
+        $request->validate([
+            'booking_id' => 'required',
+            'payment_method' => 'required|in:JazzCash,EasyPaisa',
+            'transaction_reference' => 'required|string|max:100'
+        ]);
 
-            if (!empty($secretKey) && env('PAYMENT_MODE') !== 'demo_only') {
-                try {
-                    $stripe = new \Stripe\StripeClient($secretKey);
-                    $paymentIntent = $stripe->paymentIntents->create([
-                        'amount' => (int)($amount * 100),
-                        'currency' => 'usd',
-                        'metadata' => [
-                            'student_id' => $studentId,
-                            'tutor_id' => $request->tutor_id
-                        ]
-                    ]);
-                    
-                    return response()->json([
-                        'success' => true,
-                        'clientSecret' => $paymentIntent->client_secret
-                    ]);
-                } catch (\Throwable $stripeEx) {
-                    // Fall back to demo mode if Stripe network/key is unavailable
-                    return response()->json([
-                        'success' => true,
-                        'demo' => true,
-                        'clientSecret' => 'pi_demo_secret_' . uniqid()
-                    ]);
-                }
-            } else {
-                return response()->json([
-                    'success' => true,
-                    'demo' => true,
-                    'clientSecret' => 'pi_demo_secret_' . uniqid()
-                ]);
-            }
-            
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => $e->getMessage()
-            ]);
+        $studentId = Session::get('student_id');
+        $booking = Booking::find($request->booking_id);
+
+        if (!$booking || $booking->student_id != $studentId) {
+            return back()->with('error', 'Booking not found or unauthorized.');
         }
+
+        $booking->payment_method = $request->payment_method;
+        $booking->transaction_reference = $request->transaction_reference;
+        $booking->payment_verification_status = 'submitted';
+        $booking->payment_status = 'pending';
+         $booking->is_viewed = 0;
+        $booking->save();
+
+        return redirect('/booking/success/' . $booking->id);
     }
 
-    // ===== BOOK AND PAY =====
-    public function bookAndPay(Request $request)
-    {
-        try {
-            $studentId = Session::get('student_id');
-            if (!$studentId) {
-                return response()->json(['success' => false, 'message' => 'Please login first']);
-            }
-            
-            // Find booking
-            $booking = Booking::find($request->booking_id);
-            
-            if (!$booking) {
-                return response()->json(['success' => false, 'message' => 'Booking not found']);
-            }
-
-            if ($booking->student_id != $studentId) {
-                return response()->json(['success' => false, 'message' => 'Unauthorized booking access']);
-            }
-
-            $txId = $request->payment_intent_id ?? ('pi_demo_' . uniqid());
-            $amount = (float)($request->amount ?? $booking->amount ?? 1500);
-           $platformFee = round($amount * 0.20, 2);
-            $tutorEarning = round($amount - $platformFee, 2);
-
-
-
-            
-            // Atomically update Booking and create/update Payment ledger
-            DB::transaction(function() use ($booking, $studentId, $request, $txId, $amount, $platformFee, $tutorEarning) {
-                $booking->status = 'confirmed';
-                $booking->payment_status = 'paid';
-                $booking->payment_id = $txId;
-                $booking->is_viewed = 0;
-                $booking->student_viewed = 1;
-                $booking->save();
-                
-                Payment::updateOrCreate(
-                    ['booking_id' => $booking->id],
-                    [
-                        'student_id' => $studentId,
-                        'tutor_id' => $booking->tutor_id ?? $request->tutor_id,
-                        'amount' => $amount,
-                        'platform_fee' => $platformFee,
-                         'tutor_earning' => $tutorEarning,
-                        'currency' => 'usd',
-                        'transaction_id' => $txId,
-                        'status' => 'completed'
-                    ]
-                );
-            });
-            
-            return response()->json([
-                'success' => true,
-                'booking_id' => $booking->id
-            ]);
-            
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => $e->getMessage()
-            ]);
-        }
-    }
-    
-    // ===== BOOKING SUCCESS PAGE =====
+    // ===== BOOKING SUCCESS / SUBMITTED PAGE =====
     public function bookingSuccess($bookingId)
     {
         $studentId = Session::get('student_id');
@@ -158,7 +60,7 @@ class PaymentController extends Controller
         }
 
         $booking = Booking::with('tutor')->findOrFail($bookingId);
-        
+
         if ($booking->student_id != $studentId) {
             return redirect('/student/dashboard')->with('error', 'Unauthorized access.');
         }

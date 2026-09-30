@@ -18,6 +18,7 @@ class Booking extends Model
         'amount',
         'status',
         'payment_status',
+        'payment_method', 'transaction_reference', 'payment_verification_status',
         'payment_id',
         'is_viewed',
         'student_viewed',

@@ -329,10 +329,7 @@
                                         <div class="info-value">{{ $tutor->location ?? 'Islamabad' }}</div>
                                     </div>
 
-                          <div class="info-item">
-                        <div class="info-label">Weekly Availability</div>
-                       <div class="info-value">{{ $tutor->availability ?? 'Flexible / By Arrangement' }}</div>
-                      </div>
+                          
                               
 
                                     <div class="info-item">
@@ -408,7 +405,7 @@
                             <div class="pricing-card">
                                 <h3 class="info-title" style="border: none; padding: 0; justify-content: center;"><i class="fa-solid fa-tag"></i> Session Pricing</h3>
                                 <div class="price-amount">Rs {{ number_format($tutor->hourly_rate ?? 1500) }}</div>
-                                <div class="price-unit">per hourly 1-on-1 session</div>
+                                 <div class="price-unit">per month</div>
                                 
                                <!-- Request & Booking Flow -->
 <div style="background: white; border-radius: 14px; padding: 18px; border: 1px solid #E2E8F0; margin-bottom: 20px; text-align: left;">

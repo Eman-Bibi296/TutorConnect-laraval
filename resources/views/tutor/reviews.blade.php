@@ -160,7 +160,7 @@
         <div class="main-content">
             <div class="page-header">
                 <h1><i class="fa-solid fa-star"></i> Reviews & Ratings</h1>
-                <p>Student feedback and performance ratings received from completed sessions</p>
+                <p>Student feedback and ratings received from completed bookings.</p>
             </div>
 
             <!-- Big Rating Summary Card -->
@@ -176,7 +176,7 @@
 
             <!-- Testimonials Card -->
             <div class="reviews-list-card">
-                <h3><i class="fa-regular fa-comment-dots" style="color:var(--primary);"></i> Student Testimonials</h3>
+                <h3><i class="fa-regular fa-comment-dots" style="color:var(--primary);"></i> Student Reviews</h3>
                 
                 @forelse($reviewsList as $rev)
                     @php
@@ -195,7 +195,7 @@
                             
                                 <div>
                                     <span>{{ $studentName }}</span>
-                                    <small class="d-block text-muted" style="font-weight:400; font-size:0.75rem;">Verified Student Learner</small>
+                                    <small class="d-block text-muted" style="font-weight:400; font-size:0.75rem;">Verified Student </small>
                                 </div>
                             </span>
                             <span class="review-date">{{ $rev->created_at ? $rev->created_at->format('M d, Y') : 'Recently' }}</span>

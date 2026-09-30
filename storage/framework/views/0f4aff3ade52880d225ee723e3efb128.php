@@ -162,8 +162,8 @@
         <!-- Main Content -->
         <div class="main-content">
             <div class="page-header">
-                <h1><i class="fa-solid fa-calendar-check"></i> Session Bookings</h1>
-                <p>Manage and conduct scheduled tutoring sessions with enrolled students</p>
+                <h1><i class="fa-solid fa-calendar-check"></i> Booking Requests</h1>
+                <p>Manage and view scheduled bookings with students.</p>
             </div>
 
             <!-- Stats Grid -->
@@ -177,7 +177,7 @@
                         <?php echo e($bookings->where('status', 'confirmed')->count()); ?>
 
                     </div>
-                    <div class="stat-label">Confirmed Sessions</div>
+                    <div class="stat-label">CONFIRMED BOOKINGS</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-number" style="color: #D97706;">
@@ -203,7 +203,7 @@
 
             <!-- Bookings List -->
             <div class="data-card">
-                <h3><i class="fa-solid fa-calendar-days" style="color:var(--primary);"></i> Scheduled Sessions</h3>
+                <h3><i class="fa-solid fa-calendar-days" style="color:var(--primary);"></i> Scheduled Bookings</h3>
                 <div class="table-responsive">
                     <table class="custom-table">
                         <thead>
@@ -243,30 +243,43 @@
                                     <td><span class="badge bg-light text-dark border"><?php echo e(ucfirst($booking->mode ?? 'Online')); ?></span></td>
                                     <td style="font-weight: 600; color: #059669;"><?php echo e($booking->sessions_per_week ?? 1); ?>x</td>
                 
-                                    <td>
-    <?php if($booking->status == 'confirmed' && !$booking->tutor_confirmed): ?>
-        <span class="status-badge status-pending"><i class="fa-solid fa-clock"></i> Payment Received</span>
-    <?php elseif($booking->status == 'confirmed' && $booking->tutor_confirmed): ?>
+                                <td>
+    <?php if($booking->payment_verification_status == 'submitted'): ?>
+        <span class="status-badge status-pending"><i class="fa-solid fa-hourglass-half"></i> Payment Submitted</span>
+    <?php elseif($booking->payment_verification_status == 'rejected'): ?>
+        <span class="status-badge" style="background:#FEF2F2; color:#DC2626; border:1px solid #FECACA;"><i class="fa-solid fa-circle-xmark"></i> Payment Rejected</span>
+    <?php elseif($booking->status == 'confirmed'): ?>
         <span class="status-badge status-confirmed"><i class="fa-solid fa-circle-check"></i> Confirmed</span>
     <?php elseif($booking->status == 'completed'): ?>
         <span class="status-badge status-completed"><i class="fa-solid fa-award"></i> Completed</span>
     <?php else: ?>
-        <span class="status-badge status-pending"><i class="fa-solid fa-clock"></i> <?php echo e(ucfirst($booking->status)); ?></span>
+        <span class="status-badge status-pending"><i class="fa-solid fa-clock"></i> Awaiting Payment</span>
     <?php endif; ?>
 </td>
 <td style="text-align:right;">
     <a href="/tutor/messages" class="btn-table-action btn-action-chat me-1">
         <i class="fa-solid fa-comment"></i> Chat
     </a>
-    <?php if($booking->status == 'confirmed' && !$booking->tutor_confirmed): ?>
-        <form action="/tutor/confirm-payment" method="POST" style="display:inline-block;">
+    <?php if($booking->payment_verification_status == 'submitted'): ?>
+        <div style="font-size:0.75rem; color:#64748B; margin-bottom:4px;">
+            <strong><?php echo e($booking->payment_method); ?></strong>: <?php echo e($booking->transaction_reference); ?>
+
+        </div>
+        <form action="/tutor/verify-manual-payment" method="POST" style="display:inline-block;">
             <?php echo csrf_field(); ?>
             <input type="hidden" name="booking_id" value="<?php echo e($booking->id); ?>">
             <button type="submit" class="btn-table-action btn-action-complete">
-                <i class="fa-solid fa-circle-check"></i> Confirm Payment
+                <i class="fa-solid fa-circle-check"></i> Verify Payment
             </button>
         </form>
-    <?php elseif($booking->status == 'confirmed' && $booking->tutor_confirmed): ?>
+        <form action="/tutor/reject-manual-payment" method="POST" style="display:inline-block;" onsubmit="return confirm('Reject this payment?');">
+            <?php echo csrf_field(); ?>
+            <input type="hidden" name="booking_id" value="<?php echo e($booking->id); ?>">
+            <button type="submit" class="btn-table-action" style="background:#FEF2F2; color:#DC2626;">
+                <i class="fa-solid fa-xmark"></i> Reject
+            </button>
+        </form>
+    <?php elseif($booking->status == 'confirmed'): ?>
         <form action="/tutor/complete-session" method="POST" style="display:inline-block;">
             <?php echo csrf_field(); ?>
             <input type="hidden" name="booking_id" value="<?php echo e($booking->id); ?>">
@@ -277,13 +290,7 @@
     <?php endif; ?>
 </td>
 
-
-
-
-
-
-                                    
-                                    
+   
                                 </tr>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                                 <tr>

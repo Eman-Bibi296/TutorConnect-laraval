@@ -473,7 +473,12 @@ class StudentController extends Controller
         $filePath = public_path($material->file_path);
         
         if(file_exists($filePath)) {
-            return response()->file($filePath);
+             $ext = strtolower(pathinfo($filePath, PATHINFO_EXTENSION));
+             if ($ext === 'pdf') {
+                 return response()->file($filePath);
+                  }
+             return response()->download($filePath, $material->file_name);
+            
         }
         
         return back()->with('error', 'File not found!');

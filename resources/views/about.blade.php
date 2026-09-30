@@ -261,7 +261,7 @@
             <i class="fas fa-bullseye"></i> Our Purpose &amp; Story
         </div>
         <h1>About <span>TutorConnect</span></h1>
-        <p class="hero-subtitle">Connecting motivated students with verified expert tutors in a simple, structured, and trusted ecosystem.</p>
+        <p class="hero-subtitle">Connecting motivated students with verified expert tutors in a simple, reliable, and trusted system.</p>
     </div>
 </section>
 
@@ -269,32 +269,32 @@
 <div class="about-container">
     <div class="about-text">
         <h2>Welcome to <span>TutorConnect</span></h2>
-        <p>TutorConnect is an educational platform created to bridge the gap between students seeking targeted academic guidance and qualified tutors providing specialized instruction.</p>
-        <p>Whether preparing for school exams, mastering university modules, or learning programming, TutorConnect streamlines teacher discovery, scheduling, direct communication, and study material sharing in one place.</p>
+        <p>TutorConnect is an online platform that connects students with qualified tutors easily and securely, allowing students to find tutors according to subject, book sessions, chat directly, and share study materials all in one place. </p>
+        
     </div>
 
-    <h2 class="section-title">Core <span>Platform Features</span></h2>
-    <p class="section-subtitle">Everything you need for productive tutoring sessions</p>
+    <h2 class="section-title">Key <span>Platform Features</span></h2>
+    <p class="section-subtitle">Everything you need for easy online tutor booking</p>
 
     <div class="services-section">
-        <div class="service-card"><div class="icon">🔍</div><h4>Subject &amp; City Filter</h4><p>Locate ideal tutors quickly based on specific subjects, location, and teaching mode.</p></div>
-        <div class="service-card"><div class="icon">📋</div><h4>Verified Tutor Profiles</h4><p>Review comprehensive tutor biographies, educational credentials, and student ratings.</p></div>
-        <div class="service-card"><div class="icon">📨</div><h4>Direct Booking Requests</h4><p>Schedule one-on-one sessions seamlessly with instant status tracking.</p></div>
-        <div class="service-card"><div class="icon">💬</div><h4>Integrated Messaging</h4><p>Exchange questions, discuss syllabus requirements, and confirm timings directly.</p></div>
-        <div class="service-card"><div class="icon">📚</div><h4>Study Materials Sharing</h4><p>Tutors can upload lecture notes and past papers for students to download.</p></div>
-        <div class="service-card"><div class="icon">⭐</div><h4>Transparent Reviews</h4><p>Genuine student feedback maintains high quality standards across the platform.</p></div>
+        <div class="service-card"><div class="icon">🔍</div><h4>Subject &amp; City Filter</h4><p>Easily find tutors according to subjects.</p></div>
+        <div class="service-card"><div class="icon">📋</div><h4>Verified Tutor Profiles</h4><p>View tutor qualifications, experience, and student ratings</p></div>
+        <div class="service-card"><div class="icon">📨</div><h4>Direct Booking Requests</h4><p>Send booking requests to tutors and track your request status.</p></div>
+        <div class="service-card"><div class="icon">💬</div><h4> Messaging</h4><p>Send booking requests to tutors and track your request status.</p></div>
+        <div class="service-card"><div class="icon">📚</div><h4>Study Materials Sharing</h4><p>Tutors share study notes and PDFs for students to view or download.</p></div>
+        <div class="service-card"><div class="icon">⭐</div><h4>Reviews</h4><p>Read real reviews from other students before booking.</p></div>
     </div>
 
     <div class="mission-vision">
         <div class="mv-card">
             <span class="icon">🎯</span>
             <h3>Our Mission</h3>
-            <p>To provide an accessible, safe, and intuitive platform that empowers students to achieve academic excellence through personalized one-on-one mentorship from qualified educators.</p>
+            <p>To connect students with qualified tutors in a simple, safe, and reliable way for better guidance.</p>
         </div>
         <div class="mv-card vision">
             <span class="icon">🚀</span>
             <h3>Our Vision</h3>
-            <p>To become a leading academic discovery network that democratizes access to quality education, supporting both independent tutors and aspiring learners worldwide.</p>
+            <p>To make it easy for students to find the right tutors while helping tutors connect with new students.</p>
         </div>
     </div>
 
@@ -339,15 +339,15 @@
         <h3 style="text-align:center; color:#111827; margin:0 0 10px; font-size:1.4rem; font-weight:700;">
             ✨ Why Choose <span style="color:#059669;">TutorConnect</span>?
         </h3>
-        <p style="text-align:center; color:#6B7280; margin-bottom:20px; font-size:0.95rem;">Designed specifically for smooth student-tutor collaboration</p>
+        <p style="text-align:center; color:#6B7280; margin-bottom:20px; font-size:0.95rem;">Designed for simple and secure tutor booking</p>
         <ul class="features-list">
-            <li><span class="check">✔</span> Subject-Specific Tutor Discovery</li>
-            <li><span class="check">✔</span> Admin-Verified Educator Credentials</li>
-            <li><span class="check">✔</span> Real-Time Session Booking System</li>
-            <li><span class="check">✔</span> Direct In-App Student-Tutor Chat</li>
-            <li><span class="check">✔</span> Course Materials &amp; Resource Center</li>
-            <li><span class="check">✔</span> Transparent Rating &amp; Review System</li>
-            <li><span class="check">✔</span> Dedicated Dashboards for Both Roles</li>
+            <li><span class="check">✔</span>Easy Subject & City Search </li>
+            <li><span class="check">✔</span> Admin-Verified Tutor Profiles</li>
+            <li><span class="check">✔</span> Booking Request System</li>
+            <li><span class="check">✔</span> Direct Messaging & Chat</li>
+            <li><span class="check">✔</span> Study Materials Sharing</li>
+            <li><span class="check">✔</span>  Rating &amp; Review System</li>
+            <li><span class="check">✔</span> Dedicated Dashboards </li>
             <li><span class="check">✔</span> Safe &amp; Secure Authentication</li>
         </ul>
     </div>
@@ -355,7 +355,7 @@
     <!-- Call to Action Banner -->
     <div style="background: linear-gradient(135deg, #111827 0%, #064E3B 100%); border-radius: 24px; padding: 50px 30px; text-align: center; color: white; margin-top: 60px; box-shadow: 0 15px 35px rgba(6,78,59,0.2);">
         <h3 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 10px;">Ready to Get Started?</h3>
-        <p style="color: #A7F3D0; font-size: 1rem; max-width: 550px; margin: 0 auto 25px;">Whether you want to learn from top tutors or share your knowledge as an educator, TutorConnect is ready for you.</p>
+        <p style="color: #A7F3D0; font-size: 1rem; max-width: 550px; margin: 0 auto 25px;">Whether you are looking to find expert tutors or offer tutoring services, TutorConnect is here for you.</p>
         <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
             <a href="/student/register" style="background: linear-gradient(135deg, #059669 0%, #10B981 100%); color: white; font-weight: 700; padding: 12px 28px; border-radius: 12px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
                 <i class="fas fa-user-graduate"></i> Register as Student

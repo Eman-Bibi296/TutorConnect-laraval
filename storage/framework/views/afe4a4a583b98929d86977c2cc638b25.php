@@ -231,7 +231,7 @@
                     <div class="tutor-details">
                         <h3><?php echo e($tutor->name); ?></h3>
                         <p><i class="fa-solid fa-book"></i> <?php echo e($tutor->subject); ?> &nbsp;•&nbsp; <i class="fa-solid fa-location-dot"></i> <?php echo e($tutor->location); ?></p>
-                        <div class="tutor-price-badge"><i class="fa-solid fa-tag"></i> Rs <?php echo e($tutor->hourly_rate ?? 1500); ?>/hour</div>
+                        <div class="tutor-price-badge"><i class="fa-solid fa-tag"></i> Rs <?php echo e($tutor->hourly_rate ?? 1500); ?>/month</div>
                     </div>
                 </div>
                 

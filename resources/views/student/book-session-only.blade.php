@@ -233,7 +233,7 @@
                     <div class="tutor-details">
                         <h3>{{ $tutor->name }}</h3>
                         <p><i class="fa-solid fa-book"></i> {{ $tutor->subject }} &nbsp;•&nbsp; <i class="fa-solid fa-location-dot"></i> {{ $tutor->location }}</p>
-                        <div class="tutor-price-badge"><i class="fa-solid fa-tag"></i> Rs {{ $tutor->hourly_rate ?? 1500 }}/hour</div>
+                        <div class="tutor-price-badge"><i class="fa-solid fa-tag"></i> Rs {{ $tutor->hourly_rate ?? 1500 }}/month</div>
                     </div>
                 </div>
                 

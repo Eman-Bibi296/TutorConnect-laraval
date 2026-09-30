@@ -161,6 +161,24 @@
         color: #065F46;
         border: 1px solid #A7F3D0;
     }
+     .password-wrapper {
+     position: relative;
+  }
+ .password-wrapper input {
+     padding-right: 45px;
+ }
+ .toggle-password {
+     position: absolute;
+     right: 14px;
+     top: 50%;
+     transform: translateY(-50%);
+     cursor: pointer;
+     color: #94A3B8;
+     font-size: 1rem;
+   }
+    .toggle-password:hover {
+     color: #059669;
+   }
 </style>
 
 <div class="auth-container">
@@ -168,7 +186,7 @@
         <div class="auth-header">
             <div class="auth-header-icon"><i class="fa-solid fa-chalkboard-user"></i></div>
             <h2>Tutor Login</h2>
-            <p>Welcome back! Sign in to access your instructor dashboard</p>
+            <p>Welcome back! Sign in to access your dashboard</p>
         </div>
         
         @if(session('error'))
@@ -193,7 +211,10 @@
             
             <div class="form-group">
                 <label><i class="fa-solid fa-lock"></i> Password</label>
-                <input type="password" name="password" placeholder="••••••••" autocomplete="new-password" required>
+                <div class="password-wrapper">
+        <input type="password" name="password" id="tutorPassword" placeholder="••••••••" autocomplete="new-password" required>
+      <i class="fa-solid fa-eye toggle-password" onclick="togglePasswordField('tutorPassword', this)"></i>
+  </div>
                 <div style="text-align: right; margin-top: 8px;">
                <a href="/forgot-password?type=tutor" style="color: #059669; font-size: 0.85rem; font-weight: 600; text-decoration: none;">Forgot Password?</a>
             </div>
@@ -205,8 +226,23 @@
         </form>
         
         <div class="auth-footer">
-            Want to teach on TutorConnect? <a href="/tutor/register">Register as Tutor</a>
+             <a href="/tutor/register">Register as Tutor</a>
         </div>
     </div>
 </div>
+
+ <script>
+ function togglePasswordField(id, icon) {
+     const input = document.getElementById(id);
+     if (input.type === 'password') {
+         input.type = 'text';
+         icon.classList.remove('fa-eye');
+         icon.classList.add('fa-eye-slash');
+     } else {
+         input.type = 'password';
+         icon.classList.remove('fa-eye-slash');
+         icon.classList.add('fa-eye');
+     }
+ }
+ </script>
 @endsection

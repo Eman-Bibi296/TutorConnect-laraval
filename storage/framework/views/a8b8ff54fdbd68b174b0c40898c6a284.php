@@ -209,7 +209,7 @@
                                 <tr>
                                     <th>Tutor Name</th>
                                     <th>Subject</th>
-                                    <th>Hourly Rate</th>
+                                    <th>Monthly Rate</th>
                                     <th>Date Sent</th>
                                     <th>Status</th>
                                     <th style="text-align:right;">Actions</th>
@@ -240,7 +240,7 @@
 
                                         </td>
                                         <td><?php echo e($t->subject ?? 'Computer Science'); ?></td>
-                                        <td style="font-weight:700; color:#059669;">Rs <?php echo e(number_format($t->hourly_rate ?? 1500)); ?>/hr</td>
+                                        <td style="font-weight:700; color:#059669;">Rs <?php echo e(number_format($t->hourly_rate ?? 1500)); ?>/month</td>
                                         <td><?php echo e($req->created_at->format('M d, Y')); ?></td>
                                         <td>
                                             <?php if($req->status == 'accepted'): ?>

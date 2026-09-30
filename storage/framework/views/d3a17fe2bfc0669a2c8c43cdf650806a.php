@@ -169,6 +169,25 @@
         color: #065F46;
         border: 1px solid #A7F3D0;
     }
+     .password-wrapper {
+     position: relative;
+ }
+ .password-wrapper input {
+     padding-right: 45px;
+ }
+ .toggle-password {
+     position: absolute;
+    right: 14px;
+     top: 50%;
+     transform: translateY(-50%);
+    cursor: pointer;
+     color: #94A3B8;
+     font-size: 1rem;
+ }
+ .toggle-password:hover {
+     color: #059669;
+ }
+    
 </style>
 
 <div class="login-container">
@@ -212,7 +231,10 @@
             
             <div class="form-group">
                 <label><i class="fas fa-lock me-1 text-muted"></i> Password</label>
-                <input type="password" name="password" placeholder="Enter your password" autocomplete="new-password" required>
+                <div class="password-wrapper">
+                <input type="password" name="password" id="loginPassword" placeholder="Enter your password" autocomplete="new-password" required>
+               <i class="fa-solid fa-eye toggle-password" onclick="togglePasswordField('loginPassword', this)"></i>
+        </div>
                  <div style="text-align: right; margin-top: 8px;">
         <a href="/forgot-password" style="color: #059669; font-size: 0.85rem; font-weight: 600; text-decoration: none;">Forgot Password?</a>
     </div>
@@ -220,7 +242,7 @@
             
             
             <button type="submit" class="btn-login-submit">
-                <i class="fas fa-sign-in-alt"></i> Login to Dashboard
+                <i class="fas fa-sign-in-alt"></i> Login 
             </button>
             
             <div class="register-link">
@@ -250,8 +272,26 @@
             tutorOption.classList.add('selected');
             studentOption.classList.remove('selected');
             form.action = '/tutor/login';
-        }
-    }
+        
+       }
+}
+
+  function togglePasswordField(id, icon) {
+      const input = document.getElementById(id);
+      if (input.type === 'password') {
+          input.type = 'text';
+          icon.classList.remove('fa-eye');
+         icon.classList.add('fa-eye-slash');
+     } else {
+          input.type = 'password';
+          icon.classList.remove('fa-eye-slash');
+          icon.classList.add('fa-eye');
+     }
+  
+ }
+
+
+    
 </script>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\xampp\htdocs\TutorConnect\resources\views/auth/login.blade.php ENDPATH**/ ?>

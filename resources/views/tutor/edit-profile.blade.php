@@ -206,7 +206,7 @@
 
                         <div class="form-row">
                             <div class="form-group">
-                                <label><i class="fa-solid fa-tag"></i> Hourly Rate (Rs)</label>
+                                <label><i class="fa-solid fa-tag"></i> Monthly Rate (Rs)</label>
                                 <input type="number" name="hourly_rate" value="{{ old('hourly_rate', $tutor->hourly_rate ?? 1500) }}" required>
                             </div>
                             <div class="form-group">
@@ -226,16 +226,13 @@
                             </div>
                         </div>
 
-                        <div class="form-row">
+                        
                             <div class="form-group">
-                                <label><i class="fa-solid fa-location-dot"></i> City / Mode</label>
+                                <label><i class="fa-solid fa-location-dot"></i> City </label>
                                 <input type="text" name="location" value="{{ old('location', $tutor->location) }}" required>
                             </div>
-                            <div class="form-group">
-                                <label><i class="fa-solid fa-clock"></i> Weekly Availability</label>
-                                <input type="text" name="availability" value="{{ old('availability', $tutor->availability ?? 'Monday - Friday: 4:00 PM - 8:00 PM') }}">
-                            </div>
-                        </div>
+                            
+                        
 
                         <button type="submit" class="btn-save">
                             <i class="fa-solid fa-floppy-disk"></i> Save Profile Changes

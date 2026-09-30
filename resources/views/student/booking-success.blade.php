@@ -118,8 +118,8 @@
                 <div class="success-icon-badge">
                     <i class="fa-solid fa-check"></i>
                 </div>
-                <h2>Booking Confirmed!</h2>
-                <p>Your session has been successfully booked and payment has been processed. The tutor has been notified.</p>
+                 <h2>Payment Submitted!</h2>
+                <p>Your transaction details have been sent to the tutor for verification. Your booking will be confirmed once the tutor verifies your payment.</p>
                 <a href="/student/my-bookings" class="btn-view-bookings">
                     <i class="fa-solid fa-calendar-check"></i> <span>View My Bookings</span>
                 </a>

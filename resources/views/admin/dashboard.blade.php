@@ -6,8 +6,8 @@
 <!-- TOPBAR -->
 <div style="display: flex; align-items: center; justify-content: space-between; background: white; padding: 18px 24px; border-radius: 20px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04); border: 1px solid #E2E8F0; margin-bottom: 28px; flex-wrap: wrap; gap: 12px;">
     <div>
-        <h2 style="font-size: 1.5rem; font-weight: 800; color: #111827; margin: 0;">Admin Control Center</h2>
-        <p style="font-size: 0.88rem; color: #64748B; margin: 2px 0 0;">Platform monitoring, tutor verifications, student orders, and system analytics</p>
+        <h2 style="font-size: 1.5rem; font-weight: 800; color: #111827; margin: 0;">Admin  Dashboard</h2>
+        <p style="font-size: 0.88rem; color: #64748B; margin: 2px 0 0;">Overview of users,bookings,payments and system activity.</p>
     </div>
     <div style="display: flex; align-items: center; gap: 12px;">
         <a href="/" class="btn btn-sm btn-outline-dark rounded-pill px-3" style="font-weight:600; padding: 8px 16px;">
@@ -29,7 +29,7 @@
             </div>
         </div>
         <div class="stat-number">{{ $totalStudents }}</div>
-        <small style="color: #10B981; font-weight: 600;"><i class="fa-solid fa-arrow-trend-up"></i> Registered Learners</small>
+        <small style="color: #10B981; font-weight: 600;"><i class="fa-solid fa-arrow-trend-up"></i> Registered </small>
     </div>
 
     <div class="stat-card">
@@ -84,7 +84,7 @@
 <div class="section-card">
     <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;">
         <h3 class="section-title" style="margin: 0; border: none; padding: 0;">
-            <i class="fa-solid fa-chalkboard-user text-success me-2"></i> Faculty & Instructors
+            <i class="fa-solid fa-chalkboard-user text-success me-2"></i> Registered Tutors
         </h3>
         <a href="/admin/tutors" class="btn btn-sm btn-outline-success rounded-pill px-3">View All Tutors ({{ $totalTutors }})</a>
     </div>
@@ -96,7 +96,7 @@
                     <th>Instructor</th>
                     <th>Subject</th>
                     <th>Qualification</th>
-                    <th>Rate / Hour</th>
+                    <th>Rate / Month</th>
                     <th>Status</th>
                     <th style="text-align: right;">Actions</th>
                 </tr>
@@ -121,7 +121,7 @@
                     </td>
                     <td><span class="badge bg-light text-dark border">{{ $tutor->subject ?? 'General' }}</span></td>
                     <td>{{ $tutor->qualification ?? 'Certified' }}</td>
-                    <td style="font-weight: 700; color: #059669;">Rs {{ number_format((float)($tutor->hourly_rate ?? 1500), 0) }}/hr</td>
+                    <td style="font-weight: 700; color: #059669;">Rs {{ number_format((float)($tutor->hourly_rate ?? 1500), 0) }}/month</td>
                     <td>
                         @if($tutor->is_verified)
                             <span class="badge bg-success bg-opacity-10 text-success rounded-pill px-2 py-1"><i class="fa-solid fa-circle-check me-1"></i> Verified</span>
@@ -221,7 +221,7 @@
         <h3 class="section-title" style="margin: 0; border: none; padding: 0;">
             <i class="fa-solid fa-user-graduate text-info me-2"></i> Enrolled Students
         </h3>
-        <a href="/admin/students" class="btn btn-sm btn-outline-info rounded-pill px-3">View Directory ({{ $totalStudents }})</a>
+        <a href="/admin/students" class="btn btn-sm btn-outline-info rounded-pill px-3">View all students ({{ $totalStudents }})</a>
     </div>
     
     <div class="table-responsive">
@@ -266,7 +266,7 @@
         <h3 class="section-title" style="margin: 0; border: none; padding: 0;">
             <i class="fa-solid fa-star text-warning me-2"></i> Student Feedback & Reviews
         </h3>
-        <a href="/admin/reviews" class="btn btn-sm btn-outline-warning rounded-pill px-3 text-dark">Moderate Reviews</a>
+        <a href="/admin/reviews" class="btn btn-sm btn-outline-warning rounded-pill px-3 text-dark"> View all Reviews</a>
     </div>
     
     <div class="table-responsive">
@@ -274,7 +274,7 @@
             <thead>
                 <tr>
                     <th>Student</th>
-                    <th>Instructor</th>
+                    <th>Tutor</th>
                     <th>Rating</th>
                     <th>Feedback Comment</th>
                     <th>Date</th>

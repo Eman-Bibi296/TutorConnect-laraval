@@ -190,7 +190,7 @@
         <div class="main-content">
             <div class="page-header">
                 <h1><i class="fa-solid fa-folder-open"></i> Upload Study Materials</h1>
-                <p>Share lecture slides, practice questions, and notes with your connected students</p>
+                <p>Share study plans, notes, and reference materials with your connected students.</p>
             </div>
 
             @if(session('success'))
@@ -213,7 +213,7 @@
                         <div class="form-group">
                             <label><i class="fa-solid fa-heading"></i> Document Title</label>
         
-                            <input type="text" name="title" placeholder="e.g. Laravel Full-Stack MVC Architecture Notes" required>
+                            <input type="text" name="title" placeholder="e.g. Study Plan & Important Files" required>
                         </div>
                         <div class="form-group">
                             <label><i class="fa-solid fa-file-arrow-up"></i> Choose File (PDF / Doc / Slides)</label>
@@ -234,7 +234,7 @@
 
                     <div class="form-group">
                         <label><i class="fa-solid fa-align-left"></i> Summary / Instructions for Students</label>
-                        <textarea name="description" rows="2" placeholder="Explain what concepts this material covers..."></textarea>
+                        <textarea name="description" rows="2" placeholder="Add a brief description about this study plan or file..."></textarea>
                     </div>
 
                     <button type="submit" class="btn-upload">

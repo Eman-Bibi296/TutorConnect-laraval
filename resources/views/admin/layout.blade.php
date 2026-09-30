@@ -240,7 +240,7 @@
             <div class="admin-badge-profile">
                 <div class="admin-avatar">A</div>
                 <div>
-                    <h6 style="color:white; margin:0; font-weight:700; font-size:0.85rem;">Super Admin</h6>
+                    <h6 style="color:white; margin:0; font-weight:700; font-size:0.85rem;"> Admin</h6>
                     <small style="color:#34D399; font-size:0.7rem;">● Online Control</small>
                 </div>
             </div>

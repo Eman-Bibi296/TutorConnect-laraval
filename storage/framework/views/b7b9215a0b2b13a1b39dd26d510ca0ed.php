@@ -371,7 +371,7 @@
                     <i class="fas fa-graduation-cap"></i> Easy &amp; Trusted Tutoring Platform
                 </div>
                 <h1>Search Easy &amp; <span>Expert Tutors</span></h1>
-                <p>Students can easily search for verified tutors in their required subjects, view detailed profiles, message directly, and book learning sessions.</p>
+                <p>Students can easily search for verified tutors in their required subjects, view detailed profiles, message directly, and send booking requests.</p>
                 <div class="hero-buttons">
                     <a href="#find-tutors" class="btn-find"><i class="fas fa-search"></i> Find a Tutor</a>
                     <a href="/tutor/register" class="btn-become"><i class="fas fa-chalkboard-teacher"></i> Become a Tutor</a>
@@ -398,7 +398,7 @@
         <div class="row">
             <div class="col-6 col-md-3 stat-item"><div class="stat-number"><?php echo e($realStudentCount); ?></div><div class="stat-label">Active Students</div></div>
             <div class="col-6 col-md-3 stat-item"><div class="stat-number"><?php echo e($realTutorCount); ?></div><div class="stat-label">Verified Tutors</div></div>
-             <div class="col-6 col-md-3 stat-item"><div class="stat-number"><?php echo e($realSubjectCount); ?></div><div class="stat-label">Subjects Covered</div></div>
+             <div class="col-6 col-md-3 stat-item"><div class="stat-number"><?php echo e($realSubjectCount); ?></div><div class="stat-label">Subjects </div></div>
             <div class="col-6 col-md-3 stat-item"><div class="stat-number"><?php echo e($realAvgRating ? number_format($realAvgRating, 1) : '5.0'); ?>/5</div><div class="stat-label">Student Rating</div></div>
         </div>
     </div>
@@ -448,7 +448,7 @@
                             <p style="font-size: 0.82rem; color: #64748B; margin-bottom: 12px; line-height: 1.5;"><?php echo e(Str::limit($tutor->bio ?? ($tutor->qualification . ' with proven subject expertise.'), 95)); ?></p>
                             <div style="display: flex; justify-content: space-between; background: #F8FAFC; padding: 10px 14px; border-radius: 12px; margin-bottom: 18px; font-size: 0.85rem; border: 1px solid #F1F5F9;">
                                 <span>⭐ <strong>4.9</strong> (Verified)</span>
-                                <span style="color: #059669; font-weight: 800;">Rs <?php echo e(number_format($tutor->hourly_rate ?? 1500)); ?>/hr</span>
+                                <span style="color: #059669; font-weight: 800;">Rs <?php echo e(number_format($tutor->hourly_rate ?? 1500)); ?>/month</span>
                             </div>
                         </div>
                         <a href="/student/register" class="btn w-100" style="background: linear-gradient(135deg, #059669 0%, #10B981 100%); color: white; border-radius: 10px; font-weight: 700; font-size: 0.88rem; padding: 10px;">
@@ -478,13 +478,13 @@
     <div class="container">
         <div class="section-header">
             <h2>Why Choose TutorConnect?</h2>
-            <p>Our platform provides a seamless, simple experience for both learners and educators.</p>
+            <p>Our platform provides a simple and secure experience for both students and tutors.</p>
         </div>
         <div class="features-grid">
-            <div class="feature-card"><div class="feature-icon">🔍</div><h3>Easy Search</h3><p>Filter tutors by subject, city, experience, and hourly rates.</p></div>
-            <div class="feature-card"><div class="feature-icon">✅</div><h3>Verified Tutors</h3><p>Every tutor profile and credential is verified by admin.</p></div>
-            <div class="feature-card"><div class="feature-icon">💬</div><h3>Direct Messaging</h3><p>Chat directly with tutors to discuss syllabus and schedules.</p></div>
-            <div class="feature-card"><div class="feature-icon">⭐</div><h3>Ratings &amp; Reviews</h3><p>Read real student feedback before booking your sessions.</p></div>
+            <div class="feature-card"><div class="feature-icon">🔍</div><h3>Easy Search</h3><p>Filter tutors by subject, city, experience, and fee.</p></div>
+            <div class="feature-card"><div class="feature-icon">✅</div><h3>Verified Tutors</h3><p>Every tutor profile is verified by admin for safety and trust.</p></div>
+            <div class="feature-card"><div class="feature-icon">💬</div><h3>Direct Messaging</h3><p>Chat directly with tutors to discuss availability and details.</p></div>
+            <div class="feature-card"><div class="feature-icon">⭐</div><h3>Ratings &amp; Reviews</h3><p> Student feedback before making a booking request.</p></div>
         </div>
     </div>
 </section>
@@ -494,7 +494,7 @@
     <div class="container">
         <div class="section-header">
             <h2>How It Works</h2>
-            <p>Simple and straightforward steps to start your journey with TutorConnect.</p>
+            <p>Easy Steps for students and tutors to connect.</p>
         </div>
 
         <!-- Steps for Students -->
@@ -505,8 +505,8 @@
             <div class="steps-grid">
                 <div class="step-card"><div class="step-number">1</div><h4>Create Account</h4><p>Sign up as a student with your basic details and log into your dashboard.</p></div>
                 <div class="step-card"><div class="step-number">2</div><h4>Search Tutors</h4><p>Explore tutors filtered by your subject and check their qualifications.</p></div>
-                <div class="step-card"><div class="step-number">3</div><h4>Book or Message</h4><p>Send a session booking request or message the tutor directly.</p></div>
-                <div class="step-card"><div class="step-number">4</div><h4>Rating &amp; Review</h4><p>Attend sessions, download study materials, and leave feedback.</p></div>
+                <div class="step-card"><div class="step-number">3</div><h4>Book or Message</h4><p>Send a booking request or message the tutor directly.</p></div>
+                <div class="step-card"><div class="step-number">4</div><h4>Rating &amp; Review</h4><p>Download study materials, hire tutors, and leave feedback.</p></div>
             </div>
         </div>
 
@@ -518,15 +518,15 @@
             <div class="steps-grid">
                 <div class="step-card"><div class="step-number tutor-step">1</div><h4>Register Profile</h4><p>Sign up as a tutor and add your qualifications, subjects, and bio.</p></div>
                 <div class="step-card"><div class="step-number tutor-step">2</div><h4>Admin Approval</h4><p>Your profile gets verified by the administrator for safety &amp; trust.</p></div>
-                <div class="step-card"><div class="step-number tutor-step">3</div><h4>Manage Bookings</h4><p>Accept booking requests and respond to student inquiries.</p></div>
-                <div class="step-card"><div class="step-number tutor-step">4</div><h4>Share Study material</h4><p>Upload study notes, conduct sessions, and build your reputation.</p></div>
+                <div class="step-card"><div class="step-number tutor-step">3</div><h4>Manage Bookings</h4><p>Accept booking requests and respond to student.</p></div>
+                <div class="step-card"><div class="step-number tutor-step">4</div><h4>Share Study material</h4><p>Upload study notes, connect with students, and build your reputation.</p></div>
             </div>
         </div>
 
         <!-- CTA Banner with Direct Registration Links -->
         <div class="cta-banner">
-            <h3>Ready to Boost Your Grades?</h3>
-            <p>Join hundreds of students finding the right guidance today.</p>
+            <h3>Ready to Find Your Tutor?</h3>
+            <p>Connect with verified tutors securely today.</p>
             <div class="d-flex justify-content-center gap-3 flex-wrap">
                 <a href="/student/register" class="btn-cta-student"><i class="fas fa-user-graduate"></i> Get Started as Student</a>
                 <a href="/tutor/register" class="btn-cta-tutor"><i class="fas fa-chalkboard-teacher"></i> Become a Tutor</a>

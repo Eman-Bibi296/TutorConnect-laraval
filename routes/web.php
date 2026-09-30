@@ -130,9 +130,10 @@ use App\Http\Controllers\PaymentController;
 
 // ⭐ PAYMENT ROUTES
 Route::get('/payment/{bookingId}', [PaymentController::class, 'showPaymentPage']);
-Route::post('/create-payment-intent', [PaymentController::class, 'createPaymentIntent']);
-Route::post('/book-and-pay', [PaymentController::class, 'bookAndPay']);
+Route::post('/submit-payment-proof', [PaymentController::class, 'submitPaymentProof']);
 Route::get('/booking/success/{bookingId}', [PaymentController::class, 'bookingSuccess']);
+Route::post('/tutor/verify-manual-payment', [TutorController::class, 'verifyManualPayment']);
+ Route::post('/tutor/reject-manual-payment', [TutorController::class, 'rejectManualPayment']);
 
 Route::get('/forgot-password', [PasswordResetController::class, 'showForgotForm']);
 Route::post('/forgot-password', [PasswordResetController::class, 'sendOtp']);

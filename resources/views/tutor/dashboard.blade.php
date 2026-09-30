@@ -219,7 +219,7 @@
         <div class="main-content">
             <div class="welcome-card">
                 <h1>Welcome back, {{ $tutor->name ?? 'Instructor' }}! 👨‍🏫</h1>
-                <p>Here's what is happening with your tutoring sessions and students today.</p>
+                <p>Here's an overview of your booking requests and active connections today.</p>
             </div>
 
             <!-- Stats Grid -->
@@ -330,7 +330,7 @@
 
             <!-- Bookings Table -->
             <div class="data-card">
-                <h3><i class="fas fa-calendar-check text-primary"></i> Live Session Bookings</h3>
+                <h3><i class="fas fa-calendar-check text-primary"></i> Active Bookings</h3>
                 <div class="table-responsive">
                     <table class="custom-table">
                         <thead>
@@ -374,7 +374,11 @@
                                     <td style="color:#64748B;">Rs {{ number_format($sessionFee) }}</td>
                                     <td style="font-weight:700; color:#059669;">Rs {{ number_format($tutorEarning) }}</td>
                                     <td>
-                                        @if($booking->status == 'confirmed')
+                                         @if($booking->payment_verification_status == 'submitted')
+      <span class="badge-pending"><i class="fas fa-hourglass-half"></i> Awaiting Verification</span>
+  @elseif($booking->payment_verification_status == 'rejected')
+      <span class="badge-rejected"><i class="fas fa-circle-xmark"></i> Payment Rejected</span>
+                                         @elseif($booking->status == 'confirmed')
                                             <span class="badge-confirmed"><i class="fas fa-check-circle"></i> Confirmed</span>
                                         @elseif($booking->status == 'completed')
                                             <span class="badge-completed"><i class="fas fa-award"></i> Completed</span>
@@ -383,7 +387,9 @@
                                         @endif
                                     </td>
                                     <td>
-                                        @if($booking->status == 'confirmed')
+                                         @if($booking->payment_verification_status == 'submitted')
+      <a href="/tutor/bookings" class="btn-action-complete" style="text-decoration:none;">Go Verify</a>
+                                        @elseif($booking->status == 'confirmed')
                                             <form action="/tutor/complete-session" method="POST" style="display:inline-block;">
                                                 @csrf
                                                 <input type="hidden" name="booking_id" value="{{ $booking->id }}">
