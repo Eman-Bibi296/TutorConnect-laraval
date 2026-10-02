@@ -295,42 +295,41 @@
             <p>To make it easy for students to find the right tutors while helping tutors connect with new students.</p>
         </div>
     </div>
+     <?php
+        $featuredFaculty = \App\Models\Tutor::where('is_verified', true)
+            ->orderByDesc('id')
+            ->take(3)
+            ->get();
+    ?>
 
     <!-- Featured Faculty / Educators Section -->
+      <?php if($featuredFaculty->count() > 0): ?>
     <div style="margin-top: 60px;">
         <h2 class="section-title">Meet Our <span>Verified Faculty</span></h2>
-        <p class="section-subtitle">Dedicated professionals empowering students across Pakistan and online</p>
+        <p class="section-subtitle">Expert tutors avaiable to guide students in every subjects</p>
 
         <div class="row g-4 mt-2">
+              <?php $__currentLoopData = $featuredFaculty; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $tutor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <?php
+                    $facultyAvatar = 'images/burhan.png';
+                    if (!empty($tutor->profile_picture) && file_exists(public_path($tutor->profile_picture))) {
+                        $facultyAvatar = $tutor->profile_picture;
+                    }
+                    $facultyRating = $tutor->avgRating();
+                ?>
             <div class="col-md-4">
                 <div style="background: white; border-radius: 20px; padding: 25px; text-align: center; border: 1px solid #E2E8F0; box-shadow: 0 4px 15px rgba(0,0,0,0.03);">
-                    <img src="<?php echo e(asset('images/burhan.png')); ?>" alt="Dr. Burhan Ahmad" style="width: 90px; height: 90px; border-radius: 50%; object-fit: cover; border: 3px solid #10B981; margin-bottom: 15px; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);">
-                    <h4 style="font-weight: 800; color: #111827; margin: 0 0 4px;">Dr. Burhan Ahmad</h4>
-                    <p style="color: #059669; font-weight: 700; font-size: 0.85rem; margin-bottom: 8px;">PhD in Computer Science</p>
-                    <p style="color: #64748B; font-size: 0.85rem; line-height: 1.5; margin-bottom: 15px;">Full-Stack Development, PHP Laravel, and Software Architecture specialist.</p>
-                    <span class="badge bg-success bg-opacity-10 text-success rounded-pill px-3 py-1">⭐ 4.9 Rating</span>
+                     <img src="<?php echo e(asset($facultyAvatar)); ?>" alt="<?php echo e($tutor->name); ?>" style="width: 90px; height: 90px; border-radius: 50%; object-fit: cover; border: 3px solid #10B981; margin-bottom: 15px; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);" onerror="this.src='https://ui-avatars.com/api/?name=<?php echo e(urlencode($tutor->name)); ?>&background=ECFDF5&color=059669'">
+                    <h4 style="font-weight: 800; color: #111827; margin: 0 0 4px;"><?php echo e($tutor->name); ?></h4>
+                    <p style="color: #059669; font-weight: 700; font-size: 0.85rem; margin-bottom: 8px;"><?php echo e($tutor->qualification ?? 'Qualified Instructor'); ?></p>
+                    <p style="color: #64748B; font-size: 0.85rem; line-height: 1.5; margin-bottom: 15px;"><?php echo e(Str::limit($tutor->bio ?? ($tutor->subject . ' specialist with proven teaching experience.'), 90)); ?></p>
+                    <span class="badge bg-success bg-opacity-10 text-success rounded-pill px-3 py-1">⭐ <?php echo e(number_format($facultyRating, 1)); ?> Rating</span>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div style="background: white; border-radius: 20px; padding: 25px; text-align: center; border: 1px solid #E2E8F0; box-shadow: 0 4px 15px rgba(0,0,0,0.03);">
-                    <img src="<?php echo e(asset('images/rabia.jpg')); ?>" alt="Prof. Rabia Tariq" style="width: 90px; height: 90px; border-radius: 50%; object-fit: cover; border: 3px solid #10B981; margin-bottom: 15px; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);">
-                    <h4 style="font-weight: 800; color: #111827; margin: 0 0 4px;">Prof. Rabia Tariq</h4>
-                    <p style="color: #059669; font-weight: 700; font-size: 0.85rem; margin-bottom: 8px;">MPhil in Applied Mathematics</p>
-                    <p style="color: #64748B; font-size: 0.85rem; line-height: 1.5; margin-bottom: 15px;">Calculus, Differential Equations, and Linear Algebra mentor.</p>
-                    <span class="badge bg-success bg-opacity-10 text-success rounded-pill px-3 py-1">⭐ 5.0 Rating</span>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div style="background: white; border-radius: 20px; padding: 25px; text-align: center; border: 1px solid #E2E8F0; box-shadow: 0 4px 15px rgba(0,0,0,0.03);">
-                    <img src="<?php echo e(asset('images/ahmad.jpg')); ?>" alt="Engr. Ahmad Ali" style="width: 90px; height: 90px; border-radius: 50%; object-fit: cover; border: 3px solid #10B981; margin-bottom: 15px; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);">
-                    <h4 style="font-weight: 800; color: #111827; margin: 0 0 4px;">Engr. Ahmad Ali</h4>
-                    <p style="color: #059669; font-weight: 700; font-size: 0.85rem; margin-bottom: 8px;">Electrical Engineering</p>
-                    <p style="color: #64748B; font-size: 0.85rem; line-height: 1.5; margin-bottom: 15px;">Applied Physics, Circuit Design, and Electromagnetism instructor.</p>
-                    <span class="badge bg-success bg-opacity-10 text-success rounded-pill px-3 py-1">⭐ 4.8 Rating</span>
-                </div>
-            </div>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </div>
     </div>
+       <?php endif; ?>
 
     <!-- Features Checklist Section -->
     <div class="features-wrapper mt-5">

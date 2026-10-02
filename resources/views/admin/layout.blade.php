@@ -258,7 +258,7 @@
             
             <div style="margin-top: auto; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1);">
                 <ul class="sidebar-menu">
-                    <li><a href="/" style="color:#34D399;"><i class="fa-solid fa-globe"></i> View Website</a></li>
+                    
                     <li><a href="/admin/logout" style="color:#EF4444;"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
                 </ul>
             </div>
